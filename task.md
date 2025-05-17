@@ -7,7 +7,7 @@
 - [*] Define technology stack (frontend, backend)
 - [*] Create initial project structure
 - [*] Set up CI/CD pipeline
-- [ ] Create database schema design
+- [] Create database schema design
 - [ ] Design API endpoints
 - [ ] Set up project management tools
 
@@ -26,11 +26,7 @@
 
 ### Authentication & User Management
 
-- [ ] Implement user registration
 - [ ] Implement user login/logout
-- [ ] Create user profile management
-- [ ] Add password recovery functionality
-- [ ] Implement user preference settings
 
 ### Grinder Settings Feature
 
