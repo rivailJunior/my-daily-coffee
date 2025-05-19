@@ -9,7 +9,7 @@
 - [*] Set up CI/CD pipeline
 - [] Create database schema design
 - [ ] Design API endpoints
-- [ ] Set up project management tools
+- [*] Set up project management tools
 
 ## Design Tasks
 

@@ -19,6 +19,7 @@ const config: Config = {
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		colors: {
+  			// Theme colors using CSS variables
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
@@ -58,6 +59,16 @@ const config: Config = {
   				'3': 'hsl(var(--chart-3))',
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
+  			},
+  			
+  			// Direct color references
+  			coffee: {
+  				coral: '#F79B72',     // Coral/Peach color
+  				navy: '#2A4759',      // Navy blue color
+  				gray: '#DDDDDD',      // Light gray color
+  				white: '#EEEEEE',     // Off-white color
+  				'coral-light': '#FAB795',  // Lighter coral variant
+  				'navy-dark': '#1D3241',    // Darker navy variant
   			}
   		}
   	}

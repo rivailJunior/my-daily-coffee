@@ -1,13 +1,18 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Roboto } from 'next/font/google'
 import './globals.css'
 import { QueryProvider } from '@/providers/query-provider'
 import { ThemeProvider } from '@/providers/theme-provider'
 import { AuthProvider } from '@/providers/auth-provider'
 import { ThemeSwitcher } from '@/components/theme-switcher'
 import { AuthStatus } from '@/components/auth/auth-status'
+import { Navbar } from '@/components/navigation/navbar'
 
-const inter = Inter({ subsets: ['latin'] })
+const roboto = Roboto({
+  weight: ['300', '400', '500', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: 'My Daily Coffee',
@@ -21,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} min-h-screen bg-background`}>
+      <body className={`${roboto.className} min-h-screen bg-background`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -35,9 +40,10 @@ export default function RootLayout({
                 <AuthStatus />
                 <ThemeSwitcher />
               </header>
-              <main className="min-h-screen pt-16">
+              <main className="min-h-screen pt-16 pb-16">
                 {children}
               </main>
+              <Navbar />
             </AuthProvider>
           </QueryProvider>
         </ThemeProvider>
