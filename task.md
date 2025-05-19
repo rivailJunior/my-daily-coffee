@@ -30,11 +30,11 @@
 
 ### Grinder Settings Feature
 
-- [ ] Create grinder management page
-- [ ] Implement "Add New Grinder" form
-- [ ] Develop grinder edit functionality
-- [ ] Build grinder listing view
-- [ ] Implement grinder deletion with confirmation
+- [x] Create grinder management page
+- [x] Implement "Add New Grinder" form
+- [x] Develop grinder edit functionality
+- [x] Build grinder listing view
+- [x] Implement grinder deletion with confirmation
 
 ### Recipe Management
 
