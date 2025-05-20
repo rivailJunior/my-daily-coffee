@@ -8,7 +8,7 @@ const navItems = [
   { name: "Home", href: "/" },
   { name: "Grinders", href: "/grinders" },
   { name: "Recipes", href: "/recipes" },
-  { name: "Brew", href: "/brew" },
+  { name: "Methods", href: "/manual-brewing-methods" },
 ];
 
 export function Navbar() {
@@ -56,7 +56,7 @@ export function Navbar() {
                   <path d="M10 9H8"></path>
                 </svg>
               )}
-              {item.name === "Brew" && (
+              {item.name === "Methods" && (
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="size-5 mb-1">
                   <path d="M17 8h1a4 4 0 1 1 0 8h-1"></path>
                   <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path>
