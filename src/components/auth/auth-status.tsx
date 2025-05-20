@@ -4,22 +4,24 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { LogoutButton } from '@/components/auth/logout-button'
 import { LogIn, User } from 'lucide-react'
-import { useSession, signIn } from 'next-auth/react'
+import { signIn } from 'next-auth/react'
+import { useAuth } from '@/contexts/AuthContext'
 
 export function AuthStatus() {
-  const { data: session, status } = useSession()
-  // Show loading state while session is being fetched
-  if (status === 'loading') {
+  const { isAuthenticated, isLoading, user } = useAuth()
+  
+  // Show loading state while authentication status is being fetched
+  if (isLoading) {
     return <div className="h-9 w-24 animate-pulse rounded bg-muted"></div>
   }
 
   // Show user info and logout button when authenticated
-  if (status === 'authenticated' && session?.user) {
+  if (isAuthenticated && user) {
     return (
       <div className="flex items-center gap-4">
         <div className="hidden md:flex items-center gap-2">
           <User className="h-4 w-4" />
-          <span className="text-sm font-medium">{session.user.email}</span>
+          <span className="text-sm font-medium">{user.email}</span>
         </div>
         <LogoutButton variant="outline" size="sm" />
       </div>

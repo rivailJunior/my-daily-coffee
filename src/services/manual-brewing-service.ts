@@ -1,5 +1,28 @@
-import { ManualBrewer, ManualBrewerFormData, INITIAL_MANUAL_BREWERS } from "@/types/manualBrewing";
+import { ManualBrewer, ManualBrewerFormData, ALL_BREWING_METHODS, BrewingMethod } from "@/types/manualBrewing";
 import { v4 as uuidv4 } from "uuid";
+// Helper to convert a BrewingMethod to a ManualBrewer
+const convertToManualBrewer = (method: BrewingMethod): ManualBrewer => {
+  return {
+    id: `${method.name.toLowerCase().replace(/\s+/g, '-')}-${uuidv4().slice(0, 8)}`,
+    name: method.name,
+    brand: "", // Default value, user can update
+    model: "", // Default value, user can update
+    brewMethod: method.brewMethod,
+    type: method.type,
+    material: "other", // Default value, user can update
+    filterType: "paper", // Default value, user can update
+    capacity: 500, // Default value, user can update
+    recommendedGrindSize: 7, // Default value, user can update
+    brewTime: {
+      min: 120,
+      max: 240
+    },
+    pressure: method.brewMethod === "hybrid", // Assume hybrid methods use pressure
+    notes: method.description,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  };
+};
 
 const STORAGE_KEY = "my-daily-coffee-manual-brewers";
 
@@ -9,8 +32,8 @@ const getManualBrewers = (): ManualBrewer[] => {
   
   const storedData = localStorage.getItem(STORAGE_KEY);
   if (!storedData) {
-    // Initialize with pre-created brewers if no data exists
-    const initialData = INITIAL_MANUAL_BREWERS;
+    // Initialize with brewers converted from ALL_BREWING_METHODS
+    const initialData = ALL_BREWING_METHODS.map(convertToManualBrewer);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(initialData));
     return initialData;
   }
