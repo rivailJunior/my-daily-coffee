@@ -7,9 +7,9 @@
 - [*] Define technology stack (frontend, backend)
 - [*] Create initial project structure
 - [*] Set up CI/CD pipeline
+- [*] Set up project management tools
 - [] Create database schema design
 - [ ] Design API endpoints
-- [*] Set up project management tools
 
 ## Design Tasks
 
@@ -26,7 +26,7 @@
 
 ### Authentication & User Management
 
-- [ ] Implement user login/logout
+- [x] Implement user login/logout
 
 ### Grinder Settings Feature
 
@@ -35,6 +35,14 @@
 - [x] Develop grinder edit functionality
 - [x] Build grinder listing view
 - [x] Implement grinder deletion with confirmation
+
+### Manual Brewing Methods
+
+- [x] Create manual brewing methods management page
+- [x] Implement "Add New Brewing Method" form
+- [x] Develop brewing method edit functionality
+- [x] Build brewing method listing view
+- [x] Implement brewing method deletion with confirmation
 
 ### Recipe Management
 
