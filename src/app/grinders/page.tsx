@@ -6,9 +6,13 @@ import { getAllGrinders } from "@/services/grinder-service";
 import { Grinder } from "@/types/grinder";
 import { GrinderCard } from "@/components/grinders/grinder-card";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Search } from "lucide-react";
 
 export default function GrindersPage() {
   const [grinders, setGrinders] = useState<Grinder[]>([]);
+  const [filteredGrinders, setFilteredGrinders] = useState<Grinder[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -16,6 +20,7 @@ export default function GrindersPage() {
       try {
         const data = getAllGrinders();
         setGrinders(data);
+        setFilteredGrinders(data);
       } catch (error) {
         console.error("Error loading grinders:", error);
       } finally {
@@ -26,9 +31,34 @@ export default function GrindersPage() {
     loadGrinders();
   }, []);
 
+  useEffect(() => {
+    // Filter grinders based on search query
+    if (!searchQuery.trim()) {
+      setFilteredGrinders(grinders);
+      return;
+    }
+
+    const query = searchQuery.toLowerCase().trim();
+    const filtered = grinders.filter(grinder => {
+      return (
+        grinder.name.toLowerCase().includes(query) ||
+        grinder.brand.toLowerCase().includes(query) ||
+        grinder.model.toLowerCase().includes(query)
+      );
+    });
+    
+    setFilteredGrinders(filtered);
+  }, [searchQuery, grinders]);
+
   const handleGrinderDeleted = () => {
     // Refresh the list after deletion
-    setGrinders(getAllGrinders());
+    const updatedGrinders = getAllGrinders();
+    setGrinders(updatedGrinders);
+    setFilteredGrinders(updatedGrinders);
+  };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
   };
 
   return (
@@ -91,15 +121,46 @@ export default function GrindersPage() {
           </Link>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {grinders.map((grinder) => (
-            <GrinderCard
-              key={grinder.id}
-              grinder={grinder}
-              onDelete={handleGrinderDeleted}
+        <>
+          <div className="relative mb-6">
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-500">
+              <Search className="h-4 w-4" />
+            </div>
+            <Input
+              type="text"
+              placeholder="Search by name, brand, or model..."
+              className="pl-10"
+              value={searchQuery}
+              onChange={handleSearchChange}
             />
-          ))}
-        </div>
+          </div>
+
+          {filteredGrinders.length === 0 ? (
+            <div className="bg-white dark:bg-coffee-navy-dark border border-coffee-gray/30 dark:border-coffee-navy rounded-lg p-8 text-center">
+              <h3 className="text-xl font-medium mb-2">No matching grinders</h3>
+              <p className="text-gray-500 dark:text-gray-400 mb-6">
+                Try adjusting your search criteria
+              </p>
+              <Button variant="outline" onClick={() => setSearchQuery("")}>Clear Search</Button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {filteredGrinders.map((grinder) => (
+                <GrinderCard
+                  key={grinder.id}
+                  grinder={grinder}
+                  onDelete={handleGrinderDeleted}
+                />
+              ))}
+            </div>
+          )}
+          
+          {filteredGrinders.length > 0 && (
+            <div className="mt-4 text-sm text-gray-500 dark:text-gray-400">
+              Showing {filteredGrinders.length} of {grinders.length} grinders
+            </div>
+          )}
+        </>
       )}
     </div>
   );
