@@ -167,50 +167,54 @@ export default function TimerPage({ params }: TimerPageProps) {
   }
 
   return (
-    <div className="container mx-auto py-8 px-4">
-      <h1 className="text-2xl font-bold text-coffee-navy dark:text-coffee-coral mb-6">
+    <div className='container mx-auto py-8 px-4'>
+      <h1 className='text-2xl font-bold text-coffee-navy dark:text-coffee-coral mb-6'>
         Brewing Timer
       </h1>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
         {/* Recipe Information */}
-        <Card className="lg:col-span-1">
+        <Card className='lg:col-span-1'>
           <CardHeader>
             <CardTitle>Recipe Details</CardTitle>
-            <CardDescription>
-              {recipe.name}
-            </CardDescription>
+            <CardDescription>{recipe.name}</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className='space-y-4'>
             <div>
-              <h3 className="font-medium mb-2">Brewing Method</h3>
-              <p>{brewer?.name} ({brewer?.brand})</p>
+              <h3 className='font-medium mb-2'>Brewing Method</h3>
+              <p>
+                {brewer?.name} ({brewer?.brand})
+              </p>
             </div>
             <div>
-              <h3 className="font-medium mb-2">Grinder</h3>
-              <p>{grinder?.name} ({grinder?.brand})</p>
+              <h3 className='font-medium mb-2'>Grinder</h3>
+              <p>
+                {grinder?.name} ({grinder?.brand})
+              </p>
             </div>
             <div>
-              <h3 className="font-medium mb-2">Beans</h3>
-              <p>{recipe.beanName} <Badge>{recipe.roastProfile}</Badge></p>
+              <h3 className='font-medium mb-2'>Beans</h3>
+              <p>
+                {recipe.beanName} <Badge>{recipe.roastProfile}</Badge>
+              </p>
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className='grid grid-cols-2 gap-4'>
               <div>
-                <h3 className="font-medium mb-2">Coffee</h3>
+                <h3 className='font-medium mb-2'>Coffee</h3>
                 <p>{recipe.coffeeAmount}g</p>
               </div>
               <div>
-                <h3 className="font-medium mb-2">Water</h3>
+                <h3 className='font-medium mb-2'>Water</h3>
                 <p>{recipe.waterAmount}ml</p>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className='grid grid-cols-2 gap-4'>
               <div>
-                <h3 className="font-medium mb-2">Grind Size</h3>
+                <h3 className='font-medium mb-2'>Grind Size</h3>
                 <p>{recipe.grindSize}/13</p>
               </div>
               <div>
-                <h3 className="font-medium mb-2">Water Temp</h3>
+                <h3 className='font-medium mb-2'>Water Temp</h3>
                 <p>{recipe.waterTemperature}°C</p>
               </div>
             </div>
@@ -218,114 +222,150 @@ export default function TimerPage({ params }: TimerPageProps) {
         </Card>
 
         {/* Timer Display */}
-        <Card className="lg:col-span-2">
+        <Card className='lg:col-span-2'>
           <CardHeader>
-            <div className="flex justify-between items-center">
+            <div className='flex justify-between items-center'>
               <CardTitle>Brewing Timer</CardTitle>
-              <div className="text-sm text-gray-500">
+              <div className='text-sm text-gray-500'>
                 Step {currentStepIndex + 1} of {recipe.steps.length}
               </div>
             </div>
             <CardDescription>
-              Total Time: {formatTime(recipe.totalTime)} • Elapsed: {formatTime(totalTimeElapsed)}
+              Total Time: {formatTime(recipe.totalTime)} • Elapsed:{' '}
+              {formatTime(totalTimeElapsed)}
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-6">
-            {/* Overall Progress */}
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm">
-                <span>Overall Progress</span>
-                <span>{Math.round(calculateTotalProgress())}%</span>
-              </div>
-              <Progress value={calculateTotalProgress()} className="h-2" />
+          <CardContent className='space-y-6'>
+            {/* Progress information */}
+            <div className='flex justify-between text-sm px-1 mb-2'>
+              <span>
+                Step {currentStepIndex + 1} of {recipe.steps.length}
+              </span>
+              <span>
+                Total Progress: {Math.round(calculateTotalProgress())}%
+              </span>
             </div>
 
             {/* Current Step */}
-            {currentStep && (
-              <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg">
-                <div className="flex items-center mb-4">
+            {currentStep && !(currentStepIndex === recipe.steps.length - 1 && timeRemaining === 0) && (
+              <div
+                className={`p-6 rounded-lg transition-colors duration-300 bg-slate-400 dark:bg-slate-600`}
+              >
+                <div className='flex items-center mb-4'>
                   {currentStep.isPouring ? (
-                    <Droplet className="h-6 w-6 mr-2 text-blue-500" />
+                    <Droplet className='h-6 w-6 mr-2 text-blue-500' />
                   ) : currentStep.isStirring ? (
-                    <RotateCcw className="h-6 w-6 mr-2 text-amber-500" />
+                    <RotateCcw className='h-6 w-6 mr-2 text-amber-500' />
                   ) : currentStep.isWaiting ? (
-                    <Timer className="h-6 w-6 mr-2 text-gray-500" />
+                    <Timer className='h-6 w-6 mr-2 text-gray-500' />
                   ) : (
-                    <Coffee className="h-6 w-6 mr-2 text-coffee-coral" />
+                    <Coffee className='h-6 w-6 mr-2 text-coffee-coral' />
                   )}
-                  <h3 className="text-xl font-bold">{currentStep.name}</h3>
+                  <h3 className='text-xl font-bold'>{currentStep.name}</h3>
                 </div>
-                
-                <p className="mb-6 text-gray-700 dark:text-gray-300">{currentStep.description}</p>
-                
-                {/* Step Progress */}
-                <div className="space-y-2 mb-6">
-                  <div className="flex justify-between">
-                    <span>Step Progress</span>
-                    <span>{Math.round(calculateProgress())}%</span>
+
+                <p className='mb-6 text-gray-700 dark:text-gray-300'>
+                  {currentStep.description}
+                </p>
+
+                {/* Circular Timer Display */}
+                <div className='flex flex-col items-center justify-center mb-6'>
+                  <div className='relative w-48 h-48 mb-2'>
+                    {/* Background circle */}
+                    <div className='absolute inset-0 rounded-full border-8 border-gray-200 dark:border-gray-700'></div>
+
+                    {/* Progress circle with SVG */}
+                    <svg
+                      className='absolute inset-0 w-full h-full -rotate-90'
+                      viewBox='0 0 100 100'
+                    >
+                      <circle
+                        cx='50'
+                        cy='50'
+                        r='45'
+                        fill='white'
+                        strokeWidth='4'
+                        stroke={
+                          currentStep.isWaiting
+                            ? '#EAB308'
+                            : currentStep.isPouring
+                            ? '#22C55E'
+                            : '#C2410C'
+                        }
+                        strokeDasharray='289.02652413026095'
+                        strokeDashoffset={
+                          289.02652413026095 * (1 - calculateProgress() / 100)
+                        }
+                        strokeLinecap='round'
+                        className='transition-all duration-500 ease-linear '
+                      />
+                    </svg>
+
+                    {/* Time display in center */}
+                    <div className='absolute inset-0 flex items-center justify-center'>
+                      <div className='text-5xl font-bold font-mono'>
+                        {formatTime(timeRemaining)}
+                      </div>
+                    </div>
                   </div>
-                  <Progress value={calculateProgress()} className="h-3" />
+
+                  <div className='text-sm text-gray-500'>
+                    {Math.round(calculateProgress())}% complete
+                  </div>
                 </div>
-                
-                {/* Timer Display */}
-                <div className="text-center">
-                  <div className="text-5xl font-bold mb-4 font-mono">
-                    {formatTime(timeRemaining)}
-                  </div>
-                  
-                  <div className="flex justify-center space-x-4">
-                    <Button
-                      variant={isTimerRunning ? "outline" : "default"}
-                      size="lg"
-                      onClick={toggleTimer}
-                    >
-                      {isTimerRunning ? (
-                        <>
-                          <Pause className="mr-2 h-5 w-5" /> Pause
-                        </>
-                      ) : (
-                        <>
-                          <Play className="mr-2 h-5 w-5" /> {totalTimeElapsed > 0 ? "Resume" : "Start"}
-                        </>
-                      )}
-                    </Button>
-                    
-                    <Button
-                      variant="outline"
-                      size="lg"
-                      onClick={resetTimer}
-                    >
-                      <RotateCcw className="mr-2 h-5 w-5" /> Reset
-                    </Button>
-                  </div>
+
+                <div className='flex justify-center space-x-4'>
+                  <Button
+                    variant={isTimerRunning ? 'outline' : 'default'}
+                    size='lg'
+                    onClick={toggleTimer}
+                  >
+                    {isTimerRunning ? (
+                      <>
+                        <Pause className='mr-2 h-5 w-5' /> Pause
+                      </>
+                    ) : (
+                      <>
+                        <Play className='mr-2 h-5 w-5' />{' '}
+                        {totalTimeElapsed > 0 ? 'Resume' : 'Start'}
+                      </>
+                    )}
+                  </Button>
+
+                  <Button variant='outline' size='lg' onClick={resetTimer}>
+                    <RotateCcw className='mr-2 h-5 w-5' /> Reset
+                  </Button>
                 </div>
               </div>
             )}
 
             {/* Next Step Preview */}
             {recipe.steps[currentStepIndex + 1] && (
-              <div className="border border-gray-200 dark:border-gray-700 p-4 rounded-lg">
-                <h4 className="font-medium mb-2">Next: {recipe.steps[currentStepIndex + 1].name}</h4>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+              <div className='border border-gray-200 dark:border-gray-700 p-4 rounded-lg'>
+                <h4 className='font-medium mb-2'>
+                  Next: {recipe.steps[currentStepIndex + 1].name}
+                </h4>
+                <p className='text-sm text-gray-600 dark:text-gray-400'>
                   {recipe.steps[currentStepIndex + 1].description}
                 </p>
               </div>
             )}
-            
+
             {/* Brewing Complete */}
-            {currentStepIndex === recipe.steps.length - 1 && timeRemaining === 0 && (
-              <div className="bg-green-50 dark:bg-green-900/20 p-6 rounded-lg text-center">
-                <CheckCircle className="h-12 w-12 mx-auto mb-2 text-green-500" />
-                <h3 className="text-xl font-bold mb-2">Brewing Complete!</h3>
-                <p className="mb-4">Your coffee is ready to enjoy.</p>
-                <Button onClick={resetTimer} variant="outline">
-                  Brew Again
-                </Button>
-              </div>
-            )}
+            {currentStepIndex === recipe.steps.length - 1 &&
+              timeRemaining === 0 && (
+                <div className='bg-green-50 dark:bg-green-900/20 p-6 rounded-lg text-center'>
+                  <CheckCircle className='h-12 w-12 mx-auto mb-2 text-green-500' />
+                  <h3 className='text-xl font-bold mb-2'>Brewing Complete!</h3>
+                  <p className='mb-4'>Your coffee is ready to enjoy.</p>
+                  <Button onClick={resetTimer} variant='outline'>
+                    Brew Again
+                  </Button>
+                </div>
+              )}
           </CardContent>
           <CardFooter>
-            <Button variant="outline" onClick={goBack} className="w-full">
+            <Button variant='outline' onClick={goBack} className='w-full'>
               Back to Recipe Form
             </Button>
           </CardFooter>
