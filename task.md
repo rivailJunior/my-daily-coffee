@@ -44,6 +44,17 @@
 - [x] Build brewing method listing view
 - [x] Implement brewing method deletion with confirmation
 
+
+### Brewing Assistant
+
+- [ ] Develop recipe recommendation algorithm
+- [ ] Create brewing timer functionality
+- [ ] Implement step-by-step brewing guide
+- [ ] Build pour guidance visualization
+- [ ] Develop real-time brewing graph
+- [ ] Implement brew completion and rating
+
+
 ### Recipe Management
 
 - [ ] Create recipe creation form
@@ -55,14 +66,6 @@
 - [ ] Build recipe listing and filtering
 - [ ] Add recipe search functionality
 
-### Brewing Assistant
-
-- [ ] Develop recipe recommendation algorithm
-- [ ] Create brewing timer functionality
-- [ ] Implement step-by-step brewing guide
-- [ ] Build pour guidance visualization
-- [ ] Develop real-time brewing graph
-- [ ] Implement brew completion and rating
 
 ### Analytics & Insights
 
