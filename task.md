@@ -47,12 +47,12 @@
 
 ### Brewing Assistant
 
-- [ ] Develop recipe recommendation algorithm
-- [ ] Create brewing timer functionality
-- [ ] Implement step-by-step brewing guide
-- [ ] Build pour guidance visualization
-- [ ] Develop real-time brewing graph
-- [ ] Implement brew completion and rating
+- [] Develop recipe recommendation algorithm
+- [x] Create brewing timer functionality
+- [x] Implement step-by-step brewing guide
+- [] Build pour guidance visualization
+- [] Develop real-time brewing graph
+- [] Implement brew completion and rating following sca rating
 
 
 ### Recipe Management

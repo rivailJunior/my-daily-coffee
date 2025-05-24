@@ -168,7 +168,7 @@ export default function BrewingAssistantPage() {
   };
 
   // Handle form submission
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const formData: BrewingAssistantFormData = {
       brewerId: values.brewerId,
       grinderId: values.grinderId,
@@ -177,9 +177,9 @@ export default function BrewingAssistantPage() {
       beanName: values.beanName,
       roastProfile: values.roastProfile as any,
     };
+    console.log({ formData });
+    const recipe = await createBrewingRecipe(formData);
 
-    const recipe = createBrewingRecipe(formData);
-    
     if (recipe) {
       // Navigate to the brewing timer page with the recipe ID
       router.push(`/brewing-assistant/timer/${recipe.id}`);
