@@ -90,15 +90,19 @@ const generateRecipeWithIA = async (
     // Parse AI response and create recipe
     const aiSuggestion = response.text || 'No AI suggestions available';
 
+    const helperTime = (time: number) => {
+      return time < 1 ? time * 100 : time;
+    };
+
     const steps = JSON.parse(aiSuggestion)?.map((step: any) => {
       return {
         id: uuidv4(),
         name: step.description,
         description: step.description,
-        time: step.time ? step.time : 20,
-        waterAmount: step.waterAmount ? step.waterAmount : 0,
-        isPouring: step.isPouring,
-        isStirring: step.isStirring,
+        time: helperTime(step.time),
+        waterAmount: step.waterAmount,
+        isPouring: !!step.isPouring,
+        isStirring: !!step.isStirring,
         isWaiting: step.isWaiting,
       };
     });
@@ -148,6 +152,7 @@ export const createBrewingRecipe = async (
 
     // TODO: validate if user has ia subscription to use generateRecipeWithIA
     const recipe = await generateRecipeWithIA(formData);
+    console.log({ recipe });
     const recipes: BrewingRecipe[] = getSavedRecipes();
 
     if (recipe) {

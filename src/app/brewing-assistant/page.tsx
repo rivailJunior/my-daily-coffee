@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 
 import { getAllManualBrewers } from "@/services/manual-brewing-service";
 import { getAllGrinders } from "@/services/grinder-service";
@@ -19,6 +19,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Loader2 } from "lucide-react";
 
 // Form schema validation
 const formSchema = z.object({
@@ -167,8 +168,22 @@ export default function BrewingAssistantPage() {
     isUpdatingRef.current = false;
   };
 
+  // Setup mutation for form submission
+  const mutation = useMutation({
+    mutationFn: createBrewingRecipe,
+    onSuccess: (recipe) => {
+      if (recipe) {
+        // Navigate to the brewing timer page with the recipe ID
+        router.push(`/brewing-assistant/timer/${recipe.id}`);
+      }
+    },
+    onError: (error) => {
+      console.error('Error creating recipe:', error);
+    }
+  });
+
   // Handle form submission
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
     const formData: BrewingAssistantFormData = {
       brewerId: values.brewerId,
       grinderId: values.grinderId,
@@ -177,16 +192,11 @@ export default function BrewingAssistantPage() {
       beanName: values.beanName,
       roastProfile: values.roastProfile as any,
     };
-    console.log({ formData });
-    const recipe = await createBrewingRecipe(formData);
-
-    if (recipe) {
-      // Navigate to the brewing timer page with the recipe ID
-      router.push(`/brewing-assistant/timer/${recipe.id}`);
-    }
+    
+    mutation.mutate(formData);
   };
 
-  const isLoading = isLoadingBrewers || isLoadingGrinders;
+  const isLoading = isLoadingBrewers || isLoadingGrinders || mutation.isPending;
 
   return (
     <div className='container mx-auto py-8 px-4'>
@@ -393,7 +403,9 @@ export default function BrewingAssistantPage() {
                               )}
                             />
                           </div>
-                          <div className='text-xs text-gray-500 mt-1'>Coffee:Water</div>
+                          <div className='text-xs text-gray-500 mt-1'>
+                            Coffee:Water
+                          </div>
                           <FormMessage />
                         </FormItem>
                       )}
@@ -462,14 +474,23 @@ export default function BrewingAssistantPage() {
                     <FormItem>
                       <FormLabel>Current Ratio</FormLabel>
                       <div className='bg-gray-100 dark:bg-gray-800 p-2 rounded-md w-full text-center h-[40px] flex items-center justify-center'>
-                        <p className='text-sm font-medium'>1:{ratio.toFixed(1)}</p>
+                        <p className='text-sm font-medium'>
+                          1:{ratio.toFixed(1)}
+                        </p>
                       </div>
                     </FormItem>
                   </div>
                 </div>
 
-                <Button type='submit' className='w-full'>
-                  Generate Recipe & Start Timer
+                <Button type='submit' className='w-full' disabled={isLoading}>
+                  {mutation.isPending ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      AI Generating Your Recipe...
+                    </>
+                  ) : (
+                    'Generate Recipe & Start Timer'
+                  )}
                 </Button>
               </form>
             </Form>
