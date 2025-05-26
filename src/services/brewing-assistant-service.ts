@@ -51,7 +51,8 @@ const generateRecipeWithIA = async (
             - Water amount: ${formData.waterAmount}ml
             - Bean: ${formData.beanName}
             - Roast profile: ${formData.roastProfile}
-            - Grinder: ${grinder.name}.`,
+            - Grinder: ${grinder.name}.
+            You should always return time in seconds. You can also bring details about grind size and water temperature for the intial step of the recipe.`,
       config: {
         responseMimeType: 'application/json',
         responseSchema: {
@@ -91,7 +92,7 @@ const generateRecipeWithIA = async (
     const aiSuggestion = response.text || 'No AI suggestions available';
 
     const helperTime = (time: number) => {
-      return time < 1 ? time * 100 : time;
+      return !!time && time < 1 ? time * 100 : time || 30;
     };
 
     const steps = JSON.parse(aiSuggestion)?.map((step: any) => {

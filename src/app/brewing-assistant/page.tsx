@@ -196,7 +196,7 @@ export default function BrewingAssistantPage() {
     mutation.mutate(formData);
   };
 
-  const isLoading = isLoadingBrewers || isLoadingGrinders || mutation.isPending;
+  const isLoading = isLoadingBrewers || isLoadingGrinders;
 
   return (
     <div className='container mx-auto py-8 px-4'>
@@ -214,7 +214,7 @@ export default function BrewingAssistantPage() {
         </CardHeader>
         <CardContent>
           {isLoading ? (
-            <div className='flex justify-center items-center h-40'>
+            <div className='flex justify-center items-center h-auto'>
               <p className='text-gray-500'>Loading...</p>
             </div>
           ) : (
@@ -243,7 +243,7 @@ export default function BrewingAssistantPage() {
                           <SelectContent>
                             {brewers.map((brewer: ManualBrewer) => (
                               <SelectItem key={brewer.id} value={brewer.id}>
-                                {brewer.name} ({brewer.brand} {brewer.model})
+                                {brewer.name} {brewer.brand} {brewer.model}
                               </SelectItem>
                             ))}
                           </SelectContent>
@@ -275,7 +275,7 @@ export default function BrewingAssistantPage() {
                           <SelectContent>
                             {grinders.map((grinder: Grinder) => (
                               <SelectItem key={grinder.id} value={grinder.id}>
-                                {grinder.name} ({grinder.brand})
+                                {grinder.name} {grinder.brand}
                               </SelectItem>
                             ))}
                           </SelectContent>
@@ -485,7 +485,7 @@ export default function BrewingAssistantPage() {
                 <Button type='submit' className='w-full' disabled={isLoading}>
                   {mutation.isPending ? (
                     <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      <Loader2 className='mr-2 h-4 w-4 animate-spin' />
                       AI Generating Your Recipe...
                     </>
                   ) : (

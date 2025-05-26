@@ -220,7 +220,7 @@ export default function TimerPage({ params }: TimerPageProps) {
             </div>
             <div className='flex flex-row gap-2'>
               <div className='font-thin mb-2 text-sm sm:text-base'>
-                Grinder: {grinder?.name} ({grinder?.brand})
+                Grinder: {grinder?.name} {grinder?.brand}
               </div>
             </div>
             <div className='flex flex-row gap-2'>

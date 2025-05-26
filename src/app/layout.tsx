@@ -25,29 +25,27 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang='en' suppressHydrationWarning>
       <body className={`${roboto.className} min-h-screen bg-background`}>
         <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
+          attribute='class'
+          defaultTheme='system'
           enableSystem
           disableTransitionOnChange
-          storageKey="coffee-theme"
+          storageKey='coffee-theme'
         >
           <QueryProvider>
             <AuthProvider>
-              <header className="fixed top-0 right-0 p-4 z-50 flex items-center gap-4">
+              <header className='fixed top-0 right-0 p-4 z-50 flex items-center gap-4'>
                 <ConditionalAuthStatus />
                 <ThemeSwitcher />
               </header>
-              <main className="min-h-screen pt-16 pb-16">
-                {children}
-              </main>
+              <main className='min-h-screen '>{children}</main>
               <Navbar />
             </AuthProvider>
           </QueryProvider>
         </ThemeProvider>
       </body>
     </html>
-  )
+  );
 }
