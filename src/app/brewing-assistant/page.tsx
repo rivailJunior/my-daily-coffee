@@ -20,6 +20,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Loader2 } from "lucide-react";
+import { Container } from '@/components/container';
 
 // Form schema validation
 const formSchema = z.object({
@@ -179,7 +180,7 @@ export default function BrewingAssistantPage() {
     },
     onError: (error) => {
       console.error('Error creating recipe:', error);
-    }
+    },
   });
 
   // Handle form submission
@@ -192,14 +193,14 @@ export default function BrewingAssistantPage() {
       beanName: values.beanName,
       roastProfile: values.roastProfile as any,
     };
-    
+
     mutation.mutate(formData);
   };
 
   const isLoading = isLoadingBrewers || isLoadingGrinders;
 
   return (
-    <div className='container mx-auto py-8 px-4'>
+    <Container>
       <h1 className='text-2xl font-bold text-coffee-navy dark:text-coffee-coral mb-6'>
         Brewing Assistant
       </h1>
@@ -497,6 +498,6 @@ export default function BrewingAssistantPage() {
           )}
         </CardContent>
       </Card>
-    </div>
+    </Container>
   );
 }
