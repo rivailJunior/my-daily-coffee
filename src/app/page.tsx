@@ -57,7 +57,7 @@ export default function Home() {
 
   return (
     <Container>
-      <div className='flex flex-col min-h-screen bg-white dark:bg-coffee-navy'>
+      <div className='flex flex-col min-h-screen bg-transparent '>
         {/* App Header with Welcome Message */}
         <div className='mb-8'>
           <div className='flex items-center justify-between mb-4'>
@@ -90,7 +90,10 @@ export default function Home() {
             </span>
           </Card>
           <Card className='p-4 flex flex-col items-center justify-center hover:bg-coffee-gray/10 dark:hover:bg-coffee-navy-dark cursor-pointer transition-colors border-coffee-gray/30 dark:border-coffee-navy-dark bg-white dark:bg-coffee-navy'>
-            <div className='h-10 w-10 rounded-full bg-coffee-coral/20 dark:bg-coffee-coral/10 flex items-center justify-center mb-2'>
+            <div
+              className='h-10 w-10 rounded-full bg-coffee-coral/20 dark:bg-coffee-coral/10 flex items-center justify-center mb-2'
+              onClick={() => router.push('/manual-brewing-methods')}
+            >
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 className='h-5 w-5 text-coffee-coral'

@@ -180,7 +180,7 @@ export default function BrewingAssistantPage() {
     },
     onError: (error) => {
       console.error('Error creating recipe:', error);
-    },
+    }
   });
 
   // Handle form submission
