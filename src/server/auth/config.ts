@@ -37,31 +37,6 @@ export const authConfig = {
       clientId: process.env.AUTH_GOOGLE_CLIENT_ID,
       clientSecret: process.env.AUTH_GOOGLE_CLIENT_SECRET,
     }),
-    Credentials({
-      name: "credentials",
-      credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" }
-      },
-      async authorize(credentials) {
-        // This is a simple example. In a real app, you would validate against a database
-        if (!credentials?.email || !credentials?.password) {
-          return null;
-        }
-        
-        // For demo purposes, we'll accept a demo user
-        if (credentials.email === "user@example.com" && credentials.password === "password") {
-          return {
-            id: "1",
-            name: "Demo User",
-            email: "user@example.com",
-          };
-        }
-        
-        // Return null if user data could not be retrieved
-        return null;
-      },
-    }),
     /**
      * ...add more providers here.
      *
@@ -73,7 +48,7 @@ export const authConfig = {
      */
   ],
   session: {
-    strategy: "jwt",
+    strategy: 'jwt',
   },
   // adapter: PrismaAdapter(db),
   callbacks: {
@@ -84,7 +59,7 @@ export const authConfig = {
           ...session.user,
           id: token.sub, // Use token.sub as the user ID when using JWT strategy
         },
-      }
+      };
     },
   },
 } satisfies NextAuthConfig;
