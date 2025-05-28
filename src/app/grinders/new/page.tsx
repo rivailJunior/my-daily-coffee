@@ -18,6 +18,6 @@ export default function NewGrinderPage() {
       <div className="bg-white dark:bg-coffee-navy-dark border border-coffee-gray/30 dark:border-coffee-navy rounded-lg p-6">
         <GrinderForm />
       </div>
-    </>
+    </Container>
   );
 }
