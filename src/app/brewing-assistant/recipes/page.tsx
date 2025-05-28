@@ -2,7 +2,8 @@
 
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
-import { Plus } from 'lucide-react';
+import { Coffee, Droplet, Plus, Timer as TimerIcon } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 import { getAllRecipes } from '@/services/brewing-assistant-service';
 import { BrewingRecipe } from '@/types/brewingAssistant';
@@ -16,9 +17,14 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Badge } from '@/components/ui/badge';
+import { useToast } from '@/hooks/use-toast';
 import dayjs from 'dayjs';
+import { Container } from '@/components/container';
 
 export default function RecipesPage() {
+  const router = useRouter();
+  const { toast } = useToast();
   const {
     data: recipes = [],
     isLoading,
@@ -37,7 +43,7 @@ export default function RecipesPage() {
 
   if (isLoading) {
     return (
-      <div className='container mx-auto px-4 py-8'>
+      <Container>
         <div className='flex justify-between items-center mb-8'>
           <h1 className='text-3xl font-bold'>My Brewing Recipes</h1>
           <Button disabled>
@@ -62,22 +68,22 @@ export default function RecipesPage() {
             </Card>
           ))}
         </div>
-      </div>
+      </Container>
     );
   }
 
   if (error) {
     return (
-      <div className='container mx-auto px-4 py-8'>
+      <Container>
         <div className='text-center text-red-500'>
           Error loading recipes: {handleError(error)}
         </div>
-      </div>
+      </Container>
     );
   }
 
   return (
-    <div className='container mx-auto px-4 py-8'>
+    <Container>
       <div className='flex justify-between items-center mb-8'>
         <h1 className='text-3xl font-bold'>My Brewing Recipes</h1>
         <Button asChild>
@@ -101,51 +107,76 @@ export default function RecipesPage() {
       ) : (
         <div className='grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
           {recipes.map((recipe) => (
-            <Link
-              key={recipe.id}
-              href={`/brewing-assistant/recipes/${recipe.id}`}
-            >
-              <Card className='h-full transition-colors hover:bg-accent/50'>
-                <CardHeader>
-                  <CardTitle className='text-xl'>
-                    {recipe.name || 'Unnamed Recipe'}
-                  </CardTitle>
-                  <CardDescription className='line-clamp-1'>
-                    {recipe.beanName || 'No bean name'}
-                    {recipe.roastProfile && ` • ${recipe.roastProfile}`}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className='space-y-2'>
-                    <div className='flex justify-between'>
-                      <span className='text-sm text-muted-foreground'>
-                        Coffee
-                      </span>
-                      <span>{recipe.coffeeAmount}g</span>
+            <Card key={recipe.id} className='h-full flex flex-col'>
+              <CardHeader className='pb-2'>
+                <CardTitle className='text-xl line-clamp-1'>
+                  {recipe.name || 'Unnamed Recipe'}
+                </CardTitle>
+                <CardDescription className='line-clamp-1'>
+                  {recipe.beanName || 'No bean name'}
+                  {recipe.roastProfile && (
+                    <Badge variant='outline' className='ml-2'>
+                      {recipe.roastProfile}
+                    </Badge>
+                  )}
+                </CardDescription>
+              </CardHeader>
+              <CardContent className='flex-1'>
+                <div className='space-y-3'>
+                  <div className='flex items-center justify-between p-3 bg-muted/50 rounded-lg'>
+                    <div className='flex items-center space-x-2'>
+                      <Coffee className='h-4 w-4 text-muted-foreground' />
+                      <span className='text-sm'>Coffee</span>
                     </div>
-                    <div className='flex justify-between'>
-                      <span className='text-sm text-muted-foreground'>
-                        Water
-                      </span>
-                      <span>{recipe.waterAmount}ml</span>
-                    </div>
-                    <div className='flex justify-between'>
-                      <span className='text-sm text-muted-foreground'>
-                        Temp
-                      </span>
-                      <span>{recipe.waterTemperature}°C</span>
-                    </div>
+                    <span className='font-medium'>{recipe.coffeeAmount}g</span>
                   </div>
-                </CardContent>
-                <CardFooter className='text-sm text-muted-foreground'>
-                  Last updated{' '}
-                  {dayjs(new Date(recipe.updatedAt)).format('MMM d, yyyy')}
-                </CardFooter>
-              </Card>
-            </Link>
+                  <div className='flex items-center justify-between p-3 bg-muted/50 rounded-lg'>
+                    <div className='flex items-center space-x-2'>
+                      <Droplet className='h-4 w-4 text-muted-foreground' />
+                      <span className='text-sm'>Water</span>
+                    </div>
+                    <span className='font-medium'>{recipe.waterAmount}ml</span>
+                  </div>
+                  <div className='flex items-center justify-between p-3 bg-muted/50 rounded-lg'>
+                    <div className='flex items-center space-x-2'>
+                      <TimerIcon className='h-4 w-4 text-muted-foreground' />
+                      <span className='text-sm'>Temp</span>
+                    </div>
+                    <span className='font-medium'>
+                      {recipe.waterTemperature}°C
+                    </span>
+                  </div>
+                </div>
+              </CardContent>
+              <CardFooter className='flex justify-between items-center pt-4 border-t'>
+                <span className='text-xs text-muted-foreground'>
+                  Updated {dayjs(recipe.updatedAt).format('DD/MM/YYYY HH:mm')}
+                </span>
+                <div className='flex space-x-2'>
+                  <Button
+                    variant='outline'
+                    size='sm'
+                    onClick={() =>
+                      router.push(`/brewing-assistant/recipes/${recipe.id}`)
+                    }
+                  >
+                    View
+                  </Button>
+                  <Button
+                    size='sm'
+                    onClick={() =>
+                      router.push(`/brewing-assistant/timer/${recipe.id}`)
+                    }
+                  >
+                    <TimerIcon className='mr-2 h-4 w-4' />
+                    Brew
+                  </Button>
+                </div>
+              </CardFooter>
+            </Card>
           ))}
         </div>
       )}
-    </div>
+    </Container>
   );
 }

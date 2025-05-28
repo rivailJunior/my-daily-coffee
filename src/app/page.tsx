@@ -92,7 +92,7 @@ export default function Home() {
           <Card className='p-4 flex flex-col items-center justify-center hover:bg-coffee-gray/10 dark:hover:bg-coffee-navy-dark cursor-pointer transition-colors border-coffee-gray/30 dark:border-coffee-navy-dark bg-white dark:bg-coffee-navy'>
             <div
               className='h-10 w-10 rounded-full bg-coffee-coral/20 dark:bg-coffee-coral/10 flex items-center justify-center mb-2'
-              onClick={() => router.push('/manual-brewing-methods')}
+              onClick={() => router.push('/brewing-assistant/recipes')}
             >
               <svg
                 xmlns='http://www.w3.org/2000/svg'
