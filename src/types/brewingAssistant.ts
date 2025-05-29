@@ -54,9 +54,16 @@ export const generateRecipe = (
   brewer: ManualBrewer,
   grinder: Grinder
 ): BrewingRecipe => {
-  const { brewerId, grinderId, coffeeAmount, waterAmount, beanName, roastProfile } = formData;
+  const {
+    brewerId,
+    grinderId,
+    coffeeAmount,
+    waterAmount,
+    beanName,
+    roastProfile,
+  } = formData;
   const ratio = waterAmount / coffeeAmount;
-  
+
   // Base recipe structure
   const recipe: BrewingRecipe = {
     id: `recipe-${Date.now()}`,
@@ -73,7 +80,7 @@ export const generateRecipe = (
     beanName,
     roastProfile,
     createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    updatedAt: new Date().toISOString(),
   };
 
   // Generate steps based on brewing method

@@ -9,17 +9,41 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 
 import { getAllManualBrewers } from "@/services/manual-brewing-service";
 import { getAllGrinders } from "@/services/grinder-service";
-import { createBrewingRecipe } from "@/services/brewing-assistant-service";
-import { BrewingAssistantFormData, ROAST_PROFILES } from "@/types/brewingAssistant";
-import { ManualBrewer } from "@/types/manualBrewing";
-import { Grinder } from "@/types/grinder";
+import { createBrewingRecipe } from '@/services/brewing-assistant-service';
+import {
+  BrewingAssistantFormData,
+  ROAST_PROFILES,
+  BrewingRecipe,
+} from '@/types/brewingAssistant';
+import { ManualBrewer } from '@/types/manualBrewing';
+import { Grinder } from '@/types/grinder';
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Loader2 } from "lucide-react";
+import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Loader2 } from 'lucide-react';
 import { Container } from '@/components/container';
 
 // Form schema validation
@@ -159,28 +183,17 @@ export default function BrewingAssistantPage() {
     form.setValue('waterAmount', water);
     isUpdatingRef.current = false;
   };
-
-  // Update coffee amount when water amount changes to maintain ratio
-  // This function is no longer needed since water amount is now disabled
-  const updateCoffeeAmount = (water: number) => {
-    isUpdatingRef.current = true;
-    const coffee = Math.round(water / ratio);
-    form.setValue('coffeeAmount', coffee);
-    isUpdatingRef.current = false;
-  };
-
   // Setup mutation for form submission
-  const mutation = useMutation({
+  const mutation = useMutation<BrewingRecipe, Error, BrewingAssistantFormData>({
     mutationFn: createBrewingRecipe,
     onSuccess: (recipe) => {
-      if (recipe) {
-        // Navigate to the brewing timer page with the recipe ID
-        router.push(`/brewing-assistant/timer/${recipe.id}`);
-      }
+      // Navigate to the brewing timer page with the recipe ID
+      router.push(`/brewing-assistant/timer/${recipe.id}`);
     },
     onError: (error) => {
-      console.error('Error creating recipe:', error);
-    }
+      console.error('Error generating recipe:', error);
+      // You might want to show an error toast here
+    },
   });
 
   // Handle form submission
@@ -191,7 +204,7 @@ export default function BrewingAssistantPage() {
       coffeeAmount: values.coffeeAmount,
       waterAmount: values.waterAmount,
       beanName: values.beanName,
-      roastProfile: values.roastProfile as any,
+      roastProfile: values.roastProfile as any, // This cast should be fixed in the form schema
     };
 
     mutation.mutate(formData);
@@ -205,7 +218,7 @@ export default function BrewingAssistantPage() {
         Brewing Assistant
       </h1>
 
-      <Card className='w-full max-w-2xl mx-auto'>
+      <Card className='w-full mx-auto'>
         <CardHeader>
           <CardTitle>Create Your Brewing Recipe</CardTitle>
           <CardDescription>

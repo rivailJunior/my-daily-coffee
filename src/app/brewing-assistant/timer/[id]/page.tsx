@@ -25,12 +25,14 @@ import {
   CheckCircle,
   Coffee,
   Droplet,
+  FastForward,
   Pause,
   Play,
   RotateCcw,
   Timer,
   X,
 } from 'lucide-react';
+import { Container } from '@/components/container';
 
 interface TimerPageProps {
   params: {
@@ -182,25 +184,25 @@ export default function TimerPage({ params }: TimerPageProps) {
 
   if (isLoading) {
     return (
-      <div className='container mx-auto py-8 px-4 flex justify-center items-center h-[70vh]'>
-        <p className='text-lg sm:text-xl'>Loading brewing recipe...</p>
-      </div>
+      <Container>
+        <p className='text-lg sm:text-xl'>Loading recipe...</p>
+      </Container>
     );
   }
 
   if (error || !recipe) {
     return (
-      <div className='container mx-auto py-8 px-4 flex flex-col justify-center items-center h-[70vh]'>
+      <Container>
         <AlertCircle className='h-12 w-12 sm:h-16 sm:w-16 text-red-500 mb-4' />
-        <p className='text-lg sm:text-xl mb-4'>Error loading brewing recipe</p>
+        <p className='text-lg sm:text-xl mb-4'>Error loading recipe</p>
         <Button onClick={goBack}>Go Back</Button>
-      </div>
+      </Container>
     );
   }
 
   return (
-    <div className='container mx-auto py-8 px-4'>
-      <h1 className='text-xl sm:text-2xl font-bold text-coffee-navy dark:text-coffee-coral mb-6 text-center'>
+    <Container>
+      <h1 className='text-xl sm:text-2xl font-bold text-coffee-navy dark:text-coffee-coral mb-6 '>
         Brewing Timer
       </h1>
 
@@ -277,22 +279,18 @@ export default function TimerPage({ params }: TimerPageProps) {
                 >
                   <div className='flex items-center mb-4'>
                     {currentStep.isPouring ? (
-                      <Droplet className='h-6 w-6 mr-2 text-blue-500' />
+                      <Droplet className='h-20 w-20 md:h-8 md:w-8 mr-2 text-white' />
                     ) : currentStep.isStirring ? (
-                      <RotateCcw className='h-6 w-6 mr-2 text-amber-500' />
+                      <RotateCcw className='h-20 w-20 md:h-8 md:w-8 mr-2 text-amber-500' />
                     ) : currentStep.isWaiting ? (
-                      <Timer className='h-6 w-6 mr-2 text-gray-500' />
+                      <Timer className='h-20 w-20 md:h-8 md:w-8 mr-2 text-gray-500' />
                     ) : (
-                      <Coffee className='h-6 w-6 mr-2 text-coffee-coral' />
+                      <Coffee className='h-20 w-20 md:h-8 md:w-8 mr-2 text-coffee-coral' />
                     )}
-                    <h3 className='text-lg sm:text-xl font-bold'>
-                      {currentStep.name}
+                    <h3 className='text-sm sm:text-base font-bold'>
+                      {currentStep.description}
                     </h3>
                   </div>
-
-                  <p className='mb-6 text-sm sm:text-base text-gray-700 dark:text-gray-300'>
-                    {currentStep.description}
-                  </p>
 
                   {/* Circular Timer Display */}
                   <div className='flex flex-col items-center justify-center mb-6'>
@@ -373,13 +371,12 @@ export default function TimerPage({ params }: TimerPageProps) {
 
             {/* Next Step Preview */}
             {recipe.steps[currentStepIndex + 1] && (
-              <div className='border border-gray-200 dark:border-gray-700 p-4 rounded-lg'>
-                <h4 className='text-sm sm:text-base font-medium mb-2'>
+              <div className='border border-gray-200 dark:border-gray-700 p-4 rounded-lg flex items-center gap-2 text-xs sm:text-sm'>
+                <FastForward className='h-8 w-8 md:h-6 md:w-6' />
+                {/* <Droplet className='h-20 w-20 md:h-8 md:w-8 mr-2 text-white' /> */}
+                <div className='font-medium'>
                   Next: {recipe.steps[currentStepIndex + 1].name}
-                </h4>
-                <p className='text-xs sm:text-sm text-gray-600 dark:text-gray-400'>
-                  {recipe.steps[currentStepIndex + 1].description}
-                </p>
+                </div>
               </div>
             )}
 
@@ -407,6 +404,6 @@ export default function TimerPage({ params }: TimerPageProps) {
           </CardFooter>
         </Card>
       </div>
-    </div>
+    </Container>
   );
 }
