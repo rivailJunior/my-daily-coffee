@@ -1,14 +1,15 @@
-"use client";
+/* eslint-disable react/no-unescaped-entities */
+'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { useRouter } from "next/navigation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useRouter } from 'next/navigation';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
+import { useQuery, useMutation } from '@tanstack/react-query';
 
-import { getAllManualBrewers } from "@/services/manual-brewing-service";
-import { getAllGrinders } from "@/services/grinder-service";
+import { getAllManualBrewers } from '@/services/manual-brewing-service';
+import { getAllGrinders } from '@/services/grinder-service';
 import { createBrewingRecipe } from '@/services/brewing-assistant-service';
 import {
   BrewingAssistantFormData,
