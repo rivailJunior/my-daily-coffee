@@ -1,8 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  env: {
-    WELCOME_MESSAGE: process.env.WELCOME_MESSAGE,
-  },
+  env: {},
 };
 
 module.exports = nextConfig

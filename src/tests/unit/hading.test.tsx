@@ -1,10 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import { Heading } from "@/components";
 
-jest.mock("../../config/env", () => ({
-  env: {
-    WELCOME_MESSAGE: "We are here to help you with your Next.js project 🥳",
-  },
+jest.mock('../../config/env', () => ({
+  env: {},
 }));
 
 describe("Heading Component", () => {
