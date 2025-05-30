@@ -1,37 +1,37 @@
 "use client";
 import Image from 'next/image';
 import Link from 'next/link';
+import { useQuery } from '@tanstack/react-query';
+import { Clock, Coffee } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useRouter } from 'next/navigation';
 import { Container } from '@/components/container';
+import { getAllRecipes } from '@/services/brewing-assistant-service';
+import { Skeleton } from '@/components/ui/skeleton';
+import dayjs from 'dayjs';
 
 export default function Home() {
   const router = useRouter();
-  // Mock data for recent brews
-  const recentBrews = [
-    {
-      id: 1,
-      name: 'Morning Espresso',
-      rating: 4.5,
-      date: '2 hours ago',
-      method: 'Espresso',
-    },
-    {
-      id: 2,
-      name: 'Ethiopian Pour Over',
-      rating: 5,
-      date: 'Yesterday',
-      method: 'Pour Over',
-    },
-    {
-      id: 3,
-      name: 'Afternoon Latte',
-      rating: 4,
-      date: '2 days ago',
-      method: 'Espresso',
-    },
-  ];
+  
+  const { data: recipes = [], isLoading } = useQuery({
+    queryKey: ['brewing-recipes'],
+    queryFn: () => getAllRecipes(),
+  });
+
+  // Get the 3 most recent brews, sorted by date (newest first)
+  const recentBrews = recipes
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    .slice(0, 3)
+    .map(recipe => ({
+      ...recipe,
+      // Format date for display
+      formattedDate: new Date(recipe.createdAt).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      })
+    }));
 
   // Mock data for coffee beans
   const coffeeBeans = [
@@ -191,36 +191,50 @@ export default function Home() {
             </Link>
           </div>
           <div className='space-y-3'>
-            {recentBrews.map((brew) => (
-              <Card
-                key={brew.id}
-                className='p-4 hover:bg-coffee-gray/10 dark:hover:bg-coffee-navy-dark cursor-pointer transition-colors border-coffee-gray/30 dark:border-coffee-navy-dark bg-white dark:bg-coffee-navy'
-              >
-                <div className='flex justify-between items-center'>
-                  <div>
-                    <h3 className='font-medium text-coffee-navy dark:text-coffee-white'>
-                      {brew.name}
-                    </h3>
-                    <div className='text-sm text-coffee-navy/70 dark:text-coffee-white/70'>
-                      {brew.method} • {brew.date}
-                    </div>
-                  </div>
-                  <div className='flex items-center bg-coffee-coral/20 dark:bg-coffee-coral/10 px-2 py-1 rounded-full'>
-                    <svg
-                      xmlns='http://www.w3.org/2000/svg'
-                      className='h-4 w-4 text-coffee-coral mr-1'
-                      viewBox='0 0 20 20'
-                      fill='currentColor'
-                    >
-                      <path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z' />
-                    </svg>
-                    <span className='text-sm font-medium text-coffee-navy dark:text-coffee-white'>
-                      {brew.rating}
-                    </span>
+            {isLoading ? (
+              // Loading state
+              [1, 2, 3].map((i) => (
+                <div key={i} className="flex items-center p-3">
+                  <Skeleton className="h-10 w-10 rounded-lg mr-3" />
+                  <div className="space-y-2 flex-1">
+                    <Skeleton className="h-4 w-3/4" />
+                    <Skeleton className="h-3 w-1/2" />
                   </div>
                 </div>
-              </Card>
-            ))}
+              ))
+            ) : recentBrews.length > 0 ? (
+              // Show recent brews
+              recentBrews.map((brew) => (
+                <Link 
+                  key={brew.id} 
+                  href={`/brewing-assistant/timer/${brew.id}`}
+                  className="block hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                >
+                  <div className="flex items-center p-3">
+                    <div className="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-lg mr-3">
+                      <Coffee className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
+                        {brew.name}
+                      </p>
+                      <div className="flex items-center mt-1 text-xs text-gray-500 dark:text-gray-400">
+                        <span className="truncate">{brew.brewerId || 'Custom Brew'}</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 ml-2">
+                      <Clock className="w-3.5 h-3.5 mr-1" />
+                      {brew.formattedDate}
+                    </div>
+                  </div>
+                </Link>
+              ))
+            ) : (
+              // No recent brews
+              <div className="p-4 text-center text-sm text-gray-500 dark:text-gray-400">
+                No recent brews found. Create your first brewing recipe to get started!
+              </div>
+            )}
           </div>
         </div>
 

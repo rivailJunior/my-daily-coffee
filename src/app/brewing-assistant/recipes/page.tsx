@@ -107,7 +107,11 @@ export default function RecipesPage() {
       ) : (
         <div className='grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
           {recipes.map((recipe) => (
-            <Card key={recipe.id} className='h-full flex flex-col'>
+            <Card 
+              key={recipe.id} 
+              className='h-full flex flex-col cursor-pointer hover:shadow-md transition-shadow'
+              onClick={() => router.push(`/brewing-assistant/timer/${recipe.id}`)}
+            >
               <CardHeader className='pb-2'>
                 <CardTitle className='text-xl line-clamp-1'>
                   {recipe.name || 'Unnamed Recipe'}
@@ -156,17 +160,19 @@ export default function RecipesPage() {
                   <Button
                     variant='outline'
                     size='sm'
-                    onClick={() =>
-                      router.push(`/brewing-assistant/recipes/${recipe.id}`)
-                    }
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      router.push(`/brewing-assistant/recipes/${recipe.id}`);
+                    }}
                   >
                     View
                   </Button>
                   <Button
                     size='sm'
-                    onClick={() =>
-                      router.push(`/brewing-assistant/timer/${recipe.id}`)
-                    }
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      router.push(`/brewing-assistant/timer/${recipe.id}`);
+                    }}
                   >
                     <TimerIcon className='mr-2 h-4 w-4' />
                     Brew
