@@ -12,7 +12,7 @@ export async function POST(request: Request) {
       grinder: Grinder;
     } = await request.json();
     const ai = new GoogleGenAI({
-      apiKey: process.env.NEXT_PUBLIC_GOOGLE_IA_API_KEY,
+      apiKey: process.env.GOOGLE_IA_API_KEY,
     });
 
     if (!formData.brewer || !formData.grinder) {
