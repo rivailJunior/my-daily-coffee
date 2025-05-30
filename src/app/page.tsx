@@ -86,7 +86,7 @@ export default function Home() {
               </svg>
             </div>
             <span className='text-sm font-medium text-coffee-navy dark:text-coffee-white'>
-              Buy Beans
+              Buy Coffee Beans (not implemented)
             </span>
           </Card>
           <Card className='p-4 flex flex-col items-center justify-center hover:bg-coffee-gray/10 dark:hover:bg-coffee-navy-dark cursor-pointer transition-colors border-coffee-gray/30 dark:border-coffee-navy-dark bg-white dark:bg-coffee-navy'>
@@ -145,7 +145,7 @@ export default function Home() {
               </svg>
             </div>
             <span className='text-sm font-medium text-coffee-navy dark:text-coffee-white'>
-              Stats
+              Stats (not implemented)
             </span>
           </Card>
         </div>
@@ -158,7 +158,7 @@ export default function Home() {
               variant='outline'
               className='border-white text-white hover:bg-white/20'
             >
-              Start
+              Start (not implemented)
             </Button>
           </div>
           <div className='grid grid-cols-3 gap-4 text-center'>
@@ -245,7 +245,7 @@ export default function Home() {
         <div>
           <div className='flex justify-between items-center mb-4'>
             <h2 className='text-xl font-bold text-coffee-navy dark:text-coffee-white'>
-              My Coffee Beans
+              My Coffee Beans (mocked)
             </h2>
             <Link
               href='/beans'
@@ -304,7 +304,9 @@ export default function Home() {
                     d='M12 6v6m0 0v6m0-6h6m-6 0H6'
                   />
                 </svg>
-                <span className='text-sm font-medium'>Add New Beans</span>
+                <span className='text-sm font-medium'>
+                  Add New Beans (not implemented)
+                </span>
               </div>
             </Card>
           </div>
