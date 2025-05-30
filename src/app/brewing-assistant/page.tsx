@@ -251,11 +251,11 @@ export default function BrewingAssistantPage() {
                           defaultValue={field.value}
                         >
                           <FormControl>
-                            <SelectTrigger>
+                            <SelectTrigger className='bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-coffee-coral/50 dark:focus:ring-coffee-coral/70'>
                               <SelectValue placeholder='Select brewing method' />
                             </SelectTrigger>
                           </FormControl>
-                          <SelectContent>
+                          <SelectContent className='bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600'>
                             {brewers.map((brewer: ManualBrewer) => (
                               <SelectItem key={brewer.id} value={brewer.id}>
                                 {brewer.name} {brewer.brand} {brewer.model}
@@ -283,11 +283,11 @@ export default function BrewingAssistantPage() {
                           defaultValue={field.value}
                         >
                           <FormControl>
-                            <SelectTrigger>
+                            <SelectTrigger className='bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-coffee-coral/50 dark:focus:ring-coffee-coral/70'>
                               <SelectValue placeholder='Select grinder' />
                             </SelectTrigger>
                           </FormControl>
-                          <SelectContent>
+                          <SelectContent className='bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600'>
                             {grinders.map((grinder: Grinder) => (
                               <SelectItem key={grinder.id} value={grinder.id}>
                                 {grinder.name} {grinder.brand}
@@ -315,6 +315,7 @@ export default function BrewingAssistantPage() {
                         <FormControl>
                           <Input
                             placeholder='e.g., Ethiopia Yirgacheffe'
+                            className='bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-coffee-coral/50 dark:focus:ring-coffee-coral/70 transition-colors'
                             {...field}
                           />
                         </FormControl>
@@ -337,11 +338,11 @@ export default function BrewingAssistantPage() {
                           defaultValue={field.value}
                         >
                           <FormControl>
-                            <SelectTrigger>
+                            <SelectTrigger className='bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-coffee-coral/50 dark:focus:ring-coffee-coral/70'>
                               <SelectValue placeholder='Select roast profile' />
                             </SelectTrigger>
                           </FormControl>
-                          <SelectContent>
+                          <SelectContent className='bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600'>
                             {ROAST_PROFILES.map((profile) => (
                               <SelectItem
                                 key={profile.value}
@@ -375,7 +376,7 @@ export default function BrewingAssistantPage() {
                             <FormControl>
                               <Input
                                 type='text'
-                                className='text-center'
+                                className='text-center bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-coffee-coral/50 dark:focus:ring-coffee-coral/70 transition-colors'
                                 {...field}
                                 onChange={(e) => {
                                   // Only allow numeric input
@@ -399,7 +400,7 @@ export default function BrewingAssistantPage() {
                                 <FormControl>
                                   <Input
                                     type='text'
-                                    className='text-center'
+                                    className='text-center bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-coffee-coral/50 dark:focus:ring-coffee-coral/70 transition-colors'
                                     {...field}
                                     onChange={(e) => {
                                       // Only allow numeric input
@@ -438,6 +439,7 @@ export default function BrewingAssistantPage() {
                           <FormControl>
                             <Input
                               type='text'
+                              className='bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-coffee-coral/50 dark:focus:ring-coffee-coral/70 transition-colors'
                               {...field}
                               onChange={(e) => {
                                 // Only allow numeric input
@@ -488,7 +490,7 @@ export default function BrewingAssistantPage() {
                   <div className='md:col-span-1'>
                     <FormItem>
                       <FormLabel>Current Ratio</FormLabel>
-                      <div className='bg-gray-100 dark:bg-gray-800 p-2 rounded-md w-full text-center h-[40px] flex items-center justify-center'>
+                      <div className='bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 p-2 rounded-md w-full text-center h-[40px] flex items-center justify-center'>
                         <p className='text-sm font-medium'>
                           1:{ratio.toFixed(1)}
                         </p>
