@@ -194,36 +194,38 @@ export default function Home() {
             {isLoading ? (
               // Loading state
               [1, 2, 3].map((i) => (
-                <div key={i} className="flex items-center p-3">
-                  <Skeleton className="h-10 w-10 rounded-lg mr-3" />
-                  <div className="space-y-2 flex-1">
-                    <Skeleton className="h-4 w-3/4" />
-                    <Skeleton className="h-3 w-1/2" />
+                <div key={i} className='flex items-center p-3'>
+                  <Skeleton className='h-10 w-10 rounded-lg mr-3' />
+                  <div className='space-y-2 flex-1'>
+                    <Skeleton className='h-4 w-3/4' />
+                    <Skeleton className='h-3 w-1/2' />
                   </div>
                 </div>
               ))
             ) : recentBrews.length > 0 ? (
               // Show recent brews
               recentBrews.map((brew) => (
-                <Link 
-                  key={brew.id} 
+                <Link
+                  key={brew.id}
                   href={`/brewing-assistant/timer/${brew.id}`}
-                  className="block hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                  className='block hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors '
                 >
-                  <div className="flex items-center p-3">
-                    <div className="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-lg mr-3">
-                      <Coffee className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                  <div className='hover:bg-coffee-gray/10 dark:hover:bg-coffee-navy-dark flex items-center p-3 bg-white dark:bg-coffee-navy border-2 border-coffee-gray dark:border-coffee-navy-dark cursor-pointer rounded-lg'>
+                    <div className='bg-blue-100 dark:bg-blue-900/30 p-2 rounded-lg mr-3'>
+                      <Coffee className='w-5 h-5 text-coffee-coral dark:text-coffee-coral' />
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
+                    <div className='flex-1 min-w-0'>
+                      <p className='text-sm font-medium text-gray-900 dark:text-gray-100 truncate'>
                         {brew.name}
                       </p>
-                      <div className="flex items-center mt-1 text-xs text-gray-500 dark:text-gray-400">
-                        <span className="truncate">{brew.brewerId || 'Custom Brew'}</span>
+                      <div className='flex items-center mt-1 text-xs text-gray-500 dark:text-gray-400'>
+                        <span className='truncate'>
+                          {brew.brewerId || 'Custom Brew'}
+                        </span>
                       </div>
                     </div>
-                    <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 ml-2">
-                      <Clock className="w-3.5 h-3.5 mr-1" />
+                    <div className='flex items-center text-xs text-gray-500 dark:text-gray-400 ml-2'>
+                      <Clock className='w-3.5 h-3.5 mr-1' />
                       {brew.formattedDate}
                     </div>
                   </div>
@@ -231,8 +233,9 @@ export default function Home() {
               ))
             ) : (
               // No recent brews
-              <div className="p-4 text-center text-sm text-gray-500 dark:text-gray-400">
-                No recent brews found. Create your first brewing recipe to get started!
+              <div className='p-4 text-center text-sm text-gray-500 dark:text-gray-400'>
+                No recent brews found. Create your first brewing recipe to get
+                started!
               </div>
             )}
           </div>
