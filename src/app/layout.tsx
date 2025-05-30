@@ -6,7 +6,7 @@ import { ThemeProvider } from '@/providers/theme-provider'
 import { AuthProvider } from '@/providers/auth-provider'
 import { ThemeSwitcher } from '@/components/theme-switcher'
 import { ConditionalAuthStatus } from '@/components/auth/conditional-auth-status'
-import { Navbar } from '@/components/navigation/navbar'
+import { ProtectedNavbar } from '@/components/navigation/protected-navbar'
 
 const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
@@ -41,7 +41,7 @@ export default function RootLayout({
                 <ThemeSwitcher />
               </header>
               <main className='min-h-screen '>{children}</main>
-              <Navbar />
+              <ProtectedNavbar />
             </AuthProvider>
           </QueryProvider>
         </ThemeProvider>
