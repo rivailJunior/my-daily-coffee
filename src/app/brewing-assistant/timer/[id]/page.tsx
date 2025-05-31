@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
-import { Instagram } from 'lucide-react';
+// import { Instagram } from 'lucide-react';
 import { getRecipeById } from '@/services/brewing-assistant-service';
 import { getManualBrewerById } from '@/services/manual-brewing-service';
 import { getGrinderById } from '@/services/grinder-service';
@@ -20,7 +20,6 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 
-import { Badge } from '@/components/ui/badge';
 import {
   AlertCircle,
   CheckCircle,
@@ -190,19 +189,19 @@ export default function TimerPage({ params }: TimerPageProps) {
   };
 
   // Share to Instagram
-  const shareToInstagram = () => {
-    if (!recipe || !brewer) return;
-    
-    const text = encodeURIComponent(`Just brewed a delicious cup of coffee using ${brewer.name} ${brewer.brand} and the ${recipe.name} recipe! ☕\n\n#MyDailyCoffee #CoffeeBrewing #SpecialtyCoffee`);
-    
-    // Instagram doesn't support direct sharing via URL, so we'll open a new window
-    // with pre-filled text that users can copy and paste
-    window.open(
-      `https://www.instagram.com/create/story?text=${text}`,
-      '_blank',
-      'noopener,noreferrer'
-    );
-  };
+  // const shareToInstagram = () => {
+  //   if (!recipe || !brewer) return;
+
+  //   const text = encodeURIComponent(`Just brewed a delicious cup of coffee using ${brewer.name} ${brewer.brand} and the ${recipe.name} recipe! ☕\n\n#MyDailyCoffee #CoffeeBrewing #SpecialtyCoffee`);
+
+  //   // Instagram doesn't support direct sharing via URL, so we'll open a new window
+  //   // with pre-filled text that users can copy and paste
+  //   window.open(
+  //     `https://www.instagram.com/create/story?text=${text}`,
+  //     '_blank',
+  //     'noopener,noreferrer'
+  //   );
+  // };
 
   // Get current step
   const getCurrentStep = (): BrewingStep | null => {
@@ -340,25 +339,25 @@ export default function TimerPage({ params }: TimerPageProps) {
                 timeRemaining === 0
               ) && (
                 <div
-                  className={`p-6 rounded-lg transition-colors duration-300 bg-slate-400 dark:bg-slate-600`}
+                  className={`p-4 rounded-lg transition-colors duration-300 bg-gray-300 dark:bg-gray-700`}
                 >
-                  <div className='flex items-center mb-4'>
+                  <div className='flex flex-row items-start md:items-center gap-2'>
                     {currentStep.isPouring ? (
-                      <Droplet className='h-20 w-20 md:h-8 md:w-8 mr-2 text-white' />
+                      <Droplet className='text-white' />
                     ) : currentStep.isStirring ? (
-                      <RotateCcw className='h-20 w-20 md:h-8 md:w-8 mr-2 text-amber-500' />
+                      <RotateCcw className='text-amber-500' />
                     ) : currentStep.isWaiting ? (
-                      <Timer className='h-20 w-20 md:h-8 md:w-8 mr-2 text-gray-500' />
+                      <Timer className='text-gray-500' />
                     ) : (
-                      <Coffee className='h-20 w-20 md:h-8 md:w-8 mr-2 text-coffee-coral' />
+                      <Coffee className='text-coffee-coral' />
                     )}
-                    <h3 className='text-sm sm:text-base font-bold'>
+                    <div className='text-sm sm:text-base font-regular'>
                       {currentStep.description}
-                    </h3>
+                    </div>
                   </div>
 
                   {/* Circular Timer Display */}
-                  <div className='flex flex-col items-center justify-center mb-6'>
+                  <div className='flex flex-col items-center justify-center mb-6 mt-6'>
                     <div className='relative w-36 h-36 sm:w-48 sm:h-48 mb-2'>
                       {/* Background circle */}
                       <div className='absolute inset-0 rounded-full border-8 border-gray-200 dark:border-gray-700'></div>
@@ -437,7 +436,7 @@ export default function TimerPage({ params }: TimerPageProps) {
             {/* Next Step Preview */}
             {recipe.steps[currentStepIndex + 1] && (
               <div className='border border-gray-200 dark:border-gray-700 p-4 rounded-lg flex items-center gap-2 text-xs sm:text-sm'>
-                <FastForward className='h-8 w-8 md:h-6 md:w-6' />
+                <FastForward className='h-8 w-8' />
                 {/* <Droplet className='h-20 w-20 md:h-8 md:w-8 mr-2 text-white' /> */}
                 <div className='font-medium'>
                   Next: {recipe.steps[currentStepIndex + 1].name}
@@ -457,16 +456,20 @@ export default function TimerPage({ params }: TimerPageProps) {
                     Your coffee is ready to enjoy.
                   </p>
                   <div className='flex flex-col sm:flex-row gap-3 justify-center'>
-                    <Button onClick={resetTimer} variant='outline' className='w-full sm:w-auto'>
+                    <Button
+                      onClick={resetTimer}
+                      variant='outline'
+                      className='w-full sm:w-auto'
+                    >
                       <RotateCcw className='mr-2 h-4 w-4' /> Brew Again
                     </Button>
-                    <Button 
+                    {/* <Button 
                       onClick={shareToInstagram} 
                       variant='default' 
                       className='w-full sm:w-auto bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700'
                     >
                       <Instagram className='mr-2 h-4 w-4' /> Share on Instagram
-                    </Button>
+                    </Button> */}
                   </div>
                 </div>
               )}
