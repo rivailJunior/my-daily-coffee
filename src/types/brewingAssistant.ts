@@ -17,6 +17,7 @@ export interface BrewingRecipe {
   roastProfile?: RoastProfile;
   createdAt: string;
   updatedAt: string;
+  stepsBeforePouring: BrewingStep[];
 }
 
 export interface BrewingStep {
@@ -62,7 +63,6 @@ export const generateRecipe = (
     beanName,
     roastProfile,
   } = formData;
-  const ratio = waterAmount / coffeeAmount;
 
   // Base recipe structure
   const recipe: BrewingRecipe = {
@@ -72,8 +72,8 @@ export const generateRecipe = (
     grinderId,
     coffeeAmount,
     waterAmount,
-    waterTemperature: getWaterTemperature(roastProfile),
-    grindSize: getGrindSize(brewer, roastProfile),
+    waterTemperature: 0,
+    grindSize: 0,
     totalTime: brewer.brewTime.max,
     steps: [],
     notes: `${beanName} (${roastProfile} roast) brewed with ${brewer.name} using a ${grinder.name} grinder.`,
@@ -81,6 +81,7 @@ export const generateRecipe = (
     roastProfile,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
+    stepsBeforePouring: [],
   };
 
   // Generate steps based on brewing method

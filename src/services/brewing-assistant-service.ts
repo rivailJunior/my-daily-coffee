@@ -1,6 +1,7 @@
 import {
   BrewingAssistantFormData,
   BrewingRecipe,
+  BrewingStep,
   generateRecipe,
 } from '@/types/brewingAssistant';
 import { getManualBrewerById } from '@/services/manual-brewing-service';
@@ -37,25 +38,41 @@ export const generateRecipeWithAIViaAPI = async (
     }
 
     const data = await response.json();
+
     if (!data) {
       throw new Error('No data returned from API');
     }
 
     const helperTime = (time: number) => {
-      return !!time && time < 1 ? time * 100 : time || 30;
+      return !!time && time < 1 ? time * 100 : time || 45;
     };
 
-    const steps = JSON.parse(data)?.map((step: any) => {
-      return {
-        id: uuidv4(),
-        name: step.description,
-        description: step.description,
-        time: helperTime(step.time),
-        waterAmount: step.waterAmount,
-        isPouring: !!step.isPouring,
-        isStirring: !!step.isStirring,
-        isWaiting: step.isWaiting,
-      };
+    const steps: BrewingStep[] = [];
+    const stepsBeforePouring: BrewingStep[] = [];
+    data?.forEach((step: any) => {
+      if (step.time || step.isPouring || step.waterAmount) {
+        steps.push({
+          id: uuidv4(),
+          name: step.description,
+          description: step.description,
+          time: step.time,
+          waterAmount: step.waterAmount,
+          isPouring: !!step.isPouring,
+          isStirring: !!step.isStirring,
+          isWaiting: step.isWaiting,
+        });
+      } else {
+        stepsBeforePouring.push({
+          id: uuidv4(),
+          name: step.description,
+          description: step.description,
+          time: 0,
+          waterAmount: 0,
+          isPouring: false,
+          isStirring: false,
+          isWaiting: false,
+        });
+      }
     });
 
     if (!steps || steps.length === 0) {
@@ -73,6 +90,9 @@ export const generateRecipeWithAIViaAPI = async (
       notes: baseRecipe.notes,
       updatedAt: new Date().toISOString(),
       steps: steps,
+      stepsBeforePouring: stepsBeforePouring,
+      grindSize: data?.[0]?.grindSize,
+      waterTemperature: data?.[0]?.waterTemperature,
     };
 
     return recipe;

@@ -31,7 +31,8 @@ export async function POST(request: Request) {
             - Bean: ${formData.beanName}
             - Roast profile: ${formData.roastProfile}
             - Grinder: ${formData.grinder.name}.
-            You should always return time in seconds. You can also bring details about grind size and water temperature for the initial step of the recipe.`,
+            You must return details of how to pour if is center, spiral, circular, time in seconds, grind size in microns and water temperature.
+            Each step should also contain information if isPouring, isStirring, isWaiting and waterAmount.`,
       config: {
         responseMimeType: 'application/json',
         responseSchema: {
@@ -42,7 +43,19 @@ export async function POST(request: Request) {
               description: {
                 type: Type.STRING,
               },
+              pourType: {
+                type: Type.STRING,
+              },
               time: {
+                type: Type.NUMBER,
+              },
+              grindSize: {
+                type: Type.NUMBER,
+              },
+              waterTemperature: {
+                type: Type.NUMBER,
+              },
+              waterAmount: {
                 type: Type.NUMBER,
               },
               isPouring: {
@@ -51,16 +64,20 @@ export async function POST(request: Request) {
               isStirring: {
                 type: Type.BOOLEAN,
               },
-              waterAmount: {
-                type: Type.NUMBER,
+              isWaiting: {
+                type: Type.BOOLEAN,
               },
             },
             propertyOrdering: [
               'description',
+              'pourType',
               'time',
+              'grindSize',
+              'waterTemperature',
+              'waterAmount',
               'isPouring',
               'isStirring',
-              'waterAmount',
+              'isWaiting',
             ],
           },
         },
@@ -70,7 +87,7 @@ export async function POST(request: Request) {
     // Parse AI response and create recipe
     const aiSuggestion = response.text || 'No AI suggestions available';
 
-    return NextResponse.json(aiSuggestion);
+    return NextResponse.json(JSON.parse(aiSuggestion));
   } catch (error) {
     console.error('Error generating recipe with AI:', error);
     return NextResponse.json(

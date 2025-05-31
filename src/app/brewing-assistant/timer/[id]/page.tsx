@@ -217,19 +217,20 @@ export default function TimerPage({ params }: TimerPageProps) {
           <CardContent className='gap-4 flex flex-col md:flex-row justify-between'>
             <div className='flex flex-row gap-2'>
               <div className='font-normal mb-2 text-sm sm:text-base'>
-                Brewing Method: {brewer?.name} {brewer?.brand}
+                Method: {brewer?.name} {brewer?.brand}
               </div>
             </div>
             <div className='flex flex-row gap-2'>
               <div className='font-thin mb-2 text-sm sm:text-base'>
-                Grinder: {grinder?.name} {grinder?.brand}
+                Grinder: {grinder?.name}
+              </div>
+              <div className='font-thin mb-2 text-sm sm:text-base'>
+                <Badge>Size in microns: {recipe.grindSize}</Badge>
               </div>
             </div>
             <div className='flex flex-row gap-2'>
               <div className='font-thin mb-2 text-sm sm:text-base'>Beans: </div>
-              <div className='text-sm sm:text-base'>
-                {recipe.beanName} <Badge>{recipe.roastProfile}</Badge>
-              </div>
+              <div className='text-sm sm:text-base'>{recipe.beanName}</div>
             </div>
             <div className='flex flex-row gap-2'>
               <div className='font-thin mb-2 text-sm sm:text-base'>Coffee</div>
@@ -238,6 +239,14 @@ export default function TimerPage({ params }: TimerPageProps) {
             <div className='flex flex-row gap-2'>
               <div className='font-thin mb-2 text-sm sm:text-base'>Water</div>
               <div className='text-sm sm:text-base'>{recipe.waterAmount}ml</div>
+            </div>
+            <div className='flex flex-row gap-2'>
+              <div className='font-thin mb-2 text-sm sm:text-base'>
+                Temperature
+              </div>
+              <div className='text-sm sm:text-base'>
+                {recipe.waterTemperature}°C
+              </div>
             </div>
           </CardContent>
         </Card>
