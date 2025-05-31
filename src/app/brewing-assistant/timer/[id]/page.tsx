@@ -1,15 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
-import { getRecipeById } from "@/services/brewing-assistant-service";
-import { getManualBrewerById } from "@/services/manual-brewing-service";
-import { getGrinderById } from "@/services/grinder-service";
-import { BrewingRecipe, BrewingStep } from "@/types/brewingAssistant";
-import { useAudioNotification } from "@/components/brewing-assistant/audio-notification";
+import { useState, useEffect, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
+import { getRecipeById } from '@/services/brewing-assistant-service';
+import { getManualBrewerById } from '@/services/manual-brewing-service';
+import { getGrinderById } from '@/services/grinder-service';
+import { BrewingRecipe, BrewingStep } from '@/types/brewingAssistant';
+import { useAudioNotification } from '@/components/brewing-assistant/audio-notification';
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -23,6 +23,8 @@ import { Badge } from '@/components/ui/badge';
 import {
   AlertCircle,
   CheckCircle,
+  ChevronDown,
+  ChevronUp,
   Coffee,
   Droplet,
   FastForward,
@@ -32,6 +34,11 @@ import {
   Timer,
   X,
 } from 'lucide-react';
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '@/components/ui/collapsible';
 import { Container } from '@/components/container';
 
 interface TimerPageProps {
@@ -48,6 +55,7 @@ export default function TimerPage({ params }: TimerPageProps) {
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [totalTimeElapsed, setTotalTimeElapsed] = useState(0);
   const [totalStepTime, setTotalStepTime] = useState(0);
+  const [isRecipeDetailsOpen, setIsRecipeDetailsOpen] = useState(true);
   const { playPourSound, playStepCompleteSound, playBrewingCompleteSound } =
     useAudioNotification();
 
@@ -149,14 +157,20 @@ export default function TimerPage({ params }: TimerPageProps) {
   };
 
   // Toggle timer
-  const toggleTimer = () => {
-    setIsTimerRunning((prev) => !prev);
+  const toggleTimer = useCallback(() => {
+    const newIsRunning = !isTimerRunning;
+    setIsTimerRunning(newIsRunning);
+
+    // Close recipe details when timer starts
+    if (newIsRunning) {
+      setIsRecipeDetailsOpen(false);
+    }
 
     // Play sound when starting a pouring step
     if (!isTimerRunning && recipe?.steps[currentStepIndex].isPouring) {
       playPourSound();
     }
-  };
+  }, [isTimerRunning, recipe?.steps, currentStepIndex, playPourSound]);
 
   // Reset timer
   const resetTimer = () => {
@@ -208,48 +222,74 @@ export default function TimerPage({ params }: TimerPageProps) {
 
       <div className='flex justify-center flex-col gap-4'>
         {/* Recipe Information */}
-        <Card className='w-full'>
-          <CardHeader className='flex flex-row items-center '>
-            <CardTitle>
-              Recipe Details: <Badge>{recipe.name}</Badge>
-            </CardTitle>
-          </CardHeader>
-          <CardContent className='gap-4 flex flex-col md:flex-row justify-between'>
-            <div className='flex flex-row gap-2'>
-              <div className='font-normal mb-2 text-sm sm:text-base'>
-                Method: {brewer?.name} {brewer?.brand}
-              </div>
-            </div>
-            <div className='flex flex-row gap-2'>
-              <div className='font-thin mb-2 text-sm sm:text-base'>
-                Grinder: {grinder?.name}
-              </div>
-              <div className='font-thin mb-2 text-sm sm:text-base'>
-                <Badge>Size in microns: {recipe.grindSize}</Badge>
-              </div>
-            </div>
-            <div className='flex flex-row gap-2'>
-              <div className='font-thin mb-2 text-sm sm:text-base'>Beans: </div>
-              <div className='text-sm sm:text-base'>{recipe.beanName}</div>
-            </div>
-            <div className='flex flex-row gap-2'>
-              <div className='font-thin mb-2 text-sm sm:text-base'>Coffee</div>
-              <div className='text-sm sm:text-base'>{recipe.coffeeAmount}g</div>
-            </div>
-            <div className='flex flex-row gap-2'>
-              <div className='font-thin mb-2 text-sm sm:text-base'>Water</div>
-              <div className='text-sm sm:text-base'>{recipe.waterAmount}ml</div>
-            </div>
-            <div className='flex flex-row gap-2'>
-              <div className='font-thin mb-2 text-sm sm:text-base'>
-                Temperature
-              </div>
-              <div className='text-sm sm:text-base'>
-                {recipe.waterTemperature}°C
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <Collapsible
+          open={isRecipeDetailsOpen}
+          onOpenChange={setIsRecipeDetailsOpen}
+          className='w-full'
+        >
+          <Card className='w-full'>
+            <CollapsibleTrigger asChild className='mb-2'>
+              <CardHeader className='flex flex-row items-center justify-between cursor-pointer rounded-t-lg transition-colors'>
+                <CardTitle className='flex items-center capitalize'>
+                  {recipe.name}
+                </CardTitle>
+                <div className='text-gray-500'>
+                  {isRecipeDetailsOpen ? (
+                    <ChevronUp className='h-5 w-5' />
+                  ) : (
+                    <ChevronDown className='h-5 w-5' />
+                  )}
+                </div>
+              </CardHeader>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <CardContent className='gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6'>
+                <div className='flex flex-col'>
+                  <div className='font-thin text-xs text-gray-500'>Method</div>
+                  <div className='text-sm sm:text-base'>
+                    {brewer?.name} {brewer?.brand}
+                  </div>
+                </div>
+                <div className='flex flex-col'>
+                  <div className='font-thin text-xs text-gray-500'>Grinder</div>
+                  <div className='text-sm sm:text-base'>{grinder?.name}</div>
+                </div>
+                <div className='flex flex-col'>
+                  <div className='font-thin text-xs text-gray-500'>
+                    Grind Size
+                  </div>
+                  <div className='text-sm sm:text-base'>
+                    {recipe.grindSize} microns
+                  </div>
+                </div>
+                <div className='flex flex-col'>
+                  <div className='font-thin text-xs text-gray-500'>Beans</div>
+                  <div className='text-sm sm:text-base'>{recipe.beanName}</div>
+                </div>
+                <div className='flex flex-col'>
+                  <div className='font-thin text-xs text-gray-500'>Coffee</div>
+                  <div className='text-sm sm:text-base'>
+                    {recipe.coffeeAmount}g
+                  </div>
+                </div>
+                <div className='flex flex-col'>
+                  <div className='font-thin text-xs text-gray-500'>Water</div>
+                  <div className='text-sm sm:text-base'>
+                    {recipe.waterAmount}ml
+                  </div>
+                </div>
+                <div className='flex flex-col'>
+                  <div className='font-thin text-xs text-gray-500'>
+                    Temperature
+                  </div>
+                  <div className='text-sm sm:text-base'>
+                    {recipe.waterTemperature}°C
+                  </div>
+                </div>
+              </CardContent>
+            </CollapsibleContent>
+          </Card>
+        </Collapsible>
 
         {/* Timer Display */}
 

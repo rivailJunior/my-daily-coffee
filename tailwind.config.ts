@@ -9,6 +9,20 @@ const config: Config = {
   ],
   theme: {
   	extend: {
+  		animation: {
+      'collapsible-down': 'collapsibleDown 0.2s ease-out',
+      'collapsible-up': 'collapsibleUp 0.2s ease-out',
+    },
+    keyframes: {
+      collapsibleDown: {
+        from: { height: '0' },
+        to: { height: 'var(--radix-collapsible-content-height)' },
+      },
+      collapsibleUp: {
+        from: { height: 'var(--radix-collapsible-content-height)' },
+        to: { height: '0' },
+      },
+    },
   		backgroundImage: {
   			'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
   			'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))'
