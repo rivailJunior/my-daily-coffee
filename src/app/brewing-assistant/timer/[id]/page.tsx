@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
+import { Instagram } from 'lucide-react';
 import { getRecipeById } from '@/services/brewing-assistant-service';
 import { getManualBrewerById } from '@/services/manual-brewing-service';
 import { getGrinderById } from '@/services/grinder-service';
@@ -186,6 +187,21 @@ export default function TimerPage({ params }: TimerPageProps) {
   // Go back to form
   const goBack = () => {
     router.push('/brewing-assistant');
+  };
+
+  // Share to Instagram
+  const shareToInstagram = () => {
+    if (!recipe || !brewer) return;
+    
+    const text = encodeURIComponent(`Just brewed a delicious cup of coffee using ${brewer.name} ${brewer.brand} and the ${recipe.name} recipe! ☕\n\n#MyDailyCoffee #CoffeeBrewing #SpecialtyCoffee`);
+    
+    // Instagram doesn't support direct sharing via URL, so we'll open a new window
+    // with pre-filled text that users can copy and paste
+    window.open(
+      `https://www.instagram.com/create/story?text=${text}`,
+      '_blank',
+      'noopener,noreferrer'
+    );
   };
 
   // Get current step
@@ -440,9 +456,18 @@ export default function TimerPage({ params }: TimerPageProps) {
                   <p className='text-sm sm:text-base mb-4'>
                     Your coffee is ready to enjoy.
                   </p>
-                  <Button onClick={resetTimer} variant='outline'>
-                    Brew Again
-                  </Button>
+                  <div className='flex flex-col sm:flex-row gap-3 justify-center'>
+                    <Button onClick={resetTimer} variant='outline' className='w-full sm:w-auto'>
+                      <RotateCcw className='mr-2 h-4 w-4' /> Brew Again
+                    </Button>
+                    <Button 
+                      onClick={shareToInstagram} 
+                      variant='default' 
+                      className='w-full sm:w-auto bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700'
+                    >
+                      <Instagram className='mr-2 h-4 w-4' /> Share on Instagram
+                    </Button>
+                  </div>
                 </div>
               )}
           </CardContent>
