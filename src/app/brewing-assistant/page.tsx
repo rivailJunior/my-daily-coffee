@@ -219,7 +219,7 @@ export default function BrewingAssistantPage() {
         Brewing Assistant
       </h1>
 
-      <Card className='w-full mx-auto'>
+      <Card className='w-full mx-auto bg-white dark:bg-coffee-navy border-coffee-navy/30 dark:border-coffee-navy'>
         <CardHeader>
           <CardTitle>Create Your Brewing Recipe</CardTitle>
           <CardDescription>

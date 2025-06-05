@@ -16,8 +16,8 @@
     --popover: 0 0% 87%;
     --popover-foreground: 203 38% 26%; /* #2A4759 - Navy blue */
     
-    /* #F79B72 - Coral */
-    --primary: 20 90% 71%;
+    /* #F08060 - Darker Coral */
+    --primary: 15 85% 66%;
     --primary-foreground: 0 0% 100%;
     
     /* #2A4759 - Navy blue */
@@ -28,8 +28,8 @@
     --muted: 0 0% 87%;
     --muted-foreground: 203 38% 40%; /* Lighter navy blue */
     
-    /* #F79B72 - Coral (lighter) */
-    --accent: 20 90% 80%;
+    /* #F79B72 - Lighter Coral */
+    --accent: 20 90% 71%;
     --accent-foreground: 203 38% 26%; /* #2A4759 - Navy blue */
     
     --destructive: 0 84.2% 60.2%;
@@ -63,8 +63,8 @@
     --popover: 203 38% 20%;
     --popover-foreground: 0 0% 93%; /* #EEEEEE - Off-white */
     
-    /* #F79B72 - Coral */
-    --primary: 20 90% 71%;
+    /* #F08060 - Darker Coral */
+    --primary: 15 85% 66%;
     --primary-foreground: 203 38% 15%; /* Darker navy blue */
     
     /* #DDDDDD - Light gray */
@@ -75,8 +75,8 @@
     --muted: 203 38% 18%;
     --muted-foreground: 0 0% 80%; /* Lighter gray */
     
-    /* #F79B72 - Coral (darker) */
-    --accent: 20 90% 65%;
+    /* #F79B72 - Lighter Coral */
+    --accent: 20 90% 71%;
     --accent-foreground: 0 0% 100%;
     
     --destructive: 0 62.8% 30.6%;
@@ -85,7 +85,7 @@
     /* Darker navy blue */
     --border: 203 38% 30%;
     --input: 203 38% 30%;
-    --ring: 20 90% 71%; /* #F79B72 - Coral */
+    --ring: 15 85% 66%; /* #F08060 - Darker Coral */
     
     /* Chart colors */
     --chart-1: 20 90% 71%; /* #F79B72 - Coral */

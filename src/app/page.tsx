@@ -75,10 +75,10 @@ export default function Home() {
         {/* Quick Actions */}
         <div className='grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8'>
           <Card className='p-4 flex flex-col items-center justify-center hover:bg-coffee-gray/10 dark:hover:bg-coffee-navy-dark cursor-pointer transition-colors border-coffee-gray/30 dark:border-coffee-navy-dark bg-white dark:bg-coffee-navy'>
-            <div className='h-10 w-10 rounded-full bg-coffee-coral/20 dark:bg-coffee-coral/10 flex items-center justify-center mb-2'>
+            <div className='h-10 w-10 rounded-full bg-coffee-navy/20 dark:bg-coffee-coral/20 flex items-center justify-center mb-2'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
-                className='h-5 w-5 text-coffee-coral'
+                className='h-5 w-5 text-coffee-navy dark:text-coffee-coral'
                 viewBox='0 0 20 20'
                 fill='currentColor'
               >
@@ -91,12 +91,12 @@ export default function Home() {
           </Card>
           <Card className='p-4 flex flex-col items-center justify-center hover:bg-coffee-gray/10 dark:hover:bg-coffee-navy-dark cursor-pointer transition-colors border-coffee-gray/30 dark:border-coffee-navy-dark bg-white dark:bg-coffee-navy'>
             <div
-              className='h-10 w-10 rounded-full bg-coffee-coral/20 dark:bg-coffee-coral/10 flex items-center justify-center mb-2'
+              className='h-10 w-10 rounded-full bg-coffee-navy/20 dark:bg-coffee-coral/20 flex items-center justify-center mb-2'
               onClick={() => router.push('/brewing-assistant/recipes')}
             >
               <svg
                 xmlns='http://www.w3.org/2000/svg'
-                className='h-5 w-5 text-coffee-coral'
+                className='h-5 w-5 text-coffee-navy dark:text-coffee-coral'
                 viewBox='0 0 20 20'
                 fill='currentColor'
               >
@@ -115,10 +115,10 @@ export default function Home() {
             className='p-4 flex flex-col items-center justify-center hover:bg-coffee-gray/10 dark:hover:bg-coffee-navy-dark cursor-pointer transition-colors border-coffee-gray/30 dark:border-coffee-navy-dark bg-white dark:bg-coffee-navy'
             onClick={() => router.push('/grinders')}
           >
-            <div className='h-10 w-10 rounded-full bg-coffee-coral/20 dark:bg-coffee-coral/10 flex items-center justify-center mb-2'>
+            <div className='h-10 w-10 rounded-full bg-coffee-navy/20 dark:bg-coffee-coral/20 flex items-center justify-center mb-2'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
-                className='h-5 w-5 text-coffee-coral'
+                className='h-5 w-5 text-coffee-navy'
                 viewBox='0 0 20 20'
                 fill='currentColor'
               >
@@ -134,10 +134,10 @@ export default function Home() {
             </span>
           </Card>
           <Card className='p-4 flex flex-col items-center justify-center hover:bg-coffee-gray/10 dark:hover:bg-coffee-navy-dark cursor-pointer transition-colors border-coffee-gray/30 dark:border-coffee-navy-dark bg-white dark:bg-coffee-navy'>
-            <div className='h-10 w-10 rounded-full bg-coffee-coral/20 dark:bg-coffee-coral/10 flex items-center justify-center mb-2'>
+            <div className='h-10 w-10 rounded-full bg-coffee-navy/20 dark:bg-coffee-coral/20 flex items-center justify-center mb-2'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
-                className='h-5 w-5 text-coffee-coral'
+                className='h-5 w-5 text-coffee-navy'
                 viewBox='0 0 20 20'
                 fill='currentColor'
               >
@@ -185,7 +185,7 @@ export default function Home() {
             </h2>
             <Link
               href='/brews'
-              className='text-coffee-coral hover:text-coffee-coral/80 dark:text-coffee-coral dark:hover:text-coffee-coral/80 text-sm font-medium'
+              className='text-coffee-navy hover:text-coffee-navy/80 dark:text-coffee-navy dark:hover:text-coffee-navy/80 text-sm font-medium'
             >
               View All
             </Link>
@@ -212,7 +212,7 @@ export default function Home() {
                 >
                   <div className='hover:bg-coffee-gray/10 dark:hover:bg-coffee-navy-dark flex items-center p-3 bg-white dark:bg-coffee-navy border-2 border-coffee-gray dark:border-coffee-navy-dark cursor-pointer rounded-lg'>
                     <div className='bg-blue-100 dark:bg-blue-900/30 p-2 rounded-lg mr-3'>
-                      <Coffee className='w-5 h-5 text-coffee-coral dark:text-coffee-coral' />
+                      <Coffee className='w-5 h-5 text-coffee-navy dark:text-coffee-navy' />
                     </div>
                     <div className='flex-1 min-w-0'>
                       <p className='text-sm font-medium text-gray-900 dark:text-gray-100 truncate'>
@@ -249,7 +249,7 @@ export default function Home() {
             </h2>
             <Link
               href='/beans'
-              className='text-coffee-coral hover:text-coffee-coral/80 dark:text-coffee-coral dark:hover:text-coffee-coral/80 text-sm font-medium'
+              className='text-coffee-navy hover:text-coffee-navy/80 dark:text-coffee-navy dark:hover:text-coffee-navy/80 text-sm font-medium'
             >
               View All
             </Link>
@@ -261,10 +261,10 @@ export default function Home() {
                 className='p-4 hover:bg-coffee-gray/10 dark:hover:bg-coffee-navy-dark cursor-pointer transition-colors border-coffee-gray/30 dark:border-coffee-navy-dark bg-white dark:bg-coffee-navy'
               >
                 <div className='flex items-center'>
-                  <div className='h-10 w-10 rounded-full bg-coffee-coral/20 dark:bg-coffee-coral/10 flex items-center justify-center mr-3'>
+                  <div className='h-10 w-10 rounded-full bg-coffee-navy/20 dark:bg-coffee-navy/10 flex items-center justify-center mr-3'>
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
-                      className='h-6 w-6 text-coffee-coral'
+                      className='h-6 w-6 text-coffee-navy'
                       fill='none'
                       viewBox='0 0 24 24'
                       stroke='currentColor'
@@ -289,10 +289,10 @@ export default function Home() {
               </Card>
             ))}
             <Card className='p-4 border-dashed border-coffee-gray/50 dark:border-coffee-white/20 flex items-center justify-center cursor-pointer hover:bg-coffee-gray/10 dark:hover:bg-coffee-navy-dark transition-colors bg-white dark:bg-coffee-navy'>
-              <div className='flex flex-col items-center text-coffee-navy/70 dark:text-coffee-white/70'>
+              <div className='flex flex-col items-center text-coffee-navy/70 dark:text-coffee-coral/70'>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
-                  className='h-6 w-6 mb-1 text-coffee-coral'
+                  className='h-6 w-6 mb-1 text-coffee-navy dark:text-coffee-coral'
                   fill='none'
                   viewBox='0 0 24 24'
                   stroke='currentColor'
