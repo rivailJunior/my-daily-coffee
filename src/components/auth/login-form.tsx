@@ -22,47 +22,51 @@ export function LoginForm() {
   };
 
   return (
-    <motion.div 
+    <motion.div
       className='w-full'
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
     >
-      <div className='bg-white/80 dark:bg-amber-950/50 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden border border-amber-100/50 dark:border-amber-800/30 transition-colors duration-300'>
+      <div className='bg-white/30 dark:bg-coffee-navy/30 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden border border-gray-700/50 dark:border-coffee-navy/30 transition-colors duration-300'>
         <div className='p-8'>
           <div className='text-center mb-8'>
-            <h2 className='text-2xl font-light text-amber-900 dark:text-amber-100 mb-2'>Welcome back</h2>
-            <p className='text-amber-700/80 dark:text-amber-300/80'>Sign in to continue to your coffee journal</p>
+            <h2 className='text-2xl font-light text-gray-900 dark:text-white mb-2'>
+              Welcome!
+            </h2>
+            <p className='text-gray-700/80 dark:text-white/80'>
+              Sign in to continue to your coffee assistant IA.
+            </p>
           </div>
-          
+
           <Button
             type='button'
             variant='outline'
             className='w-full py-6 rounded-xl text-base font-normal transition-all hover:shadow-md flex items-center justify-center 
-                     border-amber-200 dark:border-amber-800/70 
-                     bg-white dark:bg-amber-950/50 
-                     hover:bg-amber-50 dark:hover:bg-amber-900/50 
-                     text-amber-900 dark:text-amber-100 
-                     hover:text-amber-900 dark:hover:text-amber-100
+                     border-gray-700 dark:border-coffee-navy/70 
+                     bg-white dark:bg-coffee-navy/30 
+                     hover:bg-gray-50 dark:hover:bg-coffee-navy/50 
+                     text-gray-900 dark:text-white 
+                     hover:text-gray-900 dark:hover:text-white
                      relative overflow-hidden group'
             onClick={handleGoogleSignIn}
             disabled={isLoading}
           >
-            <motion.span 
-              className='absolute inset-0 bg-amber-100/50 dark:bg-amber-900/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300'
+            <motion.span
+              className='absolute inset-0 bg-gray-100/50 dark:bg-gray-900/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300'
               initial={{ scale: 0.5, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.5 }}
             />
-            
+
             {isLoading ? (
-              <motion.span 
+              <motion.span
                 className='flex items-center justify-center'
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
               >
                 <svg
-                  className='animate-spin -ml-1 mr-3 h-5 w-5 text-amber-700 dark:text-amber-400'
+                  className='animate-spin -ml-1 mr-3 h-5 w-5 text-gray-700 dark:text-gray-400'
                   xmlns='http://www.w3.org/2000/svg'
                   fill='none'
                   viewBox='0 0 24 24'
@@ -84,16 +88,13 @@ export function LoginForm() {
                 <span className='relative z-10'>Signing in...</span>
               </motion.span>
             ) : (
-              <motion.span 
+              <motion.span
                 className='flex items-center justify-center relative z-10'
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
               >
-                <svg 
-                  className='mr-3 h-5 w-5' 
-                  viewBox='0 0 24 24'
-                >
+                <svg className='mr-3 h-5 w-5' viewBox='0 0 24 24'>
                   <path
                     d='M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z'
                     fill='#4285F4'
@@ -115,8 +116,8 @@ export function LoginForm() {
               </motion.span>
             )}
           </Button>
-          
-          <div className='mt-6 text-center text-sm text-amber-600/60 dark:text-amber-400/40'>
+
+          <div className='mt-6 text-center text-sm text-gray-600/60 dark:text-gray-400/40'>
             <p>We&apos;ll never post without your permission</p>
           </div>
         </div>
