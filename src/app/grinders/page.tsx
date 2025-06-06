@@ -130,7 +130,7 @@ export default function GrindersPage() {
             <Input
               type='text'
               placeholder='Search by name, brand, or model...'
-              className='pl-10'
+              className='pl-10 dark:bg-coffee-navy-dark dark:text-white dark:border-coffee-navy bg-white'
               value={searchQuery}
               onChange={handleSearchChange}
             />
