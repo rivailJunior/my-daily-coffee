@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { getRecipeById } from '@/services/brewing-assistant-service';
 import { getManualBrewerById } from '@/services/manual-brewing-service';
 import { getGrinderById } from '@/services/grinder-service';
-import { BrewingRecipe, BrewingStep } from '@/types/brewingAssistant';
-import { useAudioNotification } from '@/components/brewing-assistant/audio-notification';
+import { BrewingRecipe } from '@/types/brewingAssistant';
+import { useCountdown } from '@/hooks/useCountdown';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -22,8 +22,6 @@ import {
 import {
   AlertCircle,
   CheckCircle,
-  ChevronDown,
-  ChevronUp,
   Coffee,
   Droplet,
   FastForward,
@@ -50,14 +48,8 @@ interface TimerPageProps {
 export default function TimerPage({ params }: TimerPageProps) {
   const router = useRouter();
   const { id } = params;
-  const [isTimerRunning, setIsTimerRunning] = useState(false);
-  const [currentStepIndex, setCurrentStepIndex] = useState(0);
-  const [timeRemaining, setTimeRemaining] = useState(0);
   const [totalTimeElapsed, setTotalTimeElapsed] = useState(0);
-  const [totalStepTime, setTotalStepTime] = useState(0);
   const [isRecipeDetailsOpen, setIsRecipeDetailsOpen] = useState(true);
-  const { playPourSound, playStepCompleteSound, playBrewingCompleteSound } =
-    useAudioNotification();
 
   // Load recipe data
   const {
@@ -68,6 +60,17 @@ export default function TimerPage({ params }: TimerPageProps) {
     queryKey: ['recipe', id],
     queryFn: () => getRecipeById(id),
     enabled: !!id,
+  });
+
+  const {
+    currentStepIndex,
+    timeRemaining,
+    isRunning: isTimerRunning,
+    start: startTimer,
+    pause: pauseTimer,
+    reset: resetTimer,
+  } = useCountdown({
+    steps: recipe?.steps || [],
   });
 
   // Load brewer and grinder data
@@ -83,57 +86,15 @@ export default function TimerPage({ params }: TimerPageProps) {
     enabled: !!recipe?.grinderId,
   });
 
-  // Initialize timer when recipe loads
+  // Update total time elapsed when timer is running
   useEffect(() => {
-    if (recipe && recipe.steps.length > 0) {
-      setTotalStepTime(recipe.steps[0].time);
-      setTimeRemaining(recipe.steps[0].time);
-    }
-  }, [recipe]);
-
-  // Timer logic
-  useEffect(() => {
-    let timerId: NodeJS.Timeout | null = null;
-
-    if (isTimerRunning && timeRemaining > 0) {
-      timerId = setInterval(() => {
-        setTimeRemaining((prev) => prev - 1);
+    if (isTimerRunning) {
+      const timer = setInterval(() => {
         setTotalTimeElapsed((prev) => prev + 1);
       }, 1000);
-    } else if (isTimerRunning && timeRemaining === 0) {
-      // Current step completed
-      playStepCompleteSound();
-
-      // Move to next step if available
-      if (recipe && currentStepIndex < recipe.steps.length - 1) {
-        const nextIndex = currentStepIndex + 1;
-        setCurrentStepIndex(nextIndex);
-        setTotalStepTime(recipe.steps[nextIndex].time);
-        setTimeRemaining(recipe.steps[nextIndex].time);
-
-        // Play pour sound if the next step is a pouring step
-        if (recipe.steps[nextIndex].isPouring) {
-          playPourSound();
-        }
-      } else {
-        // Brewing complete
-        setIsTimerRunning(false);
-        playBrewingCompleteSound();
-      }
+      return () => clearInterval(timer);
     }
-
-    return () => {
-      if (timerId) clearInterval(timerId);
-    };
-  }, [
-    isTimerRunning,
-    timeRemaining,
-    currentStepIndex,
-    recipe,
-    playStepCompleteSound,
-    playPourSound,
-    playBrewingCompleteSound,
-  ]);
+  }, [isTimerRunning]);
 
   // Format time as MM:SS
   const formatTime = (seconds: number): string => {
@@ -146,8 +107,9 @@ export default function TimerPage({ params }: TimerPageProps) {
 
   // Calculate progress percentage
   const calculateProgress = (): number => {
-    if (totalStepTime === 0) return 0;
-    return ((totalStepTime - timeRemaining) / totalStepTime) * 100;
+    if (!recipe?.steps[currentStepIndex]?.time) return 0;
+    const currentStepTime = recipe.steps[currentStepIndex].time;
+    return ((currentStepTime - timeRemaining) / currentStepTime) * 100;
   };
 
   // Calculate total progress percentage
@@ -158,30 +120,27 @@ export default function TimerPage({ params }: TimerPageProps) {
 
   // Toggle timer
   const toggleTimer = useCallback(() => {
-    const newIsRunning = !isTimerRunning;
-    setIsTimerRunning(newIsRunning);
-
-    // Close recipe details when timer starts
-    if (newIsRunning) {
+    if (isTimerRunning) {
+      pauseTimer();
+    } else {
+      startTimer();
+      // Close recipe details when timer starts
       setIsRecipeDetailsOpen(false);
     }
-
-    // Play sound when starting a pouring step
-    if (!isTimerRunning && recipe?.steps[currentStepIndex].isPouring) {
-      playPourSound();
-    }
-  }, [isTimerRunning, recipe?.steps, currentStepIndex, playPourSound]);
+  }, [isTimerRunning, startTimer, pauseTimer]);
 
   // Reset timer
-  const resetTimer = () => {
-    setIsTimerRunning(false);
-    setCurrentStepIndex(0);
-    if (recipe && recipe.steps.length > 0) {
-      setTotalStepTime(recipe.steps[0].time);
-      setTimeRemaining(recipe.steps[0].time);
-    }
+  const handleResetTimer = useCallback(() => {
+    resetTimer();
     setTotalTimeElapsed(0);
-  };
+
+    // Reset to first step if recipe exists
+    if (recipe?.steps?.length) {
+      // Force re-render with initial values
+      const firstStepTime = recipe.steps[0].time;
+      resetTimer();
+    }
+  }, [resetTimer, recipe]);
 
   // Go back to form
   const goBack = () => {
@@ -189,12 +148,7 @@ export default function TimerPage({ params }: TimerPageProps) {
   };
 
   // Get current step
-  const getCurrentStep = (): BrewingStep | null => {
-    if (!recipe || !recipe.steps.length) return null;
-    return recipe.steps[currentStepIndex];
-  };
-
-  const currentStep = getCurrentStep();
+  const currentStep = recipe?.steps[currentStepIndex] || null;
 
   if (isLoading) {
     return (
@@ -234,10 +188,10 @@ export default function TimerPage({ params }: TimerPageProps) {
                   {recipe.name}
                 </CardTitle>
                 <div className='text-gray-500'>
-                  {isRecipeDetailsOpen ? (
-                    <ChevronUp className='h-5 w-5' />
+                  {isTimerRunning ? (
+                    <Pause className='h-4 w-4' />
                   ) : (
-                    <ChevronDown className='h-5 w-5' />
+                    <Play className='h-4 w-4' />
                   )}
                 </div>
               </CardHeader>
