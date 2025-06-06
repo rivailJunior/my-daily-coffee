@@ -39,6 +39,7 @@ import {
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
 import { Container } from '@/components/container';
+import { Countdown } from '@/components/countdown';
 
 interface TimerPageProps {
   params: {
@@ -323,7 +324,7 @@ export default function TimerPage({ params }: TimerPageProps) {
                 timeRemaining === 0
               ) && (
                 <div
-                  className={`p-4 rounded-lg transition-colors duration-300 bg-gray-300 dark:bg-gray-700`}
+                  className={`p-4 rounded-lg transition-colors duration-300`}
                 >
                   <div className='flex flex-row items-start md:items-center gap-2'>
                     {currentStep.isPouring ? (
@@ -343,40 +344,11 @@ export default function TimerPage({ params }: TimerPageProps) {
                   {/* Circular Timer Display */}
                   <div className='flex flex-col items-center justify-center mb-6 mt-6'>
                     <div className='relative w-36 h-36 sm:w-48 sm:h-48 mb-2'>
-                      {/* Background circle */}
-                      <div className='absolute inset-0 rounded-full border-8 border-gray-200 dark:border-gray-700'></div>
-
-                      {/* Progress circle with SVG */}
-                      <svg
-                        className='absolute inset-0 w-full h-full -rotate-90'
-                        viewBox='0 0 100 100'
-                      >
-                        <circle
-                          cx='50'
-                          cy='50'
-                          r='45'
-                          fill='white'
-                          strokeWidth='4'
-                          stroke={
-                            currentStep.isWaiting
-                              ? '#EAB308'
-                              : currentStep.isPouring
-                              ? '#22C55E'
-                              : '#C2410C'
-                          }
-                          strokeDasharray='289.02652413026095'
-                          strokeDashoffset={
-                            289.02652413026095 * (1 - calculateProgress() / 100)
-                          }
-                          strokeLinecap='round'
-                          className='transition-all duration-500 ease-linear '
-                        />
-                      </svg>
-
                       {/* Time display in center */}
                       <div className='absolute inset-0 flex items-center justify-center'>
                         <div className='text-2xl sm:text-3xl md:text-5xl font-bold font-mono'>
-                          {formatTime(timeRemaining)}
+                          {/* {formatTime(timeRemaining)} */}
+                          <Countdown seconds={timeRemaining} />
                         </div>
                       </div>
                     </div>
