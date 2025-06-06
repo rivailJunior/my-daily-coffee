@@ -7,11 +7,11 @@ const createJestConfig = nextJest({
 });
 
 const customJestConfig = {
-  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
-  testEnvironment: "jsdom", // Add coverage-related configuration
-  testPathIgnorePatterns: ["/node_modules/", "<rootDir>/cypress/"],
-  coverageDirectory: "coverage",
-  collectCoverageFrom: ["src/**/*.{js,jsx,ts,tsx}"],
+  setupFilesAfterEnv: ['./jest.setup.js'],
+  testEnvironment: 'jsdom', // Add coverage-related configuration
+  testPathIgnorePatterns: ['/node_modules/', '<rootDir>/cypress/'],
+  coverageDirectory: 'coverage',
+  collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}'],
   coverageThreshold: {
     global: {
       branches: coverageAcceptanceThreshold,

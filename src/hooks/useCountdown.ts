@@ -14,8 +14,6 @@ type useCountdownReturn = {
 };
 
 export function useCountdown({ steps }: useCountdownProps): useCountdownReturn {
-  console.log(steps);
-
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState(steps?.[0]?.time || 0);
   const [isRunning, setIsRunning] = useState(false);

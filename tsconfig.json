@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2024",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -26,9 +26,17 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
+    "**/*.d.ts",
     ".next/types/**/*.ts",
-    "jest.setup.js",
-    "jest.config.js"
+    "./jest.setup.js",
+    "./jest.config.js"
   ],
-  "exclude": ["node_modules"]
+  "types": ["jest", "@testing-library/jest-dom", "@testing-library/react"],
+  "exclude": [
+    "node_modules",
+    "./cypress.config.ts",
+    "./cypress",
+    "**/*.cy.ts",
+    "**/*.cy.tsx"
+  ]
 }
