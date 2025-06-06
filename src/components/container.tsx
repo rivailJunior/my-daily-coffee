@@ -2,7 +2,7 @@ import React from 'react';
 
 export function Container({ children }: { children: React.ReactNode }) {
   return (
-    <div className='container mx-auto px-4 pt-10 pb-28 md:pt-16 lg:pt-14 bg-transparent'>
+    <div className='container mx-auto px-4 pt-6 pb-28 md:pt-10 lg:pt-10 bg-transparent'>
       {children}
     </div>
   );

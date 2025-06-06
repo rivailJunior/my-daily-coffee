@@ -25,8 +25,10 @@ import {
   Coffee,
   Droplet,
   FastForward,
+  GlassWater,
   Pause,
   Play,
+  PoundSterling,
   RotateCcw,
   Timer,
   X,
@@ -170,9 +172,14 @@ export default function TimerPage({ params }: TimerPageProps) {
 
   return (
     <Container>
-      <h1 className='text-xl sm:text-2xl font-bold text-coffee-navy dark:text-coffee-coral mb-6 '>
-        Brewing Timer
-      </h1>
+      <div className='flex flex-row justify-between items-center mb-6'>
+        <div className='text-xl sm:text-2xl font-bold text-coffee-navy dark:text-coffee-coral '>
+          Brewing Timer
+        </div>
+        <Button variant='outline' onClick={goBack}>
+          Back to Recipe Form
+        </Button>
+      </div>
 
       <div className='flex justify-center flex-col gap-4'>
         {/* Recipe Information */}
@@ -277,20 +284,20 @@ export default function TimerPage({ params }: TimerPageProps) {
                 currentStepIndex === recipe.steps.length - 1 &&
                 timeRemaining === 0
               ) && (
-                <div
-                  className={`p-4 rounded-lg transition-colors duration-300`}
-                >
-                  <div className='flex flex-row items-start md:items-center gap-2'>
-                    {currentStep.isPouring ? (
-                      <Droplet className='text-white' />
-                    ) : currentStep.isStirring ? (
-                      <RotateCcw className='text-amber-500' />
-                    ) : currentStep.isWaiting ? (
-                      <Timer className='text-gray-500' />
-                    ) : (
-                      <Coffee className='text-coffee-coral' />
-                    )}
-                    <div className='text-sm sm:text-base font-regular'>
+                <div>
+                  <div className='flex flex-row items-start gap-5'>
+                    <div className='flex items-center justify-center'>
+                      {currentStep.isPouring ? (
+                        <Droplet className='text-coffee-navy dark:text-white' />
+                      ) : currentStep.isStirring ? (
+                        <RotateCcw className='text-coffee-coral dark:text-amber-400' />
+                      ) : currentStep.isWaiting ? (
+                        <Timer className='text-coffee-navy dark:text-white' />
+                      ) : (
+                        <Coffee className='text-coffee-coral dark:text-coffee-coral' />
+                      )}
+                    </div>
+                    <div className='text-sm sm:text-base font-regular flex justify-center flex-row'>
                       {currentStep.description}
                     </div>
                   </div>
@@ -345,11 +352,12 @@ export default function TimerPage({ params }: TimerPageProps) {
 
             {/* Next Step Preview */}
             {recipe.steps[currentStepIndex + 1] && (
-              <div className='border border-gray-200 dark:border-gray-700 p-4 rounded-lg flex items-center gap-2 text-xs sm:text-sm'>
-                <FastForward className='h-8 w-8' />
-                {/* <Droplet className='h-20 w-20 md:h-8 md:w-8 mr-2 text-white' /> */}
+              <div className='flex flex-row items-center gap-2 text-xs sm:text-sm'>
+                <div>
+                  <FastForward className='text-coffee-navy dark:text-white' />
+                </div>
                 <div className='font-medium'>
-                  Next: {recipe.steps[currentStepIndex + 1].name}
+                  Next Step: {recipe.steps[currentStepIndex + 1].name}
                 </div>
               </div>
             )}
@@ -377,11 +385,6 @@ export default function TimerPage({ params }: TimerPageProps) {
                 </div>
               )}
           </CardContent>
-          <CardFooter>
-            <Button variant='outline' onClick={goBack} className='w-full'>
-              Back to Recipe Form
-            </Button>
-          </CardFooter>
         </Card>
       </div>
     </Container>
