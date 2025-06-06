@@ -107,10 +107,12 @@ export default function RecipesPage() {
       ) : (
         <div className='grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
           {recipes.map((recipe) => (
-            <Card 
-              key={recipe.id} 
-              className='h-full flex flex-col cursor-pointer hover:shadow-md transition-shadow'
-              onClick={() => router.push(`/brewing-assistant/timer/${recipe.id}`)}
+            <Card
+              key={recipe.id}
+              className='h-full flex flex-col cursor-pointer hover:shadow-md transition-shadow bg-white dark:bg-coffee-navy-dark'
+              onClick={() =>
+                router.push(`/brewing-assistant/timer/${recipe.id}`)
+              }
             >
               <CardHeader className='pb-2'>
                 <CardTitle className='text-xl line-clamp-1'>
@@ -127,21 +129,21 @@ export default function RecipesPage() {
               </CardHeader>
               <CardContent className='flex-1'>
                 <div className='space-y-3'>
-                  <div className='flex items-center justify-between p-3 bg-muted/50 rounded-lg'>
+                  <div className='flex items-center justify-between p-3 bg-muted/50 dark:bg-coffee-coral/20 rounded-lg'>
                     <div className='flex items-center space-x-2'>
                       <Coffee className='h-4 w-4 text-muted-foreground' />
                       <span className='text-sm'>Coffee</span>
                     </div>
                     <span className='font-medium'>{recipe.coffeeAmount}g</span>
                   </div>
-                  <div className='flex items-center justify-between p-3 bg-muted/50 rounded-lg'>
+                  <div className='flex items-center justify-between p-3 bg-muted/50 dark:bg-coffee-coral/20 rounded-lg'>
                     <div className='flex items-center space-x-2'>
                       <Droplet className='h-4 w-4 text-muted-foreground' />
                       <span className='text-sm'>Water</span>
                     </div>
                     <span className='font-medium'>{recipe.waterAmount}ml</span>
                   </div>
-                  <div className='flex items-center justify-between p-3 bg-muted/50 rounded-lg'>
+                  <div className='flex items-center justify-between p-3 bg-muted/50 dark:bg-coffee-coral/20 rounded-lg'>
                     <div className='flex items-center space-x-2'>
                       <TimerIcon className='h-4 w-4 text-muted-foreground' />
                       <span className='text-sm'>Temp</span>
