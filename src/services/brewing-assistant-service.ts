@@ -110,7 +110,7 @@ const getSavedRecipes = (): BrewingRecipe[] => {
   if (!storedData) return [];
 
   try {
-    return JSON.parse(storedData);
+    return JSON.parse(storedData).reverse();
   } catch (error) {
     console.error('Error parsing brewing recipes data:', error);
     return [];

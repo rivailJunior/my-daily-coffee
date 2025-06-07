@@ -176,7 +176,11 @@ export default function TimerPage({ params }: TimerPageProps) {
         <div className='text-xl sm:text-2xl font-bold text-coffee-navy dark:text-coffee-coral '>
           Brewing Timer
         </div>
-        <Button variant='outline' onClick={goBack}>
+        <Button
+          variant='outline'
+          onClick={goBack}
+          className='bg-coffee-coral text-white dark:bg-coffee-navy-dark'
+        >
           Back to Recipe Form
         </Button>
       </div>
@@ -188,7 +192,7 @@ export default function TimerPage({ params }: TimerPageProps) {
           onOpenChange={setIsRecipeDetailsOpen}
           className='w-full'
         >
-          <Card className='w-full'>
+          <Card className='w-full bg-white dark:bg-coffee-navy-dark'>
             <CollapsibleTrigger asChild className='mb-2'>
               <CardHeader className='flex flex-row items-center justify-between cursor-pointer rounded-t-lg transition-colors'>
                 <CardTitle className='flex items-center capitalize'>
@@ -254,7 +258,7 @@ export default function TimerPage({ params }: TimerPageProps) {
 
         {/* Timer Display */}
 
-        <Card className='w-full'>
+        <Card className='w-full bg-white dark:bg-coffee-navy-dark'>
           <CardHeader>
             <div className='flex justify-between items-center'>
               <CardTitle>Brewing Timer</CardTitle>

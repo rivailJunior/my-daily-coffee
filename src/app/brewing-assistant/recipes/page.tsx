@@ -17,14 +17,15 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import dayjs from 'dayjs';
 import { Container } from '@/components/container';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
+dayjs.extend(relativeTime);
 
 export default function RecipesPage() {
   const router = useRouter();
-  const { toast } = useToast();
   const {
     data: recipes = [],
     isLoading,
@@ -106,7 +107,7 @@ export default function RecipesPage() {
         </div>
       ) : (
         <div className='grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
-          {recipes.map((recipe) => (
+          {recipes.reverse().map((recipe) => (
             <Card
               key={recipe.id}
               className='h-full flex flex-col cursor-pointer hover:shadow-md transition-shadow bg-white dark:bg-coffee-navy-dark'
@@ -114,17 +115,13 @@ export default function RecipesPage() {
                 router.push(`/brewing-assistant/timer/${recipe.id}`)
               }
             >
-              <CardHeader className='pb-2'>
-                <CardTitle className='text-xl line-clamp-1'>
+              <CardHeader className='py-4 '>
+                <CardTitle className='text-xl line-clamp-1 capitalize'>
                   {recipe.name || 'Unnamed Recipe'}
                 </CardTitle>
-                <CardDescription className='line-clamp-1'>
-                  {recipe.beanName || 'No bean name'}
-                  {recipe.roastProfile && (
-                    <Badge variant='outline' className='ml-2'>
-                      {recipe.roastProfile}
-                    </Badge>
-                  )}
+                <CardDescription className='line-clamp-1 capitalize'>
+                  Variety - {recipe.beanName || 'No bean name'} | Roast -{' '}
+                  {recipe.roastProfile || 'No roast profile'}
                 </CardDescription>
               </CardHeader>
               <CardContent className='flex-1'>
@@ -156,7 +153,7 @@ export default function RecipesPage() {
               </CardContent>
               <CardFooter className='flex justify-between items-center pt-4 border-t'>
                 <span className='text-xs text-muted-foreground'>
-                  Updated {dayjs(recipe.updatedAt).format('DD/MM/YYYY HH:mm')}
+                  {dayjs().from(recipe.updatedAt, true)} ago
                 </span>
                 <div className='flex space-x-2'>
                   <Button
