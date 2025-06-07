@@ -53,6 +53,8 @@ export function useCountdown({ steps }: useCountdownProps): useCountdownReturn {
     };
 
   const start = () => {
+    setCurrentStepIndex(0);
+    setTimeRemaining(steps[0]?.time);
     setIsRunning(true);
   };
 
