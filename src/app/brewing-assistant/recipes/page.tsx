@@ -21,6 +21,7 @@ import { useToast } from '@/hooks/use-toast';
 import dayjs from 'dayjs';
 import { Container } from '@/components/container';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { RecipeCard } from '@/components/recipes/recipe-card';
 
 dayjs.extend(relativeTime);
 
@@ -108,77 +109,7 @@ export default function RecipesPage() {
       ) : (
         <div className='grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
           {recipes.reverse().map((recipe) => (
-            <Card
-              key={recipe.id}
-              className='h-full flex flex-col cursor-pointer hover:shadow-md transition-shadow bg-white dark:bg-coffee-navy-dark'
-              onClick={() =>
-                router.push(`/brewing-assistant/timer/${recipe.id}`)
-              }
-            >
-              <CardHeader className='py-4 '>
-                <CardTitle className='text-xl line-clamp-1 capitalize'>
-                  {recipe.name || 'Unnamed Recipe'}
-                </CardTitle>
-                <CardDescription className='line-clamp-1 capitalize'>
-                  Variety - {recipe.beanName || 'No bean name'} | Roast -{' '}
-                  {recipe.roastProfile || 'No roast profile'}
-                </CardDescription>
-              </CardHeader>
-              <CardContent className='flex-1'>
-                <div className='space-y-3'>
-                  <div className='flex items-center justify-between p-3 bg-muted/50 dark:bg-coffee-coral/20 rounded-lg'>
-                    <div className='flex items-center space-x-2'>
-                      <Coffee className='h-4 w-4 text-muted-foreground' />
-                      <span className='text-sm'>Coffee</span>
-                    </div>
-                    <span className='font-medium'>{recipe.coffeeAmount}g</span>
-                  </div>
-                  <div className='flex items-center justify-between p-3 bg-muted/50 dark:bg-coffee-coral/20 rounded-lg'>
-                    <div className='flex items-center space-x-2'>
-                      <Droplet className='h-4 w-4 text-muted-foreground' />
-                      <span className='text-sm'>Water</span>
-                    </div>
-                    <span className='font-medium'>{recipe.waterAmount}ml</span>
-                  </div>
-                  <div className='flex items-center justify-between p-3 bg-muted/50 dark:bg-coffee-coral/20 rounded-lg'>
-                    <div className='flex items-center space-x-2'>
-                      <TimerIcon className='h-4 w-4 text-muted-foreground' />
-                      <span className='text-sm'>Temp</span>
-                    </div>
-                    <span className='font-medium'>
-                      {recipe.waterTemperature}°C
-                    </span>
-                  </div>
-                </div>
-              </CardContent>
-              <CardFooter className='flex justify-between items-center pt-4 border-t'>
-                <span className='text-xs text-muted-foreground'>
-                  {dayjs().from(recipe.updatedAt, true)} ago
-                </span>
-                <div className='flex space-x-2'>
-                  <Button
-                    variant='outline'
-                    size='sm'
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      router.push(`/brewing-assistant/recipes/${recipe.id}`);
-                    }}
-                  >
-                    View
-                  </Button>
-                  <Button
-                    size='sm'
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      router.push(`/brewing-assistant/timer/${recipe.id}`);
-                    }}
-                  >
-                    <TimerIcon className='mr-2 h-4 w-4' />
-                    Brew
-                  </Button>
-                </div>
-              </CardFooter>
-            </Card>
+            <RecipeCard key={recipe.id} recipe={recipe} />
           ))}
         </div>
       )}
