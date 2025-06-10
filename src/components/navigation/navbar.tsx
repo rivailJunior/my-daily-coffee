@@ -3,13 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Coffee, Home, LifeBuoy } from 'lucide-react';
+import { BeanIcon, Blend, Coffee, Home, LifeBuoy } from 'lucide-react';
 
 const navItems = [
   { name: 'Home', href: '/' },
   { name: 'Grinders', href: '/grinders' },
-  { name: 'Brewing Assistant', href: '/brewing-assistant' },
   { name: 'Drippers', href: '/manual-brewing-methods' },
+  { name: 'Brew Assistant (IA)', href: '/brewing-assistant' },
 ];
 
 export function Navbar() {
@@ -35,27 +35,8 @@ export function Navbar() {
               )}
             >
               {item.name === 'Home' && <Home />}
-              {item.name === 'Grinders' && (
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  width='24'
-                  height='24'
-                  viewBox='0 0 24 24'
-                  fill='none'
-                  stroke='currentColor'
-                  strokeWidth='2'
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  className='size-5 mb-1'
-                >
-                  <path d='M5 11h14v8a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z'></path>
-                  <path d='M19 11V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v4'></path>
-                  <path d='M12 19v-8'></path>
-                  <path d='M8 3v4'></path>
-                  <path d='M16 3v4'></path>
-                </svg>
-              )}
-              {item.name === 'Brewing Assistant' && <Coffee />}
+              {item.name === 'Grinders' && <Blend />}
+              {item.name === 'Brew Assistant (IA)' && <Coffee />}
               {item.name === 'Drippers' && <LifeBuoy />}
               <span className='text-xs'>{item.name}</span>
             </Link>

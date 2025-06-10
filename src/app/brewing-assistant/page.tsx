@@ -44,7 +44,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Loader2 } from 'lucide-react';
+import { Coffee, List, Loader2, Plus } from 'lucide-react';
 import { Container } from '@/components/container';
 
 // Form schema validation
@@ -215,9 +215,17 @@ export default function BrewingAssistantPage() {
 
   return (
     <Container>
-      <h1 className='text-2xl font-bold text-coffee-navy dark:text-coffee-coral mb-6'>
-        Brewing Assistant
-      </h1>
+      <div className='flex items-center justify-between mb-6'>
+        <h1 className='text-2xl font-bold text-coffee-navy dark:text-coffee-coral'>
+          Brewing Assistant
+        </h1>
+        <div>
+          <Button onClick={() => router.push('/brewing-assistant/recipes')}>
+            <List />
+            Recipes
+          </Button>
+        </div>
+      </div>
 
       <Card className='w-full mx-auto bg-white dark:bg-coffee-navy border-coffee-navy/30 dark:border-coffee-navy'>
         <CardHeader>

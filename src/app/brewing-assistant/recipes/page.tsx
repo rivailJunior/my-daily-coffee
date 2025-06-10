@@ -11,19 +11,12 @@ import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
 } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useToast } from '@/hooks/use-toast';
-import dayjs from 'dayjs';
 import { Container } from '@/components/container';
-import relativeTime from 'dayjs/plugin/relativeTime';
 import { RecipeCard } from '@/components/recipes/recipe-card';
-
-dayjs.extend(relativeTime);
 
 export default function RecipesPage() {
   const router = useRouter();
@@ -89,7 +82,7 @@ export default function RecipesPage() {
       <div className='flex justify-between items-center mb-8'>
         <h1 className='text-3xl font-bold'>My Brewing Recipes</h1>
         <Button asChild>
-          <Link href='/brewing-assistant/recipes/new'>
+          <Link href='/brewing-assistant/'>
             <Plus className='mr-2 h-4 w-4' />
             New Recipe
           </Link>
