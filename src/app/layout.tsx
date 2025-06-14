@@ -7,6 +7,7 @@ import { AuthProvider } from '@/providers/auth-provider';
 import { ThemeSwitcher } from '@/components/theme-switcher';
 import { ConditionalAuthStatus } from '@/components/auth/conditional-auth-status';
 import { ProtectedNavbar } from '@/components/navigation/protected-navbar';
+import { Header } from '@/components/navigation/header';
 
 const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
@@ -47,11 +48,12 @@ export default function RootLayout({
 
               <div className='relative z-10 min-h-screen flex flex-col'>
                 <header className='fixed top-0 right-0 p-4 z-50 flex items-center gap-4'>
-                  <ConditionalAuthStatus />
+                  {/* <ConditionalAuthStatus /> */}
+                  <Header />
                   <ThemeSwitcher />
                 </header>
                 <main className='flex-1 pt-16 pb-20'>{children}</main>
-                <ProtectedNavbar />
+                {/* <ProtectedNavbar /> */}
               </div>
             </AuthProvider>
           </QueryProvider>

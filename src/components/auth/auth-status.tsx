@@ -8,7 +8,7 @@ import { signIn } from 'next-auth/react'
 import { useAuth } from '@/contexts/AuthContext'
 
 export function AuthStatus() {
-  const { isAuthenticated, isLoading, user } = useAuth()
+  const { isAuthenticated, isLoading, user } = useAuth();
   
   // Show loading state while authentication status is being fetched
   if (isLoading) {
