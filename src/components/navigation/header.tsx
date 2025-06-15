@@ -62,7 +62,9 @@ export function Header() {
                     href={item.href}
                     className={cn(
                       'text-sm font-medium transition-colors hover:text-primary',
-                      isActive ? 'text-primary' : 'text-foreground/80 hover:text-foreground'
+                      isActive
+                        ? 'text-primary'
+                        : 'text-foreground/80 hover:text-foreground'
                     )}
                   >
                     {item.name}
@@ -126,7 +128,7 @@ export function Header() {
             )}
             {!isLoginPage && (
               <div className='py-2 border-t border-border mt-2'>
-                <AuthStatus variant='mobile' />
+                <AuthStatus />
               </div>
             )}
           </div>
