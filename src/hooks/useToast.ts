@@ -53,7 +53,9 @@ interface State {
   toasts: ToasterToast[];
 }
 
+// Module-level state
 const toastTimeouts = new Map<string, ReturnType<typeof setTimeout>>();
+let memoryState: State = { toasts: [] };
 
 const addToRemoveQueue = (toastId: string) => {
   if (toastTimeouts.has(toastId)) {
@@ -128,8 +130,6 @@ export const reducer = (state: State, action: Action): State => {
 
 const listeners: Array<(state: State) => void> = [];
 
-let memoryState: State = { toasts: [] };
-
 function dispatch(action: Action) {
   memoryState = reducer(memoryState, action);
   listeners.forEach((listener) => {
@@ -188,4 +188,12 @@ function useToast() {
   };
 }
 
-export { useToast, toast };
+// Export for testing
+const __test__ = {
+  toastTimeouts,
+  memoryState,
+  genId,
+  reducer,
+};
+
+export { useToast, toast, __test__ };
