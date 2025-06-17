@@ -38,7 +38,7 @@ import {
 import { Container } from '@/components/container';
 import { Countdown } from '@/components/countdown';
 import { cn } from '@/lib/utils';
-import { Progress } from '@radix-ui/react-progress';
+import { formatTime } from '@/utils/formatTime';
 
 interface TimerPageProps {
   params: {
@@ -49,7 +49,6 @@ interface TimerPageProps {
 export default function TimerPage({ params }: TimerPageProps) {
   const router = useRouter();
   const { id } = params;
-  const [totalTimeElapsed, setTotalTimeElapsed] = useState(0);
   const [isRecipeDetailsOpen, setIsRecipeDetailsOpen] = useState(true);
 
   // Load recipe data
@@ -70,6 +69,8 @@ export default function TimerPage({ params }: TimerPageProps) {
     start: startTimer,
     pause: pauseTimer,
     reset: resetTimer,
+    calculateProgress,
+    totalTimeElapsed,
   } = useCountdown({
     steps: recipe?.steps || [],
   });
@@ -87,33 +88,6 @@ export default function TimerPage({ params }: TimerPageProps) {
     enabled: !!recipe?.grinderId,
   });
 
-  // Update total time elapsed when timer is running
-  useEffect(() => {
-    if (isTimerRunning) {
-      const timer = setInterval(() => {
-        setTotalTimeElapsed((prev) => prev + 1);
-      }, 1000);
-      return () => clearInterval(timer);
-    }
-  }, [isTimerRunning]);
-
-  // Format time as MM:SS
-  const formatTime = (seconds: number): string => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins.toString().padStart(2, '0')}:${secs
-      .toString()
-      .padStart(2, '0')}`;
-  };
-
-  // Calculate progress percentage
-  const calculateProgress = (): number => {
-    if (!recipe?.steps[currentStepIndex]?.time) return 0;
-    const currentStepTime = recipe.steps[currentStepIndex].time;
-    return ((currentStepTime - timeRemaining) / currentStepTime) * 100;
-  };
-
-  // Calculate total progress percentage
   const calculateTotalProgress = (): number => {
     if (!recipe || recipe.totalTime === 0) return 0;
     const totalProgress = (totalTimeElapsed / recipe.totalTime) * 100;
@@ -131,18 +105,6 @@ export default function TimerPage({ params }: TimerPageProps) {
       setIsRecipeDetailsOpen(false);
     }
   }, [isTimerRunning, startTimer, pauseTimer]);
-
-  // Reset timer
-  const handleResetTimer = useCallback(() => {
-    resetTimer();
-    setTotalTimeElapsed(0);
-
-    // Reset to first step if recipe exists
-    if (recipe?.steps?.length) {
-      // Force re-render with initial values
-      resetTimer();
-    }
-  }, [resetTimer, recipe]);
 
   // Go back to form
   const goBack = () => {

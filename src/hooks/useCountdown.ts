@@ -11,12 +11,22 @@ type useCountdownReturn = {
   start: () => void;
   pause: () => void;
   reset: () => void;
+  calculateProgress: () => number;
+  totalTimeElapsed: number;
 };
 
 export function useCountdown({ steps }: useCountdownProps): useCountdownReturn {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState(steps?.[0]?.time || 0);
   const [isRunning, setIsRunning] = useState(false);
+  const [totalTimeElapsed, setTotalTimeElapsed] = useState(0);
+
+  useEffect(() => {
+    if (steps?.length) {
+      setCurrentStepIndex(0);
+      setTimeRemaining(steps[0]?.time);
+    }
+  }, [steps]);
 
   useEffect(() => {
     let timerId: NodeJS.Timeout | null = null;
@@ -42,6 +52,15 @@ export function useCountdown({ steps }: useCountdownProps): useCountdownReturn {
     };
   }, [isRunning, timeRemaining, currentStepIndex, steps]);
 
+  useEffect(() => {
+    if (isRunning) {
+      const timer = setInterval(() => {
+        setTotalTimeElapsed((prev) => prev + 1);
+      }, 1000);
+      return () => clearInterval(timer);
+    }
+  }, [isRunning]);
+
   if (!steps.length)
     return {
       currentStepIndex: 0,
@@ -50,6 +69,8 @@ export function useCountdown({ steps }: useCountdownProps): useCountdownReturn {
       start: () => {},
       pause: () => {},
       reset: () => {},
+      calculateProgress: () => 0,
+      totalTimeElapsed: 0,
     };
 
   const start = () => {
@@ -65,7 +86,14 @@ export function useCountdown({ steps }: useCountdownProps): useCountdownReturn {
   const reset = () => {
     setCurrentStepIndex(0);
     setTimeRemaining(steps[0]?.time);
+    setTotalTimeElapsed(0);
     setIsRunning(false);
+  };
+
+  const calculateProgress = (): number => {
+    if (!steps[currentStepIndex]?.time) return 0;
+    const currentStepTime = steps[currentStepIndex].time;
+    return ((currentStepTime - timeRemaining) / currentStepTime) * 100;
   };
 
   return {
@@ -75,5 +103,7 @@ export function useCountdown({ steps }: useCountdownProps): useCountdownReturn {
     start,
     pause,
     reset,
+    calculateProgress,
+    totalTimeElapsed,
   };
 }
