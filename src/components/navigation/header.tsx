@@ -13,6 +13,7 @@ const navigation = [
   { name: 'Home', href: '/' },
   { name: 'Grinders', href: '/grinders' },
   { name: 'Drippers', href: '/manual-brewing-methods' },
+  { name: 'Brew Assistant', href: '/brewing-assistant' },
 ];
 
 export function Header() {
@@ -42,9 +43,7 @@ export function Header() {
         {/* Logo */}
         <Link href='/' className='flex items-center space-x-2'>
           <Coffee className='h-6 w-6 text-primary' />
-          <span className='text-xl font-bold text-foreground'>
-            MyDailyCoffee
-          </span>
+          <span className='text-xl font-regular'>MyDailyCoffee</span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -71,14 +70,6 @@ export function Header() {
                   </Link>
                 );
               })}
-              <Button
-                asChild
-                variant='ghost'
-                className='text-foreground/80 hover:text-foreground hover:bg-transparent'
-              >
-                <Link href='/brewing-assistant'>Brew Assistant</Link>
-              </Button>
-              <div className='h-6 w-px bg-border' />
             </>
           )}
           {!isLoginPage && <AuthStatus />}
@@ -115,19 +106,10 @@ export function Header() {
                     {item.name}
                   </Link>
                 ))}
-                <div className='pt-2 border-t border-gray-200'>
-                  <Link
-                    href='/brewing-assistant'
-                    className='block px-3 py-2 rounded-md text-base font-medium text-foreground/80 hover:bg-accent/50 hover:text-foreground'
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    Brew Assistant
-                  </Link>
-                </div>
               </>
             )}
             {!isLoginPage && (
-              <div className='py-2 border-t border-border mt-2'>
+              <div className='border-t border-border py-4'>
                 <AuthStatus />
               </div>
             )}

@@ -18,25 +18,25 @@ export function AuthStatus() {
   // Show user info and logout button when authenticated
   if (isAuthenticated && user) {
     return (
-      <div className="flex items-center gap-4">
-        <div className="hidden md:flex items-center gap-2">
-          <User className="h-4 w-4" />
-          <span className="text-sm font-medium">{user.email}</span>
+      <div className='flex items-center gap-4'>
+        <div className='hidden md:flex items-center gap-2'>
+          <User className='h-4 w-4' />
+          <span className='text-sm font-medium capitalize'>{user.name}</span>
         </div>
-        <LogoutButton variant="outline" size="sm" />
+        <LogoutButton
+          variant='outline'
+          size='sm'
+          className='w-full md:w-auto lg:w-auto capitalize'
+        />
       </div>
-    )
+    );
   }
 
   // Show sign in button when not authenticated
   return (
-    <Button 
-      variant="outline" 
-      size="sm"
-      onClick={() => signIn()}
-    >
-      <LogIn className="mr-2 h-4 w-4" />
+    <Button variant='outline' size='sm' onClick={() => signIn()}>
+      <LogIn className='mr-2 h-4 w-4 capitalize' />
       Sign in
     </Button>
-  )
+  );
 }

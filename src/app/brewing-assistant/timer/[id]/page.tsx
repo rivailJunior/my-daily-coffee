@@ -13,8 +13,6 @@ import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
@@ -22,16 +20,15 @@ import {
 import {
   AlertCircle,
   CheckCircle,
+  Clock,
   Coffee,
   Droplet,
   FastForward,
-  GlassWater,
   Pause,
+  Percent,
   Play,
-  PoundSterling,
   RotateCcw,
   Timer,
-  X,
 } from 'lucide-react';
 import {
   Collapsible,
@@ -40,6 +37,8 @@ import {
 } from '@/components/ui/collapsible';
 import { Container } from '@/components/container';
 import { Countdown } from '@/components/countdown';
+import { cn } from '@/lib/utils';
+import { Progress } from '@radix-ui/react-progress';
 
 interface TimerPageProps {
   params: {
@@ -117,7 +116,9 @@ export default function TimerPage({ params }: TimerPageProps) {
   // Calculate total progress percentage
   const calculateTotalProgress = (): number => {
     if (!recipe || recipe.totalTime === 0) return 0;
-    return (totalTimeElapsed / recipe.totalTime) * 100;
+    const totalProgress = (totalTimeElapsed / recipe.totalTime) * 100;
+    if (totalProgress > 100) return 100;
+    return totalProgress;
   };
 
   // Toggle timer
@@ -139,7 +140,6 @@ export default function TimerPage({ params }: TimerPageProps) {
     // Reset to first step if recipe exists
     if (recipe?.steps?.length) {
       // Force re-render with initial values
-      const firstStepTime = recipe.steps[0].time;
       resetTimer();
     }
   }, [resetTimer, recipe]);
@@ -260,25 +260,26 @@ export default function TimerPage({ params }: TimerPageProps) {
 
         <Card className='w-full bg-white dark:bg-coffee-navy-dark'>
           <CardHeader>
-            <div className='flex justify-between items-center'>
-              <CardTitle>Brewing Timer</CardTitle>
-              <div className='text-xs sm:text-sm text-gray-500'>
-                Step {currentStepIndex + 1} of {recipe.steps.length}
+            <div className='flex flex-row gap-2'>
+              <div className='flex flex-row gap-2 items-center'>
+                <Clock className='h-4 w-4' />
+                Total Time: {formatTime(recipe.totalTime)}
+              </div>
+              <div className='flex flex-row gap-2 items-center'>
+                <Timer className='h-4 w-4' />
+                Elapsed Time: {formatTime(totalTimeElapsed)}
+              </div>
+              <div className='flex flex-row gap-2 items-center'>
+                <Percent className='h-4 w-4' />
+                Total Progress: {Math.round(calculateTotalProgress())}
               </div>
             </div>
-            <CardDescription>
-              Total Time: {formatTime(recipe.totalTime)} • Elapsed:{' '}
-              {formatTime(totalTimeElapsed)}
-            </CardDescription>
           </CardHeader>
-          <CardContent className='space-y-6'>
+          <CardContent className='space-y-2'>
             {/* Progress information */}
-            <div className='flex justify-between text-xs sm:text-sm px-1 mb-2'>
-              <span>
+            <div className='flex justify-between text-xs sm:text-sm '>
+              <span className='text-white'>
                 Step {currentStepIndex + 1} of {recipe.steps.length}
-              </span>
-              <span>
-                Total Progress: {Math.round(calculateTotalProgress())}%
               </span>
             </div>
 
@@ -292,16 +293,16 @@ export default function TimerPage({ params }: TimerPageProps) {
                   <div className='flex flex-row items-start gap-5'>
                     <div className='flex items-center justify-center'>
                       {currentStep.isPouring ? (
-                        <Droplet className='text-coffee-navy dark:text-white' />
+                        <Droplet className='text-green-500' />
                       ) : currentStep.isStirring ? (
-                        <RotateCcw className='text-coffee-coral dark:text-amber-400' />
+                        <RotateCcw className='text-green-500' />
                       ) : currentStep.isWaiting ? (
-                        <Timer className='text-coffee-navy dark:text-white' />
+                        <Timer className='text-green-500' />
                       ) : (
-                        <Coffee className='text-coffee-coral dark:text-coffee-coral' />
+                        <Coffee className='text-green-500' />
                       )}
                     </div>
-                    <div className='text-sm sm:text-base font-regular flex justify-center flex-row'>
+                    <div className='text-sm sm:text-base font-regular flex justify-center flex-row text-green-500'>
                       {currentStep.description}
                     </div>
                   </div>
@@ -312,8 +313,10 @@ export default function TimerPage({ params }: TimerPageProps) {
                       {/* Time display in center */}
                       <div className='absolute inset-0 flex items-center justify-center'>
                         <div className='text-2xl sm:text-3xl md:text-5xl font-bold font-mono'>
-                          {/* {formatTime(timeRemaining)} */}
-                          <Countdown seconds={timeRemaining} />
+                          <Countdown
+                            seconds={timeRemaining}
+                            formattedTime={formatTime(timeRemaining)}
+                          />
                         </div>
                       </div>
                     </div>
@@ -327,7 +330,12 @@ export default function TimerPage({ params }: TimerPageProps) {
                     <Button
                       variant={isTimerRunning ? 'outline' : 'default'}
                       size='lg'
-                      className='w-full sm:w-auto'
+                      className={cn(
+                        'w-full sm:w-auto hover:bg-gray-500 hover:text-white',
+                        isTimerRunning
+                          ? 'bg-green-500 text-white'
+                          : 'bg-green-500'
+                      )}
                       onClick={toggleTimer}
                     >
                       {isTimerRunning ? (
@@ -345,7 +353,10 @@ export default function TimerPage({ params }: TimerPageProps) {
                     <Button
                       variant='outline'
                       size='lg'
-                      className='w-full sm:w-auto'
+                      className={cn(
+                        'w-full sm:w-auto text-white hover:bg-gray-500 hover:text-white',
+                        isTimerRunning ? 'bg-red-400' : 'bg-red-400 '
+                      )}
                       onClick={resetTimer}
                     >
                       <RotateCcw className='mr-2 h-5 w-5' /> Reset
@@ -356,11 +367,11 @@ export default function TimerPage({ params }: TimerPageProps) {
 
             {/* Next Step Preview */}
             {recipe.steps[currentStepIndex + 1] && (
-              <div className='flex flex-row items-center gap-2 text-xs sm:text-sm'>
+              <div className='flex flex-row items-center gap-2 text-xs sm:text-sm pt-4'>
                 <div>
-                  <FastForward className='text-coffee-navy dark:text-white' />
+                  <FastForward className='text-yellow-500' />
                 </div>
-                <div className='font-medium'>
+                <div className='font-regular text-yellow-500'>
                   Next Step: {recipe.steps[currentStepIndex + 1].name}
                 </div>
               </div>
