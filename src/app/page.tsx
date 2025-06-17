@@ -20,6 +20,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { HomeCard } from '@/components/homeCard';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { useSession } from 'next-auth/react';
 
 dayjs.extend(relativeTime);
 
@@ -45,7 +46,7 @@ const HomeCards = [
 
 export default function Home() {
   const router = useRouter();
-
+  const { data: session } = useSession();
   const { data: recipes = [], isLoading } = useQuery({
     queryKey: ['brewing-recipes'],
     queryFn: () => getAllRecipes(),
@@ -75,11 +76,11 @@ export default function Home() {
         <div className='mb-8'>
           <div className='flex items-center justify-between mb-4'>
             <div>
-              <h1 className='text-2xl font-bold text-coffee-navy dark:text-coffee-white'>
-                My Daily Coffee
+              <h1 className='text-2xl font-bold text-coffee-navy dark:text-coffee-coral'>
+                Home
               </h1>
               <p className='text-coffee-navy/70 dark:text-coffee-white/70'>
-                Good evening, Coffee Lover
+                Good evening, {session?.user?.name ?? 'Coffee Lover'}!
               </p>
             </div>
           </div>

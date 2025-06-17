@@ -18,7 +18,7 @@ export function ManualBrewerCard({ brewer, onDelete }: ManualBrewerCardProps) {
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
   const handleEdit = () => {
-    router.push(`/manual-brewing/${brewer.id}/edit`);
+    router.push(`/manual-brewing-methods/${brewer.id}/edit`);
   };
 
   const handleDelete = async () => {

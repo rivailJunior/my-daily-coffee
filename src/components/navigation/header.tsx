@@ -76,13 +76,15 @@ export function Header() {
         </nav>
 
         {/* Mobile menu button */}
-        <button
-          type='button'
-          className='md:hidden p-2 rounded-md text-foreground/80 hover:text-foreground focus:outline-none hover:bg-accent/50'
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
-          <Menu className='h-6 w-6' />
-        </button>
+        {!isLoginPage && (
+          <button
+            type='button'
+            className='md:hidden p-2 rounded-md text-foreground/80 hover:text-foreground focus:outline-none hover:bg-accent/50'
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            <Menu className='h-6 w-6' />
+          </button>
+        )}
       </div>
 
       {/* Mobile menu */}

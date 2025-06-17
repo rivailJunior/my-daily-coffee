@@ -10,6 +10,7 @@
 - [*] Set up project management tools
 - [] Create database schema design
 - [ ] Design API endpoints
+- [x] Make Page Heading standard
 
 ## Design Tasks
 
@@ -44,16 +45,14 @@
 - [x] Build brewing method listing view
 - [x] Implement brewing method deletion with confirmation
 
-
 ### Brewing Assistant
 
-- [] Develop recipe recommendation algorithm
+- [x] Develop recipe recommendation algorithm
 - [x] Create brewing timer functionality
 - [x] Implement step-by-step brewing guide
-- [] Build pour guidance visualization
+- [x] Build pour guidance visualization
 - [] Develop real-time brewing graph
 - [] Implement brew completion and rating following sca rating
-
 
 ### Recipe Management
 
@@ -65,7 +64,6 @@
 - [ ] Implement recipe saving functionality
 - [ ] Build recipe listing and filtering
 - [ ] Add recipe search functionality
-
 
 ### Analytics & Insights
 

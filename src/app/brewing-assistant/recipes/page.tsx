@@ -80,7 +80,9 @@ export default function RecipesPage() {
   return (
     <Container>
       <div className='flex justify-between items-center mb-8'>
-        <h1 className='text-3xl font-bold'>My Brewing Recipes</h1>
+        <h1 className='text-2xl font-bold text-coffee-navy dark:text-coffee-coral'>
+          Brewing Recipes
+        </h1>
         <Button asChild>
           <Link href='/brewing-assistant/'>
             <Plus className='mr-2 h-4 w-4' />
