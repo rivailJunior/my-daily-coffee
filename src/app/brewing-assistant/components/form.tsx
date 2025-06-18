@@ -45,6 +45,7 @@ import {
 } from '@/components/ui/select';
 import { Coffee, List, Loader2, Plus } from 'lucide-react';
 import { Container } from '@/components/container';
+import { steps } from 'framer-motion';
 
 // Form schema validation
 const formSchema = z.object({
@@ -110,7 +111,18 @@ const formSchema = z.object({
     })
     .max(10, {
       message: 'Steps amount must be at most 10',
-    }),
+    })
+    .optional(),
+  steps: z
+    .array(
+      z.object({
+        time: z.coerce.number().min(1, { message: 'Time must be at least 1' }),
+        description: z
+          .string()
+          .min(2, { message: 'Description must be at least 2 characters' }),
+      })
+    )
+    .optional(),
   roastProfile: z.enum(['light', 'medium', 'medium-dark', 'dark'], {
     required_error: 'Please select a roast profile',
   }),
@@ -222,6 +234,7 @@ export function BrewingAssistantForm({
 
   // Handle form submission
   const onSubmit = (values: z.infer<typeof formSchema>) => {
+    console.log('values', values);
     const formData: BrewingAssistantFormData = {
       brewerId: values.brewerId,
       grinderId: values.grinderId,
@@ -243,7 +256,10 @@ export function BrewingAssistantForm({
           {heading || 'Brewing Assistant'}
         </h1>
         <div>
-          <Button onClick={() => router.push('/brewing-assistant/recipes')}>
+          <Button
+            onClick={() => router.push('/brewing-assistant/recipes')}
+            className='text-white'
+          >
             <List />
             Recipes
           </Button>
@@ -535,15 +551,35 @@ export function BrewingAssistantForm({
                         control={form.control}
                         name='stepsAmount'
                         render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>How many steps?</FormLabel>
+                          <FormItem className='w-full'>
+                            <FormLabel>
+                              Add more steps to your recipe?
+                            </FormLabel>
                             <div className='flex items-center gap-3'>
-                              <span className='font-semibold'>
-                                {field.value}
-                              </span>
+                              {field.value > 1 && (
+                                <>
+                                  <button
+                                    type='button'
+                                    className='px-3 py-1 bg-primary text-white rounded hover:bg-primary/90 transition w-full'
+                                    onClick={() =>
+                                      field.onChange(
+                                        Math.max(
+                                          1,
+                                          Number(field.value || 1) - 1
+                                        )
+                                      )
+                                    }
+                                  >
+                                    Remove Step
+                                  </button>
+                                  <span className='font-semibold'>
+                                    {field.value}
+                                  </span>
+                                </>
+                              )}
                               <button
                                 type='button'
-                                className='px-3 py-1 bg-primary text-white rounded hover:bg-primary/90 transition'
+                                className='px-3 py-1 bg-primary text-white rounded hover:bg-primary/90 transition w-full'
                                 onClick={() =>
                                   field.onChange(
                                     Math.max(1, Number(field.value || 1) + 1)
@@ -561,17 +597,47 @@ export function BrewingAssistantForm({
                   )}
                 </div>
                 {isManualRecipe && (
-                  <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+                  <div className='flex flex-col gap-4 border border-coffee-coral/70 p-4 rounded-md'>
                     {Array.from(
                       { length: form.watch('stepsAmount') },
                       (_, index) => (
-                        <div key={index} className='md:col-span-1'>
+                        <div key={index} className='flex flex-row gap-4 '>
                           <FormField
                             control={form.control}
-                            name={`step${index + 1}`}
+                            name={`steps.${index}.time`}
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel>Step {index + 1}</FormLabel>
+                                <FormLabel>Step {index + 1} Time</FormLabel>
+                                <FormControl>
+                                  <Input
+                                    type='text'
+                                    {...field}
+                                    onChange={(e) => {
+                                      // Only allow numeric input
+                                      const value = e.target.value.replace(
+                                        /[^0-9]/g,
+                                        ''
+                                      );
+                                      if (value !== e.target.value) {
+                                        e.target.value = value;
+                                      }
+                                      const numValue = parseInt(value, 10);
+                                      field.onChange(numValue || 0);
+                                    }}
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            control={form.control}
+                            name={`steps.${index}.description`}
+                            render={({ field }) => (
+                              <FormItem className='w-full'>
+                                <FormLabel>
+                                  Step {index + 1} Description
+                                </FormLabel>
                                 <FormControl>
                                   <Input type='text' {...field} />
                                 </FormControl>
@@ -585,7 +651,11 @@ export function BrewingAssistantForm({
                   </div>
                 )}
 
-                <Button type='submit' className='w-full' disabled={isLoading}>
+                <Button
+                  type='submit'
+                  className='w-full text-white'
+                  disabled={isLoading}
+                >
                   {mutation.isPending ? (
                     <>
                       <Loader2 className='mr-2 h-4 w-4 animate-spin' />
