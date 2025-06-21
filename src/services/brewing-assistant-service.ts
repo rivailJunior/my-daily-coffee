@@ -177,9 +177,17 @@ export const getRecipeById = (id: string): BrewingRecipe | undefined => {
 // Save a recipe
 export const saveRecipe = (recipe: BrewingRecipe): BrewingRecipe => {
   const recipes = getSavedRecipes();
-  const index = recipes.findIndex((r) => r.id === recipe.id);
-
-  if (index === -1) {
+  const idx = recipes.findIndex((r) => r.id === recipe.id);
+  if (idx !== -1) {
+    // Update existing recipe
+    const updatedRecipe = {
+      ...recipe,
+      updatedAt: new Date().toISOString(),
+    };
+    recipes[idx] = updatedRecipe;
+    saveRecipes(recipes);
+    return updatedRecipe;
+  } else {
     // New recipe
     const newRecipe = {
       ...recipe,
@@ -190,17 +198,58 @@ export const saveRecipe = (recipe: BrewingRecipe): BrewingRecipe => {
     recipes.push(newRecipe);
     saveRecipes(recipes);
     return newRecipe;
-  } else {
-    // Update existing recipe
-    const updatedRecipe = {
-      ...recipe,
-      updatedAt: new Date().toISOString(),
-    };
-    recipes[index] = updatedRecipe;
-    saveRecipes(recipes);
-    return updatedRecipe;
   }
 };
+
+// Create a manual recipe from form data (for manual-recipe form)
+export async function createManualRecipe(
+  formData: BrewingAssistantFormData & {
+    steps?: { time: number }[];
+  }
+): Promise<BrewingRecipe> {
+  const {
+    brewerId,
+    grinderId,
+    coffeeAmount,
+    waterAmount,
+    beanName,
+    roastProfile,
+    steps,
+  } = formData;
+  const id = uuidv4();
+  const createdAt = new Date().toISOString();
+  const updatedAt = createdAt;
+  const recipe: BrewingRecipe = {
+    id,
+    name: `${beanName} Manual Recipe`,
+    brewerId,
+    grinderId,
+    coffeeAmount,
+    waterAmount,
+    waterTemperature: 94, // Default or could use helper
+    grindSize: 7, // Default or could use helper
+    totalTime: steps?.reduce((sum, s) => sum + s.time, 0) || 0,
+    steps:
+      steps?.map((step, idx) => ({
+        id: uuidv4(),
+        name: `Step ${idx + 1}`,
+        description: `Step ${idx + 1}`,
+        time: step.time,
+        isPouring: false,
+      })) || [],
+    notes: '',
+    beanName,
+    roastProfile: roastProfile as any,
+    createdAt,
+    updatedAt,
+    stepsBeforePouring: [],
+  };
+
+  console.log('save recipe', { recipe });
+  saveRecipe(recipe);
+  return recipe;
+}
+
 
 // Delete a recipe
 export const deleteRecipe = (id: string): boolean => {
