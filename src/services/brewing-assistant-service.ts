@@ -244,6 +244,8 @@ export async function createManualRecipe(
     updatedAt,
     stepsBeforePouring: [],
   };
+
+  console.log('save recipe', { recipe });
   saveRecipe(recipe);
   return recipe;
 }

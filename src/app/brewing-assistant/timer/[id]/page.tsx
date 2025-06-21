@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { getRecipeById } from '@/services/brewing-assistant-service';
@@ -10,12 +10,7 @@ import { BrewingRecipe } from '@/types/brewingAssistant';
 import { useCountdown } from '@/hooks/useCountdown';
 
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 import {
   AlertCircle,
@@ -347,7 +342,7 @@ export default function TimerPage({ params }: TimerPageProps) {
             {/* Brewing Complete */}
             {currentStepIndex === recipe.steps.length - 1 &&
               timeRemaining === 0 && (
-                <div className='bg-green-50 dark:bg-green-900/20 p-6 rounded-lg text-center'>
+                <div className='bg-green-50 dark:bg-gray-900/20 p-6 rounded-lg text-center'>
                   <CheckCircle className='h-12 w-12 mx-auto mb-2 text-green-500' />
                   <h3 className='text-lg sm:text-xl font-bold mb-2'>
                     Brewing Complete!

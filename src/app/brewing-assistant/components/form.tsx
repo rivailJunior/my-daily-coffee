@@ -43,9 +43,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Coffee, List, Loader2, Plus } from 'lucide-react';
+import { Loader2, Plus } from 'lucide-react';
 import { Container } from '@/components/container';
-import { steps } from 'framer-motion';
 
 // Form schema validation
 const formSchema = z.object({
@@ -234,7 +233,6 @@ export function BrewingAssistantForm({
 
   // Handle form submission
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log('values', values);
     const formData: BrewingAssistantFormData = {
       brewerId: values.brewerId,
       grinderId: values.grinderId,
@@ -242,6 +240,7 @@ export function BrewingAssistantForm({
       waterAmount: values.waterAmount,
       beanName: values.beanName,
       roastProfile: values.roastProfile as any, // This cast should be fixed in the form schema
+      steps: values?.steps || [],
     };
 
     mutation.mutate(formData);
@@ -556,7 +555,7 @@ export function BrewingAssistantForm({
                               Add more steps to your recipe?
                             </FormLabel>
                             <div className='flex items-center gap-3'>
-                              {field.value > 1 && (
+                              {field?.value > 1 && (
                                 <>
                                   <button
                                     type='button'
