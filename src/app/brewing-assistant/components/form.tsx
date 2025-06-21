@@ -43,7 +43,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Loader2, Plus } from 'lucide-react';
+import { List, Loader2 } from 'lucide-react';
 import { Container } from '@/components/container';
 
 // Form schema validation

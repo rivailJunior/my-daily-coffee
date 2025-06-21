@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
@@ -104,7 +104,7 @@ export default function TimerPage({ params }: TimerPageProps) {
       // Close recipe details when timer starts
       setIsRecipeDetailsOpen(false);
     }
-  }, [isTimerRunning, startTimer, pauseTimer, resume]);
+  }, [isTimerRunning, startTimer, pauseTimer, resume, totalTimeElapsed]);
 
   // Go back to form
   const goBack = () => {
