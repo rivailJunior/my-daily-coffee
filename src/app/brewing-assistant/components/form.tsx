@@ -555,7 +555,7 @@ export function BrewingAssistantForm({
                               Add more steps to your recipe?
                             </FormLabel>
                             <div className='flex items-center gap-3'>
-                              {field?.value > 1 && (
+                              {field?.value && field.value > 1 && (
                                 <>
                                   <button
                                     type='button'
@@ -598,7 +598,7 @@ export function BrewingAssistantForm({
                 {isManualRecipe && (
                   <div className='flex flex-col gap-4 border border-coffee-coral/70 p-4 rounded-md'>
                     {Array.from(
-                      { length: form.watch('stepsAmount') },
+                      { length: form.watch('stepsAmount') ?? 1 },
                       (_, index) => (
                         <div key={index} className='flex flex-row gap-4 '>
                           <FormField
