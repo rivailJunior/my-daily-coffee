@@ -9,6 +9,7 @@ type useCountdownReturn = {
   timeRemaining: number;
   isRunning: boolean;
   start: () => void;
+  resume: () => void;
   pause: () => void;
   reset: () => void;
   calculateProgress: () => number;
@@ -71,11 +72,16 @@ export function useCountdown({ steps }: useCountdownProps): useCountdownReturn {
       reset: () => {},
       calculateProgress: () => 0,
       totalTimeElapsed: 0,
+      resume: () => {},
     };
 
   const start = () => {
     setCurrentStepIndex(0);
     setTimeRemaining(steps[0]?.time);
+    setIsRunning(true);
+  };
+
+  const resume = () => {
     setIsRunning(true);
   };
 
@@ -101,6 +107,7 @@ export function useCountdown({ steps }: useCountdownProps): useCountdownReturn {
     timeRemaining,
     isRunning,
     start,
+    resume,
     pause,
     reset,
     calculateProgress,

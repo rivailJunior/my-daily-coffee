@@ -71,6 +71,7 @@ export default function TimerPage({ params }: TimerPageProps) {
     reset: resetTimer,
     calculateProgress,
     totalTimeElapsed,
+    resume,
   } = useCountdown({
     steps: recipe?.steps || [],
   });
@@ -100,11 +101,15 @@ export default function TimerPage({ params }: TimerPageProps) {
     if (isTimerRunning) {
       pauseTimer();
     } else {
-      startTimer();
+      if (totalTimeElapsed > 0) {
+        resume();
+      } else {
+        startTimer();
+      }
       // Close recipe details when timer starts
       setIsRecipeDetailsOpen(false);
     }
-  }, [isTimerRunning, startTimer, pauseTimer]);
+  }, [isTimerRunning, startTimer, pauseTimer, resume]);
 
   // Go back to form
   const goBack = () => {
