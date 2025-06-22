@@ -36,6 +36,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { ComboBoxResponsive } from '@/components/combobox';
 import {
   Select,
   SelectContent,
@@ -292,23 +293,26 @@ export function BrewingAssistantForm({
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Brewing Method</FormLabel>
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                        >
-                          <FormControl>
-                            <SelectTrigger className='bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-coffee-coral/50 dark:focus:ring-coffee-coral/70'>
-                              <SelectValue placeholder='Select brewing method' />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent className='bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600'>
-                            {brewers.map((brewer: ManualBrewer) => (
-                              <SelectItem key={brewer.id} value={brewer.id}>
-                                {brewer.name} {brewer.brand} {brewer.model}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                        <ComboBoxResponsive
+                          label='Select brewing method'
+                          items={brewers.map((brewer: ManualBrewer) => ({
+                            value: brewer.id,
+                            label:
+                              `${brewer.name} ${brewer.brand} ${brewer.model}`.trim(),
+                          }))}
+                          selectedItem={
+                            brewers
+                              .map((brewer: ManualBrewer) => ({
+                                value: brewer.id,
+                                label:
+                                  `${brewer.name} ${brewer.brand} ${brewer.model}`.trim(),
+                              }))
+                              .find((b) => b.value === field.value) || null
+                          }
+                          setSelectedItem={(item) =>
+                            field.onChange(item ? item.value : null)
+                          }
+                        />
                         <FormDescription>
                           Choose the brewing method you'll be using
                         </FormDescription>
