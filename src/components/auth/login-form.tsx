@@ -28,17 +28,8 @@ export function LoginForm() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
     >
-      <div className='bg-white/30 dark:bg-coffee-navy/30 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden border border-gray-700/50 dark:border-coffee-navy/30 transition-colors duration-300'>
+      <div className='transition-colors duration-300'>
         <div className='p-8'>
-          <div className='text-center mb-8'>
-            <h2 className='text-2xl font-light text-gray-900 dark:text-white mb-2'>
-              Welcome!
-            </h2>
-            <p className='text-gray-700/80 dark:text-white/80'>
-              Sign in to continue to your coffee assistant IA.
-            </p>
-          </div>
-
           <Button
             type='button'
             variant='outline'
