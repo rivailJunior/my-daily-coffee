@@ -45,14 +45,12 @@ export default function LoginPage() {
           <h2 className='text-3xl font-bold text-coffee-900 dark:text-white mb-2'>
             Sign In
           </h2>
-          <p className='text-base text-gray-600 dark:text-gray-300 mb-2 font-light'>
-            Welcome back! Please login to your account.
+          <p className='text-base text-gray-600 dark:text-gray-300  font-light'>
+            Please login to your account.
           </p>
         </header>
 
-        <div className='mb-6'>
-          <LoginForm />
-        </div>
+        <LoginForm />
       </section>
     </main>
   );

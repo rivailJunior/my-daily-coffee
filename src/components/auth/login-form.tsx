@@ -29,7 +29,7 @@ export function LoginForm() {
       transition={{ duration: 0.4 }}
     >
       <div className='transition-colors duration-300'>
-        <div className='p-8'>
+        <div className='p-2'>
           <Button
             type='button'
             variant='outline'
@@ -109,7 +109,10 @@ export function LoginForm() {
           </Button>
 
           <div className='mt-6 text-center text-sm text-gray-600/60 dark:text-gray-400/40'>
-            <p>We&apos;ll never post without your permission</p>
+            <p>
+              We won&apos;t save your data. We don&apos;t have money to pay for
+              servers.
+            </p>
           </div>
         </div>
       </div>
