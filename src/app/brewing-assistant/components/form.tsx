@@ -37,104 +37,9 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { ComboBoxResponsive } from '@/components/combobox';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { List, Loader2 } from 'lucide-react';
 import { Container } from '@/components/container';
-
-// Form schema validation
-const formSchema = z.object({
-  brewerId: z.string({
-    required_error: 'Please select a brewing method',
-  }),
-  grinderId: z.string({
-    required_error: 'Please select a grinder',
-  }),
-  coffeeAmount: z.coerce
-    .number({
-      required_error: 'Please enter coffee amount',
-    })
-    .min(5, {
-      message: 'Coffee amount must be at least 5g',
-    })
-    .max(100, {
-      message: 'Coffee amount must be at most 100g',
-    }),
-  waterAmount: z.coerce
-    .number({
-      required_error: 'Please enter water amount',
-    })
-    .min(50, {
-      message: 'Water amount must be at least 50ml',
-    })
-    .max(1500, {
-      message: 'Water amount must be at most 1500ml',
-    }),
-  ratioCoffee: z.coerce
-    .number({
-      required_error: 'Please enter coffee ratio',
-    })
-    .min(1, {
-      message: 'Coffee ratio must be at least 1',
-    })
-    .max(100, {
-      message: 'Coffee ratio must be at most 100',
-    }),
-  ratioWater: z.coerce
-    .number({
-      required_error: 'Please enter water ratio',
-    })
-    .min(1, {
-      message: 'Water ratio must be at least 1',
-    })
-    .max(100, {
-      message: 'Water ratio must be at most 100',
-    }),
-  beanName: z
-    .string({
-      required_error: 'Please enter the bean name',
-    })
-    .min(2, {
-      message: 'Bean name must be at least 2 characters',
-    }),
-  stepsAmount: z.coerce
-    .number({
-      required_error: 'Please enter steps amount',
-    })
-    .min(1, {
-      message: 'Steps amount must be at least 1',
-    })
-    .max(10, {
-      message: 'Steps amount must be at most 10',
-    })
-    .optional(),
-  steps: z
-    .array(
-      z.object({
-        time: z.coerce.number().min(1, { message: 'Time must be at least 1' }),
-        description: z
-          .string()
-          .min(2, { message: 'Description must be at least 2 characters' }),
-      })
-    )
-    .optional(),
-  roastProfile: z.enum(['light', 'medium', 'medium-dark', 'dark'], {
-    required_error: 'Please select a roast profile',
-  }),
-});
-
-type BrewAssistantProps = {
-  handleFormSubmit: (
-    formData: BrewingAssistantFormData & { steps?: { time: number }[] }
-  ) => Promise<BrewingRecipe>;
-  heading: string;
-  isManualRecipe?: boolean;
-};
+import { BrewingFormSchema, BrewAssistantProps } from '@/types/brewForm';
 
 export function BrewingAssistantForm({
   handleFormSubmit,
@@ -157,8 +62,8 @@ export function BrewingAssistantForm({
   });
 
   // Initialize form with default values
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof BrewingFormSchema>>({
+    resolver: zodResolver(BrewingFormSchema),
     defaultValues: {
       brewerId: '',
       grinderId: '',
@@ -233,7 +138,7 @@ export function BrewingAssistantForm({
   });
 
   // Handle form submission
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const onSubmit = (values: z.infer<typeof BrewingFormSchema>) => {
     const formData: BrewingAssistantFormData = {
       brewerId: values.brewerId,
       grinderId: values.grinderId,
@@ -328,23 +233,42 @@ export function BrewingAssistantForm({
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Grinder</FormLabel>
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                        >
-                          <FormControl>
-                            <SelectTrigger className='bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-coffee-coral/50 dark:focus:ring-coffee-coral/70'>
-                              <SelectValue placeholder='Select grinder' />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent className='bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600'>
-                            {grinders.map((grinder: Grinder) => (
-                              <SelectItem key={grinder.id} value={grinder.id}>
-                                {grinder.name} {grinder.brand}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                        <ComboBoxResponsive
+                          selectedBrewerId={field.value}
+                          setSelectedBrewerId={field.onChange}
+                          items={grinders.map((grinder: Grinder) => ({
+                            value: grinder.id,
+                            label: `${grinder.name} ${grinder.brand}`,
+                          }))}
+                          selectedItem={
+                            field.value
+                              ? {
+                                  value: field.value,
+                                  label: grinders.find(
+                                    (g: Grinder) => g.id === field.value
+                                  )
+                                    ? `${
+                                        grinders.find(
+                                          (g: Grinder) => g.id === field.value
+                                        )?.name
+                                      } ${
+                                        grinders.find(
+                                          (g: Grinder) => g.id === field.value
+                                        )?.brand
+                                      }`
+                                    : 'Select grinder',
+                                }
+                              : null
+                          }
+                          setSelectedItem={(item) => {
+                            if (item) {
+                              field.onChange(item.value);
+                            } else {
+                              field.onChange('');
+                            }
+                          }}
+                          label='Select grinder'
+                        />
                         <FormDescription>
                           Choose the grinder you'll be using
                         </FormDescription>
@@ -383,26 +307,18 @@ export function BrewingAssistantForm({
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Roast Profile</FormLabel>
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                        >
-                          <FormControl>
-                            <SelectTrigger className='bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-coffee-coral/50 dark:focus:ring-coffee-coral/70'>
-                              <SelectValue placeholder='Select roast profile' />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent className='bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600'>
-                            {ROAST_PROFILES.map((profile) => (
-                              <SelectItem
-                                key={profile.value}
-                                value={profile.value}
-                              >
-                                {profile.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                        <ComboBoxResponsive
+                          items={ROAST_PROFILES}
+                          selectedItem={
+                            ROAST_PROFILES.find(
+                              (p) => p.value === field.value
+                            ) || null
+                          }
+                          setSelectedItem={(item) =>
+                            item && field.onChange(item.value)
+                          }
+                          label='Select roast profile'
+                        />
                         <FormDescription>
                           Choose the roast level of your beans
                         </FormDescription>
