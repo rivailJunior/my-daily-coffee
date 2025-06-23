@@ -46,7 +46,7 @@ export default function RootLayout({
 
               <div className='flex flex-col h-screen z-50'>
                 <Header />
-                <main className='flex-1 pt-14'>{children}</main>
+                <main className='flex-1 pt-14 z-50'>{children}</main>
                 <div className='fixed bottom-4 right-4 z-50'>
                   <ThemeSwitcher />
                 </div>
