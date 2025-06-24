@@ -16,7 +16,6 @@ export function LoginForm() {
     try {
       await signIn('google', { callbackUrl });
     } catch (error) {
-      console.error('Google sign in failed:', error);
       setIsLoading(false);
     }
   };
@@ -29,11 +28,11 @@ export function LoginForm() {
       transition={{ duration: 0.4 }}
     >
       <div className='transition-colors duration-300'>
-        <div className='p-2'>
+        <div className='p-2 flex items-center justify-center flex-col'>
           <Button
             type='button'
             variant='outline'
-            className='w-full py-6 rounded-xl text-base font-normal transition-all hover:shadow-md flex items-center justify-center 
+            className='w-2/3 lg:w-1/2 py-6 rounded-md text-base font-normal transition-all hover:shadow-md flex items-center justify-center 
                      border-gray-700 dark:border-coffee-navy/70 
                      bg-white dark:bg-coffee-navy/30 
                      hover:bg-gray-50 dark:hover:bg-coffee-navy/50 

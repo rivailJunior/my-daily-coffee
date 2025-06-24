@@ -32,7 +32,7 @@ export function Header() {
   }, []);
 
   return (
-    <header
+    <div
       className={cn(
         'fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md transition-all duration-300 border-b',
         isScrolled ? 'py-2' : 'py-4',
@@ -118,6 +118,6 @@ export function Header() {
           </div>
         </div>
       )}
-    </header>
+    </div>
   );
 }
