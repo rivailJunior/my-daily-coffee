@@ -25,8 +25,8 @@ export function AuthStatus() {
         </div>
         <LogoutButton
           variant='outline'
-          size='sm'
-          className='w-full md:w-auto lg:w-auto capitalize'
+          size='lg'
+          className='w-full md:w-auto lg:w-auto capitalize rounded-lg bg-coffee-coral-light'
         />
       </div>
     );

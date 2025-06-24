@@ -89,8 +89,8 @@ export function Header() {
 
       {/* Mobile menu */}
       {isMenuOpen && (
-        <div className='md:hidden bg-background border-t border-border'>
-          <div className='px-4 py-2 space-y-2 pb-4'>
+        <div className='md:hidden bg-background border-t border-border pt-4'>
+          <div className='px-4 space-y-2 pb-2'>
             {isAuthenticated && (
               <>
                 {navigation.map((item) => (
@@ -108,12 +108,8 @@ export function Header() {
                     {item.name}
                   </Link>
                 ))}
+                {!isLoginPage && <AuthStatus />}
               </>
-            )}
-            {!isLoginPage && (
-              <div className='border-t border-border py-4'>
-                <AuthStatus />
-              </div>
             )}
           </div>
         </div>
