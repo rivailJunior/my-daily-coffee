@@ -147,6 +147,7 @@ export function BrewingAssistantForm({
       beanName: values.beanName,
       roastProfile: values.roastProfile as any, // This cast should be fixed in the form schema
       steps: values?.steps || [],
+      waterTemperature: values.waterTemperature,
     };
 
     mutation.mutate(formData);
@@ -214,9 +215,14 @@ export function BrewingAssistantForm({
                               }))
                               .find((b) => b.value === field.value) || null
                           }
-                          setSelectedItem={(item) =>
-                            field.onChange(item ? item.value : null)
-                          }
+                          setSelectedItem={(item) => {
+                            console.log({ item });
+                            if (item) {
+                              field.onChange(item.value);
+                            } else {
+                              field.onChange('');
+                            }
+                          }}
                         />
                         <FormDescription>
                           Choose the brewing method you'll be using
@@ -234,8 +240,6 @@ export function BrewingAssistantForm({
                       <FormItem>
                         <FormLabel>Grinder</FormLabel>
                         <ComboBoxResponsive
-                          selectedBrewerId={field.value}
-                          setSelectedBrewerId={field.onChange}
                           items={grinders.map((grinder: Grinder) => ({
                             value: grinder.id,
                             label: `${grinder.name} ${grinder.brand}`,
@@ -385,9 +389,7 @@ export function BrewingAssistantForm({
                               )}
                             />
                           </div>
-                          <div className='text-xs text-gray-500 mt-1'>
-                            Coffee:Water
-                          </div>
+
                           <FormMessage />
                         </FormItem>
                       )}
@@ -424,26 +426,39 @@ export function BrewingAssistantForm({
                               }}
                             />
                           </FormControl>
+                          <div className='text-xs text-blue-500 mt-1'>
+                            Coffee:Water - {form.getValues('waterAmount')} ml
+                          </div>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
                   </div>
-
                   {/* Water Amount */}
                   <div className='md:col-span-1'>
                     <FormField
                       control={form.control}
-                      name='waterAmount'
-                      render={({ field }) => (
+                      name='waterTemperature'
+                      render={({ field: { onChange, ...field } }) => (
                         <FormItem>
-                          <FormLabel>Water (ml)</FormLabel>
+                          <FormLabel>Water Temperature (°C)</FormLabel>
                           <FormControl>
                             <Input
-                              type='number'
+                              type='text'
+                              className='bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-coffee-coral/50 dark:focus:ring-coffee-coral/70 transition-colors'
                               {...field}
-                              disabled
-                              className='bg-gray-100 dark:bg-gray-800'
+                              onChange={(e) => {
+                                // Only allow numeric input
+                                const value = e.target.value.replace(
+                                  /[^0-9]/g,
+                                  ''
+                                );
+                                if (value !== e.target.value) {
+                                  e.target.value = value;
+                                }
+                                const numValue = parseInt(value, 10);
+                                onChange(numValue || 0);
+                              }}
                             />
                           </FormControl>
                           <FormMessage />
@@ -453,18 +468,7 @@ export function BrewingAssistantForm({
                   </div>
 
                   {/* Current Ratio Display */}
-                  {!isManualRecipe ? (
-                    <div className='md:col-span-1'>
-                      <FormItem>
-                        <FormLabel>Current Ratio</FormLabel>
-                        <div className='bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 p-2 rounded-md w-full text-center h-[40px] flex items-center justify-center'>
-                          <p className='text-sm font-medium'>
-                            1:{ratio.toFixed(1)}
-                          </p>
-                        </div>
-                      </FormItem>
-                    </div>
-                  ) : (
+                  {isManualRecipe && (
                     <div className='md:col-span-1'>
                       <FormField
                         control={form.control}

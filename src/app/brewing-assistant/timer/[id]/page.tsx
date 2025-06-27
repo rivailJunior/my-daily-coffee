@@ -334,7 +334,7 @@ export default function TimerPage({ params }: TimerPageProps) {
                   <FastForward className='text-yellow-500' />
                 </div>
                 <div className='font-regular text-yellow-500'>
-                  Next Step: {recipe.steps[currentStepIndex + 1].name}
+                  Next Step: {recipe.steps[currentStepIndex + 1].description}
                 </div>
               </div>
             )}

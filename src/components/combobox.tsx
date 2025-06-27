@@ -28,15 +28,15 @@ type Item = {
 };
 
 export function ComboBoxResponsive({
-  selectedBrewerId,
-  setSelectedBrewerId,
+  // selectedBrewerId,
+  // setSelectedBrewerId,
   items,
   setSelectedItem,
   selectedItem,
   label = 'Select...',
 }: {
-  selectedBrewerId?: string | null;
-  setSelectedBrewerId?: (id: string) => void;
+  // selectedBrewerId?: string | null;
+  // setSelectedBrewerId?: (id: string) => void;
   items: Item[];
   setSelectedItem: (item: Item | null) => void;
   selectedItem: Item | null;
@@ -47,11 +47,11 @@ export function ComboBoxResponsive({
 
   if (isDesktop) {
     const handleBrewerChange = (id: string) => {
-      if (setSelectedBrewerId) setSelectedBrewerId(id);
+      setSelectedItem(items.find((item) => item.value === id) || null);
     };
     return (
       <Select
-        value={selectedBrewerId ?? undefined}
+        value={selectedItem?.value ?? undefined}
         onValueChange={handleBrewerChange}
       >
         <FormControl>

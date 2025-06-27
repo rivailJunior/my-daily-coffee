@@ -215,6 +215,7 @@ export async function createManualRecipe(
     beanName,
     roastProfile,
     steps,
+    waterTemperature,
   } = formData;
   const id = uuidv4();
   const createdAt = new Date().toISOString();
@@ -226,17 +227,17 @@ export async function createManualRecipe(
     grinderId,
     coffeeAmount,
     waterAmount,
-    waterTemperature: 94, // Default or could use helper
-    grindSize: 7, // Default or could use helper
+    waterTemperature: waterTemperature || 90,
     totalTime: steps?.reduce((sum, s) => sum + s.time, 0) || 0,
     steps:
       steps?.map((step, idx) => ({
         id: uuidv4(),
         name: `Step ${idx + 1}`,
-        description: `Step ${idx + 1}`,
+        description: step.description,
         time: step.time,
         isPouring: false,
       })) || [],
+    grindSize: 800,
     notes: '',
     beanName,
     roastProfile: roastProfile as any,
@@ -245,7 +246,6 @@ export async function createManualRecipe(
     stepsBeforePouring: [],
   };
 
-  console.log('save recipe', { recipe });
   saveRecipe(recipe);
   return recipe;
 }

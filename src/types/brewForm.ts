@@ -84,6 +84,16 @@ export const BrewingFormSchema = z.object({
   roastProfile: z.enum(['light', 'medium', 'medium-dark', 'dark'], {
     required_error: 'Please select a roast profile',
   }),
+  waterTemperature: z.coerce
+    .number({
+      required_error: 'Please enter water temperature',
+    })
+    .min(50, {
+      message: 'Water temperature must be at least 50°C',
+    })
+    .max(100, {
+      message: 'Water temperature must be at most 100°C',
+    }),
 });
 
 export type BrewAssistantProps = {

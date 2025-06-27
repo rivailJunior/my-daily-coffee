@@ -48,6 +48,7 @@ export interface BrewingAssistantFormData {
   beanName: string;
   roastProfile: RoastProfile;
   steps?: Pick<BrewingStep, 'time' | 'description'>[];
+  waterTemperature?: number;
 }
 
 // Recipe templates for different brewing methods
