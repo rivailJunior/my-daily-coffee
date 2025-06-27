@@ -426,14 +426,31 @@ export function BrewingAssistantForm({
                               }}
                             />
                           </FormControl>
-                          <div className='text-xs text-blue-500 mt-1'>
-                            Coffee:Water - {form.getValues('waterAmount')} ml
-                          </div>
+                          {isManualRecipe && (
+                            <div className='text-xs text-blue-500 mt-1'>
+                              Total Water Amount -{' '}
+                              {form.getValues('waterAmount')} ml
+                            </div>
+                          )}
                           <FormMessage />
                         </FormItem>
                       )}
                     />
                   </div>
+                  {!isManualRecipe && (
+                    <div className='md:col-span-1'>
+                      <FormItem>
+                        <FormLabel>Total Water Amount</FormLabel>
+                        <Input
+                          type='number'
+                          className='bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-coffee-coral/50 dark:focus:ring-coffee-coral/70 transition-colors'
+                          value={form.getValues('waterAmount')}
+                          disabled
+                          aria-label='Water amount (ml)'
+                        />
+                      </FormItem>
+                    </div>
+                  )}
                   {/* Water Amount */}
                   <div className='md:col-span-1'>
                     <FormField
