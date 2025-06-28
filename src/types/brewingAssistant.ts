@@ -47,6 +47,7 @@ export interface BrewingAssistantFormData {
   waterAmount: number;
   beanName: string;
   roastProfile: RoastProfile;
+  grindSize?: number; // 1-13 scale, matches BrewingRecipe
   steps?: Pick<BrewingStep, 'time' | 'description'>[];
   waterTemperature?: number;
 }

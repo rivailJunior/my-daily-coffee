@@ -74,6 +74,8 @@ export function BrewingAssistantForm({
       beanName: '',
       stepsAmount: 1,
       roastProfile: 'medium',
+      grindSize: undefined,
+      waterTemperature: undefined,
     },
   });
 
@@ -146,9 +148,12 @@ export function BrewingAssistantForm({
       waterAmount: values.waterAmount,
       beanName: values.beanName,
       roastProfile: values.roastProfile as any, // This cast should be fixed in the form schema
+      grindSize: values?.grindSize,
       steps: values?.steps || [],
-      waterTemperature: values.waterTemperature,
+      waterTemperature: values?.waterTemperature,
     };
+
+    console.log({ formData });
 
     mutation.mutate(formData);
   };
@@ -396,6 +401,42 @@ export function BrewingAssistantForm({
                     />
                   </div>
 
+                  {/* Grind Size (only for manual recipes) */}
+                  {isManualRecipe && (
+                    <div className='md:col-span-1'>
+                      <FormField
+                        control={form.control}
+                        name='grindSize'
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Grind Size</FormLabel>
+                            <ComboBoxResponsive
+                              items={require('@/types/grinder').GRIND_SIZE_PRESETS.map(
+                                (gs) => ({
+                                  value: gs.value,
+                                  label: `${gs.name} (${gs.value}) - ${gs.description}`,
+                                })
+                              )}
+                              selectedItem={
+                                require('@/types/grinder').GRIND_SIZE_PRESETS.find(
+                                  (gs) => gs.value === field.value
+                                ) || null
+                              }
+                              setSelectedItem={(item) =>
+                                item && field.onChange(item.value)
+                              }
+                              label='Select grind size'
+                            />
+                            <FormDescription>
+                              Choose the grind size for your manual brewing
+                              method
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  )}
                   {/* Coffee Amount */}
                   <div className='md:col-span-1'>
                     <FormField
@@ -451,38 +492,40 @@ export function BrewingAssistantForm({
                       </FormItem>
                     </div>
                   )}
-                  {/* Water Amount */}
-                  <div className='md:col-span-1'>
-                    <FormField
-                      control={form.control}
-                      name='waterTemperature'
-                      render={({ field: { onChange, ...field } }) => (
-                        <FormItem>
-                          <FormLabel>Water Temperature (°C)</FormLabel>
-                          <FormControl>
-                            <Input
-                              type='text'
-                              className='bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-coffee-coral/50 dark:focus:ring-coffee-coral/70 transition-colors'
-                              {...field}
-                              onChange={(e) => {
-                                // Only allow numeric input
-                                const value = e.target.value.replace(
-                                  /[^0-9]/g,
-                                  ''
-                                );
-                                if (value !== e.target.value) {
-                                  e.target.value = value;
-                                }
-                                const numValue = parseInt(value, 10);
-                                onChange(numValue || 0);
-                              }}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
+                  {/* Water Temperature (only for manual recipes) */}
+                  {isManualRecipe && (
+                    <div className='md:col-span-1'>
+                      <FormField
+                        control={form.control}
+                        name='waterTemperature'
+                        render={({ field: { onChange, ...field } }) => (
+                          <FormItem>
+                            <FormLabel>Water Temperature (°C)</FormLabel>
+                            <FormControl>
+                              <Input
+                                type='text'
+                                className='bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-coffee-coral/50 dark:focus:ring-coffee-coral/70 transition-colors'
+                                {...field}
+                                onChange={(e) => {
+                                  // Only allow numeric input
+                                  const value = e.target.value.replace(
+                                    /[^0-9]/g,
+                                    ''
+                                  );
+                                  if (value !== e.target.value) {
+                                    e.target.value = value;
+                                  }
+                                  const numValue = parseInt(value, 10);
+                                  onChange(numValue || 0);
+                                }}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  )}
 
                   {/* Current Ratio Display */}
                   {isManualRecipe && (

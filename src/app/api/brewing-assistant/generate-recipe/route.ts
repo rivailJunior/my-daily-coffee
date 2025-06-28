@@ -22,6 +22,8 @@ export async function POST(request: Request) {
       );
     }
 
+    console.log({ formData });
+
     const response = await ai.models.generateContent({
       model: 'gemini-2.0-flash',
       contents: `Generate a coffee brewing recipe for:
@@ -31,7 +33,8 @@ export async function POST(request: Request) {
             - Bean: ${formData.beanName}
             - Roast profile: ${formData.roastProfile}
             - Grinder: ${formData.grinder.name}.
-            - Water temperature: ${formData.waterTemperature}°C.
+            - Grind size: ${formData?.grindSize}
+            - Water temperature: ${formData?.waterTemperature}°C.
             You must return details of how to pour if is center or spiral or circular into description, time in seconds, grind size in microns and water temperature.
             Each step should also contain information if isPouring, isStirring, isWaiting and waterAmount.`,
       config: {

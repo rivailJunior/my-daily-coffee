@@ -84,6 +84,11 @@ export const BrewingFormSchema = z.object({
   roastProfile: z.enum(['light', 'medium', 'medium-dark', 'dark'], {
     required_error: 'Please select a roast profile',
   }),
+  grindSize: z.coerce
+    .number({ required_error: 'Please select a grind size' })
+    .min(1, { message: 'Grind size must be at least 1 (extra fine)' })
+    .max(13, { message: 'Grind size must be at most 13 (extra coarse)' })
+    .optional(),
   waterTemperature: z.coerce
     .number({
       required_error: 'Please enter water temperature',
@@ -93,7 +98,8 @@ export const BrewingFormSchema = z.object({
     })
     .max(100, {
       message: 'Water temperature must be at most 100°C',
-    }),
+    })
+    .optional(),
 });
 
 export type BrewAssistantProps = {
