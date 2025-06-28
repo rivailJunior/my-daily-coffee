@@ -22,20 +22,37 @@ export async function POST(request: Request) {
       );
     }
 
-    console.log({ formData });
-
     const response = await ai.models.generateContent({
       model: 'gemini-2.0-flash',
-      contents: `Generate a coffee brewing recipe for:
+      contents: `
+      You are a coffee brewing expert. Generate a coffee brewing recipe for:
             - Brewing method: ${formData.brewer.name} (${formData.brewer.brewMethod})
             - Coffee amount: ${formData.coffeeAmount}g
             - Water amount: ${formData.waterAmount}ml
             - Bean: ${formData.beanName}
             - Roast profile: ${formData.roastProfile}
             - Grinder: ${formData.grinder.name}.
-            - Grind size: ${formData?.grindSize}
+            - Grind size: ${formData?.grindSize}. 
             - Water temperature: ${formData?.waterTemperature}°C.
-            You must return details of how to pour if is center or spiral or circular into description, time in seconds, grind size in microns and water temperature.
+            You should return a JSON array of objects with the following properties:
+            - description: string
+            - pourType: string
+            - time: number
+            - grindSize: number
+            - waterTemperature: number
+            - waterAmount: number
+            - isPouring: boolean
+            - isStirring: boolean
+            - isWaiting: boolean
+            For description it should contain information of how to pour the water into the brewer.
+            For pourType it should contain information of how to pour the water into the brewer.
+            For time it should contain information of how long to pour the water into the brewer.
+            For grindSize it should contain information of the grind size in microns.
+            For waterTemperature it should contain information of the water temperature in Celsius.
+            For waterAmount it should contain information of the water amount in ml.
+            For isPouring it should contain information of if the step is pouring.
+            For isStirring it should contain information of if the step is stirring.
+            For isWaiting it should contain information of if the step is waiting.
             Each step should also contain information if isPouring, isStirring, isWaiting and waterAmount.`,
       config: {
         responseMimeType: 'application/json',

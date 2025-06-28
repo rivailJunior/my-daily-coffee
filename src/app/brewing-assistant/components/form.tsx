@@ -153,8 +153,6 @@ export function BrewingAssistantForm({
       waterTemperature: values?.waterTemperature,
     };
 
-    console.log({ formData });
-
     mutation.mutate(formData);
   };
 
@@ -221,7 +219,6 @@ export function BrewingAssistantForm({
                               .find((b) => b.value === field.value) || null
                           }
                           setSelectedItem={(item) => {
-                            console.log({ item });
                             if (item) {
                               field.onChange(item.value);
                             } else {
