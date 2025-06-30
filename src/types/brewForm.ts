@@ -87,7 +87,6 @@ export const BrewingFormSchema = z.object({
   grindSize: z.coerce
     .number({ required_error: 'Please select a grind size' })
     .min(1, { message: 'Grind size must be at least 1 (extra fine)' })
-    .max(13, { message: 'Grind size must be at most 13 (extra coarse)' })
     .optional(),
   waterTemperature: z.coerce
     .number({

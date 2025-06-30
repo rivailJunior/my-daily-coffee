@@ -158,6 +158,8 @@ export function BrewingAssistantForm({
 
   const isLoading = isLoadingBrewers || isLoadingGrinders;
 
+  console.log({ form: form.getValues() });
+
   return (
     <Container>
       <div className='flex items-center justify-between mb-6'>
@@ -404,30 +406,30 @@ export function BrewingAssistantForm({
                       <FormField
                         control={form.control}
                         name='grindSize'
-                        render={({ field }) => (
+                        render={({ field: { onChange, ...field } }) => (
                           <FormItem>
                             <FormLabel>Grind Size</FormLabel>
-                            <ComboBoxResponsive
-                              items={require('@/types/grinder').GRIND_SIZE_PRESETS.map(
-                                (gs) => ({
-                                  value: gs.value,
-                                  label: `${gs.name} (${gs.value}) - ${gs.description}`,
-                                })
-                              )}
-                              selectedItem={
-                                require('@/types/grinder').GRIND_SIZE_PRESETS.find(
-                                  (gs) => gs.value === field.value
-                                ) || null
-                              }
-                              setSelectedItem={(item) =>
-                                item && field.onChange(item.value)
-                              }
-                              label='Select grind size'
-                            />
-                            <FormDescription>
-                              Choose the grind size for your manual brewing
-                              method
-                            </FormDescription>
+                            <FormControl>
+                              <Input
+                                type='text'
+                                className='bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-coffee-coral/50 dark:focus:ring-coffee-coral/70 transition-colors'
+                                {...field}
+                                placeholder='e.g. 700'
+                                onChange={(e) => {
+                                  // Only allow numeric input
+                                  const value = e.target.value.replace(
+                                    /[^0-9]/g,
+                                    ''
+                                  );
+                                  if (value !== e.target.value) {
+                                    e.target.value = value;
+                                  }
+                                  const numValue = parseInt(value, 10);
+                                  console.log({ numValue });
+                                  onChange(numValue);
+                                }}
+                              />
+                            </FormControl>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -448,7 +450,6 @@ export function BrewingAssistantForm({
                               className='bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-coffee-coral/50 dark:focus:ring-coffee-coral/70 transition-colors'
                               {...field}
                               onChange={(e) => {
-                                // Only allow numeric input
                                 const value = e.target.value.replace(
                                   /[^0-9]/g,
                                   ''
@@ -503,6 +504,7 @@ export function BrewingAssistantForm({
                                 type='text'
                                 className='bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-coffee-coral/50 dark:focus:ring-coffee-coral/70 transition-colors'
                                 {...field}
+                                placeholder='e.g. 93'
                                 onChange={(e) => {
                                   // Only allow numeric input
                                   const value = e.target.value.replace(

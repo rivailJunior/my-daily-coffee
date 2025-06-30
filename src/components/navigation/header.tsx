@@ -14,6 +14,7 @@ const navigation = [
   { name: 'Grinders', href: '/grinders' },
   { name: 'Drippers', href: '/manual-brewing-methods' },
   { name: 'Brew Assistant', href: '/brewing-assistant' },
+  { name: 'Create Recipe', href: '/brewing-assistant/manual-recipe' },
 ];
 
 export function Header() {
