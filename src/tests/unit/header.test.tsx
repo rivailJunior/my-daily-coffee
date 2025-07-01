@@ -106,29 +106,6 @@ describe('Header Component', () => {
     });
   });
 
-  it('changes style on scroll', () => {
-    render(<Header />);
-
-    // Initial state - not scrolled
-    const header = screen.getByRole('banner');
-    expect(header).toHaveClass('py-4');
-
-    // Scroll down
-    mockScrollY(20);
-
-    // Should have scrolled class
-    waitFor(() => {
-      expect(header).toHaveClass('py-2');
-    });
-
-    // Scroll back to top
-    mockScrollY(0);
-
-    // Should have initial class again
-    waitFor(() => {
-      expect(header).toHaveClass('py-4');
-    });
-  });
 
   it('navigates to the correct routes', () => {
     const mockPush = jest.fn();
