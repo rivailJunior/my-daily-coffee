@@ -133,20 +133,6 @@ export const createBrewingRecipe = async (
   formData: BrewingAssistantFormData
 ): Promise<BrewingRecipe> => {
   try {
-    // TODO: validate if user is authenticated and has ia subscription
-
-    // const brewer = getManualBrewerById(formData.brewerId);
-    // const grinder = getGrinderById(formData.grinderId);
-
-    // if (!brewer || !grinder) {
-    //   console.error("Brewer or grinder not found");
-    //   return null;
-    // }
-
-    // // Generate recipe based on the selected brewer, grinder, and beans
-    // const recipe = generateRecipe(formData, brewer, grinder);
-
-    // TODO: validate if user has ia subscription to use generateRecipeWithIA
     const recipe = await generateRecipeWithAIViaAPI(formData);
     const recipes: BrewingRecipe[] = getSavedRecipes();
 
@@ -216,6 +202,7 @@ export async function createManualRecipe(
     roastProfile,
     steps,
     waterTemperature,
+    grindSize,
   } = formData;
   const id = uuidv4();
   const createdAt = new Date().toISOString();
@@ -237,7 +224,7 @@ export async function createManualRecipe(
         time: step.time,
         isPouring: false,
       })) || [],
-    grindSize: 800,
+    grindSize: grindSize || 800,
     notes: '',
     beanName,
     roastProfile: roastProfile as any,
