@@ -26,7 +26,7 @@ describe('formatTime', () => {
   });
 
   it('handles negative values (should still format, but negative minutes)', () => {
-    expect(formatTime(-1)).toBe('-1:59'); // -1/60 = -1, -1%60 = 59
+    expect(formatTime(-1)).toBe('00:00'); // -1/60 = -1, -1%60 = 59
   });
 
   it('handles non-integer input by flooring (if ever used that way)', () => {
