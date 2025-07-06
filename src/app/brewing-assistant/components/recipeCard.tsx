@@ -79,7 +79,7 @@ export function RecipeCard({ recipe }: RecipeItemProps) {
   );
 }
 
-function DetailItem({
+export function DetailItem({
   label,
   value,
   valueClassName = 'font-regular text-sm text-amber-900',
