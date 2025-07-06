@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { RecipeCard } from '../../components/recipeCard';
+import { DownloadRecipeCard } from '../../components/downloadRecipeCard';
 import { Container } from '@/components/container';
 import { useQuery } from '@tanstack/react-query';
 import { getRecipeById } from '@/services/brewing-assistant-service';
@@ -13,7 +13,6 @@ import { useRouter } from 'next/navigation';
 export default function RecipePage({ params }: { params: { id: string } }) {
   const router = useRouter();
   const { id } = params;
-  console.log(id);
 
   // Load recipe data
   const {
@@ -48,7 +47,7 @@ export default function RecipePage({ params }: { params: { id: string } }) {
 
   return (
     <Container>
-      <RecipeCard
+      <DownloadRecipeCard
         recipe={{
           name: recipe.name,
           steps: recipe.steps,
