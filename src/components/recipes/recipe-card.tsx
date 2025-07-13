@@ -81,17 +81,16 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
             >
               Brew
             </Button>
-            {/* <Button
+            <Button
               variant='destructive'
               size='sm'
               onClick={(e) => {
                 e.stopPropagation();
-                setShowConfirmDelete(true);
+                router.push(`/brewing-assistant/recipes/${recipe.id}`);
               }}
-              disabled={isDeleting}
             >
-              {isDeleting ? 'Deleting...' : 'Delete'}
-            </Button> */}
+              Screenshot
+            </Button>
           </div>
         </div>
       </div>
