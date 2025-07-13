@@ -16,8 +16,9 @@ describe("HomePage", () => {
     cy.visit("/");
   });
 
-  it("displays home page properly", () => {
-    cy.contains("Hey, let’s build something together?");
-    cy.contains("We are here to help you with your Next.js project 🥳");
+  it('displays home page properly', () => {
+    cy.get('h1').should('have.text', 'My Daily Coffee');
+    cy.get('p').should('contain', 'Brew better, every day');
+    cy.get('button').should('contain', 'Continue with Google');
   });
 });
