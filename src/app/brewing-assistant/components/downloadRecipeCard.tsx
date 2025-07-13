@@ -33,10 +33,7 @@ export function DownloadRecipeCard({
     if (!cardRef.current) return;
 
     try {
-      const canvas = await html2canvas(cardRef.current, {
-        backgroundColor: null,
-        scale: 2, // Higher scale for better quality
-      });
+      const canvas = await html2canvas(cardRef.current);
 
       const link = document.createElement('a');
       link.download = `${recipe.name
