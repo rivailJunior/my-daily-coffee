@@ -26,7 +26,7 @@ export function DownloadRecipeCard({
   onClose,
   className = '',
 }: RecipeCardProps) {
-  const [aspectRatio, setAspectRatio] = useState<AspectRatio>('4:5');
+  const [aspectRatio, setAspectRatio] = useState<AspectRatio>('9:16');
   const cardRef = useRef<HTMLDivElement>(null);
 
   const handleDownload = async () => {
@@ -58,15 +58,14 @@ export function DownloadRecipeCard({
 
   return (
     <div className={`flex flex-col items-center gap-4 ${className}`}>
-      <div className='flex items-center gap-2 mb-4'>
-        <div className='flex items-center gap-2'>
-          <Instagram className='w-5 h-5 text-pink-600' />
-          <span className='text-sm font-medium'>Aspect Ratio:</span>
+      <div className='flex items-center gap-2 mb-4 '>
+        <div className='flex items-center gap-2 '>
+          <Instagram className='w-8 h-8 text-coffee-coral' />
           <Select
             value={aspectRatio}
             onValueChange={(value: AspectRatio) => setAspectRatio(value)}
           >
-            <SelectTrigger className='w-[100px]'>
+            <SelectTrigger className='w-full'>
               <SelectValue placeholder='Select ratio' />
             </SelectTrigger>
             <SelectContent>
@@ -90,7 +89,7 @@ export function DownloadRecipeCard({
       <div className='flex gap-4 mt-4'>
         <Button
           onClick={handleDownload}
-          className='bg-amber-600 hover:bg-amber-700 flex items-center gap-2'
+          className='bg-coffee-navy text-white flex items-center gap-2'
         >
           <Download className='w-4 h-4' />
           Download
@@ -99,7 +98,7 @@ export function DownloadRecipeCard({
           <Button
             variant='outline'
             onClick={onClose}
-            className='border-amber-300 text-amber-700 hover:bg-amber-50'
+            className='border-coffee-navy text-white'
           >
             <X className='w-4 h-4 mr-2' />
             Close
