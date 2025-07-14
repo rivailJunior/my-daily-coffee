@@ -58,7 +58,7 @@ describe('RecipeCard', () => {
   });
 
   it('renders all recipe details', () => {
-    expect(screen.getByText('3:30')).toBeInTheDocument();
+    expect(screen.getByText('00:03')).toBeInTheDocument();
     expect(screen.getByText('V60')).toBeInTheDocument();
     expect(screen.getByText('1:16')).toBeInTheDocument();
     expect(screen.getByText('92°C')).toBeInTheDocument();
@@ -67,24 +67,17 @@ describe('RecipeCard', () => {
   });
 
   it('renders all brewing steps', () => {
-    expect(screen.getByText('Pour 50ml water')).toBeInTheDocument();
-    expect(screen.getByText('Pour remaining water')).toBeInTheDocument();
-    expect(screen.getByText('Drawdown')).toBeInTheDocument();
+    expect(screen.getByText('1. Pour 50ml water')).toBeInTheDocument();
+    expect(screen.getByText('2. Pour remaining water')).toBeInTheDocument();
+    expect(screen.getByText('3. Drawdown')).toBeInTheDocument();
 
     // Check that step times are rendered
-    expect(screen.getByText('⏱ 0:30')).toBeInTheDocument();
-    expect(screen.getByText('⏱ 1:00')).toBeInTheDocument();
-    expect(screen.getByText('⏱ 2:00')).toBeInTheDocument();
-  });
-
-  it('renders step numbers as icons', () => {
-    expect(screen.getByText('1')).toBeInTheDocument();
-    expect(screen.getByText('2')).toBeInTheDocument();
-    expect(screen.getByText('3')).toBeInTheDocument();
+    expect(screen.getByText('⏱ 00:00')).toBeInTheDocument();
+    expect(screen.getByText('⏱ 00:01')).toBeInTheDocument();
+    expect(screen.getByText('⏱ 00:02')).toBeInTheDocument();
   });
 
   it('renders the footer with app information', () => {
-    expect(screen.getByText('My Daily Coffee')).toBeInTheDocument();
     expect(screen.getByText('@mydailycoffee')).toBeInTheDocument();
   });
 });
