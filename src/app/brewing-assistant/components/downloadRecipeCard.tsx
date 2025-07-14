@@ -80,11 +80,8 @@ export function DownloadRecipeCard({
       <div
         ref={cardRef}
         data-testid='recipe-card'
-        className={`${getAspectRatioClass()} relative bg-gradient-to-br from-amber-50 to-amber-100 rounded-2xl overflow-hidden shadow-xl flex flex-col`}
+        className={`${getAspectRatioClass()} relative bg-white  overflow-hidden shadow-xl flex flex-col`}
       >
-        {/* Header with gradient */}
-        <div className='h-3 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600'></div>
-
         {/* Content */}
         <RecipeCard recipe={recipe} />
       </div>
