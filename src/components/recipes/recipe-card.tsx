@@ -18,15 +18,15 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
 
   return (
     <Card className='p-6 bg-white dark:bg-coffee-navy border border-gray-200 dark:border-coffee-navy-dark rounded-xl shadow-sm'>
-      <div className='flex flex-row items-start justify-between gap-6 w-full'>
+      <div className='flex flex-col items-start justify-between gap-6'>
         {/* Left Section: Info */}
-        <div className='flex-1 min-w-0'>
-          <div className='flex items-center gap-3 mb-1'>
-            <h3 className='text-xl font-bold text-coffee-navy dark:text-coffee-coral truncate capitalize'>
+        <div className='flex-1'>
+          <div className='flex gap-3 mb-1'>
+            <h3 className='text-lg font-medium text-coffee-navy dark:text-coffee-coral truncate capitalize'>
               {recipe.name || 'Unnamed Recipe'}
             </h3>
           </div>
-          <div className='text-sm text-gray-600 dark:text-gray-300 mb-4 capitalize'>
+          <div className='text-sm text-gray-600 dark:text-gray-300 mb-4 capitalize font-medium'>
             {recipe?.beanName} - {recipe?.roastProfile} -{' '}
             <span className='text-xs text-gray-500 dark:text-gray-400'>
               {dayjs().from(recipe.updatedAt, true)} ago
@@ -68,13 +68,13 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
           </div>
         </div>
         {/* Right Section: Actions */}
-        <div className='flex flex-col items-end justify-between'>
-          <div className='flex space-x-2'>
+        <div className='flex flex-col items-start justify-between w-full'>
+          <div className='flex space-x-2 w-full'>
             {' '}
             <Button
-              variant='outline'
+              variant='default'
               size='sm'
-              className='bg-coffee-coral text-white'
+              className='w-full'
               onClick={(e) => {
                 router.push(`/brewing-assistant/timer/${recipe.id}`);
               }}
@@ -82,8 +82,9 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
               Brew
             </Button>
             <Button
-              variant='destructive'
               size='sm'
+              className='w-full'
+              variant='outline'
               onClick={(e) => {
                 e.stopPropagation();
                 router.push(`/brewing-assistant/recipes/${recipe.id}`);

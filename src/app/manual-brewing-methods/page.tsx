@@ -64,7 +64,7 @@ export default function ManualBrewingPage() {
           My Brewing Methods
         </h1>
         <Link href='/manual-brewing-methods/new'>
-          <Button>
+          <Button variant='outline'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               width='24'

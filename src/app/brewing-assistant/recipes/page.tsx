@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
-import { Coffee, Droplet, Plus, Timer as TimerIcon } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 import { getAllRecipes } from '@/services/brewing-assistant-service';
@@ -41,7 +41,7 @@ export default function RecipesPage() {
       <Container>
         <div className='flex justify-between items-center mb-8'>
           <h1 className='text-3xl font-bold'>My Brewing Recipes</h1>
-          <Button disabled>
+          <Button className='bg-coffee-navy dark:bg-coffee-coral'>
             <Plus className='mr-2 h-4 w-4' />
             New Recipe
           </Button>
@@ -83,7 +83,7 @@ export default function RecipesPage() {
         <h1 className='text-2xl font-bold text-coffee-navy dark:text-coffee-coral'>
           Brewing Recipes
         </h1>
-        <Button asChild>
+        <Button variant='outline' asChild>
           <Link href='/brewing-assistant/'>
             <Plus className='mr-2 h-4 w-4' />
             New Recipe
