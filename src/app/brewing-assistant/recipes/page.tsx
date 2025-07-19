@@ -19,7 +19,6 @@ import { Container } from '@/components/container';
 import { RecipeCard } from '@/components/recipes/recipe-card';
 
 export default function RecipesPage() {
-  const router = useRouter();
   const {
     data: recipes = [],
     isLoading,

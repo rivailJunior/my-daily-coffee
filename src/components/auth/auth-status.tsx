@@ -23,18 +23,14 @@ export function AuthStatus() {
           <User className='h-4 w-4' />
           <span className='text-sm font-medium capitalize'>{user.name}</span>
         </div>
-        <LogoutButton
-          variant='outline'
-          size='lg'
-          className='w-full md:w-auto lg:w-auto capitalize rounded-lg bg-coffee-coral-light'
-        />
+        <LogoutButton variant='outline' size='default' />
       </div>
     );
   }
 
   // Show sign in button when not authenticated
   return (
-    <Button variant='outline' size='sm' onClick={() => signIn()}>
+    <Button variant='outline' size='default' onClick={() => signIn()}>
       <LogIn className='mr-2 h-4 w-4 capitalize' />
       Sign in
     </Button>

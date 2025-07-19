@@ -439,7 +439,7 @@ export function BrewingAssistantForm({
                         name={`steps.${index}.time`}
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Time {index + 1}</FormLabel>
+                            <FormLabel>{index + 1} Step Time</FormLabel>
                             <FormControl>
                               <Input
                                 type='text'

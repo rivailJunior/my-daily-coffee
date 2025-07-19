@@ -13,7 +13,7 @@ export function StepButton({
   return (
     <Button
       type='button'
-      className='px-3 py-1 bg-primary text-white rounded hover:bg-primary/90 transition w-full'
+      variant='default'
       onClick={onClick}
       disabled={disabled}
     >

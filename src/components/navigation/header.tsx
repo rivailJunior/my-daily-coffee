@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
 import { Menu, Coffee } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { AuthStatus } from '@/components/auth/auth-status';
