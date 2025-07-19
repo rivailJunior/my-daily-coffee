@@ -138,11 +138,7 @@ export default function TimerPage({ params }: TimerPageProps) {
         <div className='text-xl sm:text-2xl font-bold text-coffee-navy dark:text-coffee-coral '>
           Brewing Timer
         </div>
-        <Button
-          variant='outline'
-          onClick={goBack}
-          className='bg-coffee-coral text-white dark:bg-coffee-navy-dark'
-        >
+        <Button variant='outline' onClick={goBack}>
           Back to Recipe Form
         </Button>
       </div>
@@ -292,12 +288,6 @@ export default function TimerPage({ params }: TimerPageProps) {
                     <Button
                       variant={isTimerRunning ? 'outline' : 'default'}
                       size='lg'
-                      className={cn(
-                        'w-full sm:w-auto hover:bg-gray-500 hover:text-white',
-                        isTimerRunning
-                          ? 'bg-green-500 text-white'
-                          : 'bg-green-500'
-                      )}
                       onClick={toggleTimer}
                     >
                       {isTimerRunning ? (
@@ -313,12 +303,8 @@ export default function TimerPage({ params }: TimerPageProps) {
                     </Button>
 
                     <Button
-                      variant='outline'
+                      variant='destructive'
                       size='lg'
-                      className={cn(
-                        'w-full sm:w-auto text-white hover:bg-gray-500 hover:text-white',
-                        isTimerRunning ? 'bg-red-400' : 'bg-red-400 '
-                      )}
                       onClick={resetTimer}
                     >
                       <RotateCcw className='mr-2 h-5 w-5' /> Reset
