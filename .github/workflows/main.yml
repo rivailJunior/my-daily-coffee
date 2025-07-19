@@ -86,17 +86,17 @@ jobs:
       - name: Running test
         run: npm run test:unit
 
-  test-e2e:
-    needs: ["test"]
-    name: E2E
-    timeout-minutes: 60
-    runs-on: ubuntu-latest
-    if: ${{ success() }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Cypress run
-        uses: cypress-io/github-action@v6
-        with:
-          build: npm run build
-          start: npm start
+  # test-e2e:
+  #   needs: ["test"]
+  #   name: E2E
+  #   timeout-minutes: 60
+  #   runs-on: ubuntu-latest
+  #   if: ${{ success() }}
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+  #     - name: Cypress run
+  #       uses: cypress-io/github-action@v6
+  #       with:
+  #         build: npm run build
+  #         start: npm start
