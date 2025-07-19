@@ -29,7 +29,7 @@ export function FormContainer({
         <div>
           <Button
             onClick={() => router.push('/brewing-assistant/recipes')}
-            className='text-white'
+            variant='outline'
           >
             <List />
             Recipes
@@ -37,8 +37,8 @@ export function FormContainer({
         </div>
       </div>
 
-      <Card 
-        data-testid="recipe-card"
+      <Card
+        data-testid='recipe-card'
         className='w-full mx-auto bg-white dark:bg-coffee-navy border-coffee-navy/30 dark:border-coffee-navy'
       >
         <CardHeader>

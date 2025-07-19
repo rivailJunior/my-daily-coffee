@@ -69,7 +69,7 @@ export default function GrindersPage() {
           My Grinders
         </h1>
         <Link href='/grinders/new'>
-          <Button>
+          <Button variant='outline'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               width='24'

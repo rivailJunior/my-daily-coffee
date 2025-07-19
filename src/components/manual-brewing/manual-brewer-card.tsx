@@ -120,36 +120,44 @@ export function ManualBrewerCard({ brewer, onDelete }: ManualBrewerCardProps) {
           </div>
         )}
 
-        <div className='mt-auto pt-3 border-t border-gray-200 dark:border-gray-700 flex justify-end gap-2'>
+        <div className='mt-auto pt-3 border-t border-gray-200 dark:border-gray-700 flex  gap-2'>
           {showConfirmDelete ? (
             <>
               <Button
-                variant='outline'
-                size='sm'
-                onClick={() => setShowConfirmDelete(false)}
-                disabled={isDeleting}
-              >
-                Cancel
-              </Button>
-              <Button
                 variant='destructive'
                 size='sm'
+                className='w-full bg-red-500 dark:bg-red-600'
                 onClick={handleDelete}
                 disabled={isDeleting}
               >
                 {isDeleting ? 'Deleting...' : 'Confirm Delete'}
               </Button>
+              <Button
+                variant='default'
+                size='sm'
+                className='w-full'
+                onClick={() => setShowConfirmDelete(false)}
+                disabled={isDeleting}
+              >
+                Cancel
+              </Button>
             </>
           ) : (
             <>
               <Button
-                variant='outline'
+                variant='destructive'
+                className='w-full'
                 size='sm'
                 onClick={() => setShowConfirmDelete(true)}
               >
                 Delete
               </Button>
-              <Button size='sm' onClick={handleEdit}>
+              <Button
+                variant='default'
+                className='w-full'
+                size='sm'
+                onClick={handleEdit}
+              >
                 Edit
               </Button>
             </>

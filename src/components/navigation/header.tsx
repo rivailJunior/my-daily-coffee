@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
 import { Menu, Coffee } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { AuthStatus } from '@/components/auth/auth-status';
@@ -13,8 +12,9 @@ const navigation = [
   { name: 'Home', href: '/' },
   { name: 'Grinders', href: '/grinders' },
   { name: 'Drippers', href: '/manual-brewing-methods' },
-  { name: 'Brew Assistant', href: '/brewing-assistant' },
-  { name: 'Create Recipe', href: '/brewing-assistant/manual-recipe' },
+  { name: 'Recipes', href: '/brewing-assistant/recipes' },
+  { name: 'Create Recipe IA', href: '/brewing-assistant' },
+  { name: 'Create Recipe Manual', href: '/brewing-assistant/manual-recipe' },
 ];
 
 export function Header() {

@@ -1,23 +1,41 @@
-import { Card } from './ui/card';
+import Image from 'next/image';
+import { Button } from './ui/button';
 
 interface HomeCardProps {
-  children: React.ReactNode;
   onClick?: () => void;
   title: string;
+  description: string;
+  image: string;
 }
 
-export const HomeCard = ({ children, onClick, title }: HomeCardProps) => {
+export const HomeCard = ({
+  onClick,
+  title,
+  description,
+  image,
+}: HomeCardProps) => {
   return (
-    <Card
-      className='p-4 flex flex-col items-center justify-center hover:bg-coffee-gray/10 dark:hover:bg-coffee-navy-dark cursor-pointer transition-colors border-coffee-gray/30 dark:border-coffee-navy-dark bg-white dark:bg-coffee-navy'
-      onClick={onClick}
-    >
-      <div className='h-10 w-10 rounded-full bg-coffee-navy/20 dark:bg-coffee-coral/20 flex items-center justify-center mb-2'>
-        {children}
+    <div className=' bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700'>
+      <Image
+        className='rounded-t-lg w-full h-48 md:h-80 object-cover'
+        src={image}
+        alt=''
+        width={500}
+        height={500}
+      />
+      <div className='p-5'>
+        <a href='#'>
+          <h5 className='mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white'>
+            {title}
+          </h5>
+        </a>
+        <p className='mb-3 font-normal text-gray-700 dark:text-gray-400'>
+          {description}
+        </p>
+        <Button variant='default' onClick={onClick}>
+          See more
+        </Button>
       </div>
-      <span className='text-sm font-medium text-coffee-navy dark:text-coffee-white'>
-        {title}
-      </span>
-    </Card>
+    </div>
   );
 };

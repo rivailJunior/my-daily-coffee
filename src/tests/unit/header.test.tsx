@@ -54,7 +54,10 @@ describe('Header Component', () => {
     expect(screen.getByRole('link', { name: /grinders/i })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /drippers/i })).toBeInTheDocument();
     expect(
-      screen.getByRole('link', { name: /brew assistant/i })
+      screen.getByRole('link', { name: /Create Recipe IA/i })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: /Create Recipe Manual/i })
     ).toBeInTheDocument();
   });
 

@@ -1,17 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
-import {
-  BeanIcon,
-  Blend,
-  ChartBar,
-  Clock,
-  Coffee,
-  List,
-  PlusIcon,
-  Settings,
-  ShoppingCart,
-} from 'lucide-react';
+import { Blend, ChartBar, Clock, Coffee, List } from 'lucide-react';
 
 import { useRouter } from 'next/navigation';
 import { Container } from '@/components/container';
@@ -28,19 +18,16 @@ const HomeCards = [
   {
     title: 'Recipes',
     href: '/brewing-assistant/recipes',
-    icon: <List className='h-5 w-5 text-coffee-navy dark:text-coffee-coral' />,
+    description: 'View and manage your recipes',
+    image:
+      'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
   },
   {
     title: 'Grinders',
     href: '/grinders',
-    icon: <Blend className='h-5 w-5 text-coffee-navy dark:text-coffee-coral' />,
-  },
-  {
-    title: 'Stats (not implemented)',
-    href: '/stats',
-    icon: (
-      <ChartBar className='h-5 w-5 text-coffee-navy dark:text-coffee-coral' />
-    ),
+    description: 'View and manage your grinders',
+    image:
+      'https://images.unsplash.com/photo-1554906110-c83e812733f7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
 ];
 
@@ -87,15 +74,15 @@ export default function Home() {
         </div>
 
         {/* Quick Actions */}
-        <div className='grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8'>
+        <div className='grid grid-cols-2 sm:grid-cols-2 gap-4 mb-8'>
           {HomeCards.map((card) => (
             <HomeCard
               key={card.title}
               title={card.title}
+              description={card.description}
               onClick={() => router.push(card.href)}
-            >
-              {card.icon}
-            </HomeCard>
+              image={card.image}
+            />
           ))}
         </div>
 
