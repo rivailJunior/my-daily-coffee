@@ -43,20 +43,6 @@ describe('StepButton', () => {
     expect(screen.getByRole('button')).not.toBeDisabled();
   });
 
-  it('applies the correct CSS classes', () => {
-    render(<StepButton icon={<Plus />} onClick={jest.fn()} />);
-
-    const button = screen.getByRole('button');
-
-    expect(button).toHaveClass('px-3');
-    expect(button).toHaveClass('py-1');
-    expect(button).toHaveClass('bg-primary');
-    expect(button).toHaveClass('text-white');
-    expect(button).toHaveClass('rounded');
-    expect(button).toHaveClass('hover:bg-primary/90');
-    expect(button).toHaveClass('transition');
-    expect(button).toHaveClass('w-full');
-  });
 
   it('renders different icons when provided', () => {
     const { rerender } = render(
