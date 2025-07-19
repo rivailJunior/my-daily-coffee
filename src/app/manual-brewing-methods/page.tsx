@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import { getAllManualBrewers } from "@/services/manual-brewing-service";
-import { ManualBrewer, BREW_METHODS } from "@/types/manualBrewing";
-import { ManualBrewerCard } from "@/components/manual-brewing/manual-brewer-card";
-import { Button } from "@/components/ui/button";
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { getAllManualBrewers } from '@/services/manual-brewing-service';
+import { ManualBrewer, BREW_METHODS } from '@/types/manualBrewing';
+import { ManualBrewerCard } from '@/components/manual-brewing/manual-brewer-card';
+import { Button } from '@/components/ui/button';
 import { Container } from '@/components/container';
 
 export default function ManualBrewingPage() {
