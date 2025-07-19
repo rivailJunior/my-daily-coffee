@@ -6,6 +6,7 @@ import { ThemeProvider } from '@/providers/theme-provider';
 import { AuthProvider } from '@/providers/auth-provider';
 import { ThemeSwitcher } from '@/components/theme-switcher';
 import { Header } from '@/components/navigation/header';
+import { Footer } from '@/components/navigation/footer';
 
 const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
@@ -53,6 +54,7 @@ export default function RootLayout({
                   <ThemeSwitcher />
                 </div>
               </div>
+              <Footer />
             </AuthProvider>
           </QueryProvider>
         </ThemeProvider>
