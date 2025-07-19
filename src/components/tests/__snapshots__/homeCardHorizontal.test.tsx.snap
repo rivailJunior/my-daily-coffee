@@ -7,7 +7,7 @@ exports[`HomeCardHorizontal matches snapshot 1`] = `
   >
     <img
       alt=""
-      class="object-cover w-20 h-20 md:h-auto md:w-20 md:rounded-none md:rounded-s-lg"
+      class="object-cover max-w-20 h-auto md:h-auto md:max-w-24 md:rounded-none md:rounded-s-lg"
       data-nimg="1"
       decoding="async"
       height="500"
@@ -18,7 +18,7 @@ exports[`HomeCardHorizontal matches snapshot 1`] = `
       width="500"
     />
     <div
-      class="flex flex-col justify-around p-4 leading-normal"
+      class="flex flex-col  p-4 leading-normal"
     >
       <div
         class="text-lg font-medium tracking-tight text-gray-900 dark:text-white capitalize"
@@ -26,9 +26,14 @@ exports[`HomeCardHorizontal matches snapshot 1`] = `
         Horizontal Test Title
       </div>
       <div
-        class="text-sm text-gray-700 dark:text-gray-400"
+        class="text-md text-gray-700 dark:text-gray-400 pt-1 capitalize"
       >
         Horizontal Test Description
+      </div>
+      <div
+        class="text-sm text-gray-700 dark:text-gray-400 pt-4"
+      >
+        2023-01-01
       </div>
     </div>
   </div>

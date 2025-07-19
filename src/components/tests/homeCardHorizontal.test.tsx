@@ -10,7 +10,7 @@ describe('HomeCardHorizontal', () => {
     title: 'Horizontal Test Title',
     description: 'Horizontal Test Description',
     image: '/test-horizontal-image.jpg',
-    onClick: jest.fn(),
+    createdAt: '2023-01-01',
   };
 
   it('renders with required props', () => {
@@ -19,6 +19,7 @@ describe('HomeCardHorizontal', () => {
     expect(screen.getByText('Horizontal Test Title')).toBeInTheDocument();
     expect(screen.getByText('Horizontal Test Description')).toBeInTheDocument();
     expect(screen.getByRole('img')).toHaveAttribute('src');
+    expect(screen.getByText('2023-01-01')).toBeInTheDocument();
   });
 
   it('applies horizontal layout styles', () => {

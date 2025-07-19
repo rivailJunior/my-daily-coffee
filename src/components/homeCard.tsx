@@ -42,26 +42,29 @@ export const HomeCard = ({
 };
 
 export const HomeCardHorizontal = ({
-  onClick,
   title,
   description,
   image,
-}: HomeCardProps) => {
+  createdAt,
+}: HomeCardProps & { createdAt: string }) => {
   return (
     <div className='flex flex-row bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm md:flex-row w-full hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 h-auto'>
       <Image
-        className='object-cover w-20 h-20 md:h-auto md:w-20 md:rounded-none md:rounded-s-lg'
+        className='object-cover max-w-20 h-auto md:h-auto md:max-w-24 md:rounded-none md:rounded-s-lg'
         src={image}
         alt=''
         width={500}
         height={500}
       />
-      <div className='flex flex-col justify-around p-4 leading-normal'>
+      <div className='flex flex-col  p-4 leading-normal'>
         <div className='text-lg font-medium tracking-tight text-gray-900 dark:text-white capitalize'>
           {title}
         </div>
-        <div className='text-sm text-gray-700 dark:text-gray-400'>
+        <div className='text-md text-gray-700 dark:text-gray-400 pt-1 capitalize'>
           {description}
+        </div>
+        <div className='text-sm text-gray-700 dark:text-gray-400 pt-4'>
+          {createdAt}
         </div>
       </div>
     </div>
