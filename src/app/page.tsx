@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { Container } from '@/components/container';
 import { getAllRecipes } from '@/services/brewing-assistant-service';
 import { Skeleton } from '@/components/ui/skeleton';
-import { HomeCard } from '@/components/homeCard';
+import { HomeCard, HomeCardHorizontal } from '@/components/homeCard';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useSession } from 'next-auth/react';
@@ -119,20 +119,14 @@ export default function Home() {
                   href={`/brewing-assistant/timer/${brew.id}`}
                   className='block hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors'
                 >
-                  <div className='hover:bg-coffee-gray/10 dark:hover:bg-coffee-navy-dark flex items-center p-3 bg-white dark:bg-coffee-navy border-2 border-coffee-gray dark:border-coffee-navy-dark cursor-pointer rounded-lg'>
-                    <div className='bg-coffee-navy/20 dark:bg-coffee-coral/20 p-2 rounded-lg mr-3'>
-                      <Coffee className='w-5 h-5 text-coffee-navy dark:text-coffee-coral' />
-                    </div>
-                    <div className='flex-1 min-w-0'>
-                      <p className='text-sm font-medium text-gray-900 dark:text-gray-100 truncate'>
-                        {brew.name}
-                      </p>
-                    </div>
-                    <div className='flex items-center text-xs text-gray-500 dark:text-gray-400 ml-2'>
-                      <Clock className='w-3.5 h-3.5 mr-1' />
-                      {dayjs().from(brew.createdAt, true)} ago
-                    </div>
-                  </div>
+                  <HomeCardHorizontal
+                    key={brew.id}
+                    title={brew.name}
+                    description={brew.formattedDate}
+                    image={
+                      'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
+                    }
+                  />
                 </Link>
               ))
             ) : (

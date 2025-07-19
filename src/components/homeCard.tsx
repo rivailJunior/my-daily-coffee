@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { Button } from './ui/button';
+import { Link } from 'lucide-react';
 
 interface HomeCardProps {
   onClick?: () => void;
@@ -35,6 +36,33 @@ export const HomeCard = ({
         <Button variant='default' onClick={onClick}>
           See more
         </Button>
+      </div>
+    </div>
+  );
+};
+
+export const HomeCardHorizontal = ({
+  onClick,
+  title,
+  description,
+  image,
+}: HomeCardProps) => {
+  return (
+    <div className='flex flex-row bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm md:flex-row w-full hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 h-auto'>
+      <Image
+        className='object-cover w-20 h-20 md:h-auto md:w-20 md:rounded-none md:rounded-s-lg'
+        src={image}
+        alt=''
+        width={500}
+        height={500}
+      />
+      <div className='flex flex-col justify-around p-4 leading-normal'>
+        <div className='text-lg font-medium tracking-tight text-gray-900 dark:text-white capitalize'>
+          {title}
+        </div>
+        <div className='text-sm text-gray-700 dark:text-gray-400'>
+          {description}
+        </div>
       </div>
     </div>
   );

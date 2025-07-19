@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HomeCard matches snapshot 1`] = `
+<div>
+  <div
+    class=" bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700"
+  >
+    <img
+      alt=""
+      class="rounded-t-lg w-full h-48 md:h-80 object-cover"
+      data-nimg="1"
+      decoding="async"
+      height="500"
+      loading="lazy"
+      src="/_next/image?url=%2Ftest-image.jpg&w=1080&q=75"
+      srcset="/_next/image?url=%2Ftest-image.jpg&w=640&q=75 1x, /_next/image?url=%2Ftest-image.jpg&w=1080&q=75 2x"
+      style="color: transparent;"
+      width="500"
+    />
+    <div
+      class="p-5"
+    >
+      <a
+        href="#"
+      >
+        <h5
+          class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+        >
+          Test Title
+        </h5>
+      </a>
+      <p
+        class="mb-3 font-normal text-gray-700 dark:text-gray-400"
+      >
+        Test Description
+      </p>
+      <button
+        class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-coffee-navy hover:bg-coffee-navy/80 dark:bg-green-500 dark:hover:bg-green-500/80 text-white dark:text-white capitalize h-9 px-4 py-2"
+      >
+        See more
+      </button>
+    </div>
+  </div>
+</div>
+`;
