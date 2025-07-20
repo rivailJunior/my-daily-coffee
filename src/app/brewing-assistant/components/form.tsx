@@ -380,7 +380,7 @@ export function BrewingAssistantForm({
                         />
                       </FormControl>
                       {isManualRecipe && (
-                        <div className='text-xs text-blue-500 mt-1'>
+                        <div className='text-xs text-gray-400 mt-1'>
                           Total Water Amount - {form.getValues('waterAmount')}{' '}
                           ml
                         </div>
@@ -429,37 +429,17 @@ export function BrewingAssistantForm({
             </div>
 
             {isManualRecipe ? (
-              <div className='flex flex-col gap-4 border border-coffee-coral/70 p-4 rounded-md'>
+              <div className='flex flex-col gap-4 border border-gray-400 p-4 rounded-md'>
                 {Array.from(
                   { length: form.watch('stepsAmount') ?? 1 },
                   (_, index) => (
-                    <div key={index} className='flex flex-row gap-4 '>
-                      <FormField
-                        control={form.control}
-                        name={`steps.${index}.time`}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>{index + 1} Step Time</FormLabel>
-                            <FormControl>
-                              <Input
-                                type='text'
-                                {...field}
-                                onChange={(e) => {
-                                  const numValue = onlyNumber(e.target.value);
-                                  field.onChange(numValue || 0);
-                                }}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                    <div key={index} className='flex flex-col gap-4 '>
                       <FormField
                         control={form.control}
                         name={`steps.${index}.description`}
                         render={({ field }) => (
                           <FormItem className='w-full'>
-                            <FormLabel>Description {index + 1}</FormLabel>
+                            <FormLabel>{index + 1}. Step Description</FormLabel>
                             <FormControl>
                               <Input type='text' {...field} />
                             </FormControl>
@@ -468,7 +448,27 @@ export function BrewingAssistantForm({
                         )}
                       />
 
-                      <div className='flex gap-2 justify-center items-end'>
+                      <div className='flex gap-2 justify-center items-end w-full'>
+                        <FormField
+                          control={form.control}
+                          name={`steps.${index}.time`}
+                          render={({ field }) => (
+                            <FormItem className='w-full'>
+                              <FormLabel>{index + 1}. Time (Seconds)</FormLabel>
+                              <FormControl>
+                                <Input
+                                  type='text'
+                                  {...field}
+                                  onChange={(e) => {
+                                    const numValue = onlyNumber(e.target.value);
+                                    field.onChange(numValue || 0);
+                                  }}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
                         <FormField
                           control={form.control}
                           name='stepsAmount'
@@ -490,6 +490,7 @@ export function BrewingAssistantForm({
                                       Math.max(1, Number(field.value || 1) - 1)
                                     )
                                   }
+                                  variant='destructive'
                                   icon={<CircleMinus className='h-4 w-4' />}
                                 />
                               </div>

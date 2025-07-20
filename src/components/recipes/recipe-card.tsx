@@ -10,34 +10,32 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(relativeTime);
 
 interface RecipeCardProps {
-  recipe: BrewingRecipe;
+  recipe: Partial<BrewingRecipe>;
 }
 
 export function RecipeCard({ recipe }: RecipeCardProps) {
   const router = useRouter();
 
   return (
-    <Card className='p-6 bg-white dark:bg-coffee-navy border border-gray-200 dark:border-coffee-navy-dark rounded-xl shadow-sm'>
-      <div className='flex flex-col items-start justify-between gap-6'>
+    <Card className='p-6 bg-white dark:bg-coffee-navy border border-gray-200 dark:border-coffee-navy-dark rounded-xl shadow-sm h-full'>
+      <div className='flex flex-col h-full justify-between gap-6'>
         {/* Left Section: Info */}
-        <div className='flex-1'>
-          <div className='flex gap-3 mb-1'>
-            <h3 className='text-lg font-medium text-coffee-navy dark:text-coffee-coral truncate capitalize'>
-              {recipe.name || 'Unnamed Recipe'}
-            </h3>
-          </div>
+        <div className='flex-1 overflow-hidden'>
+          <h3 className='text-lg font-medium text-coffee-navy dark:text-coffee-coral truncate capitalize w-full'>
+            {recipe.name || 'Unnamed Recipe'}
+          </h3>
           <div className='text-sm text-gray-600 dark:text-gray-300 mb-4 capitalize font-medium'>
-            {recipe?.beanName} - {recipe?.roastProfile} -{' '}
-            <span className='text-xs text-gray-500 dark:text-gray-400'>
+            {recipe?.beanName} - {recipe?.roastProfile}
+            <p className='text-xs text-gray-500 dark:text-gray-400'>
               {dayjs().from(recipe.updatedAt, true)} ago
-            </span>
+            </p>
           </div>
           <div className='grid grid-cols-2 gap-y-2 gap-x-8 text-sm'>
             <div>
               <div className='uppercase text-xs text-gray-500 dark:text-gray-400 tracking-wider'>
                 Coffee
               </div>
-              <div className='font-semibold text-coffee-navy dark:text-coffee-coral'>
+              <div className='font-regular text-coffee-navy dark:text-coffee-coral'>
                 {recipe.coffeeAmount}g
               </div>
             </div>
@@ -45,7 +43,7 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
               <div className='uppercase text-xs text-gray-500 dark:text-gray-400 tracking-wider'>
                 Water
               </div>
-              <div className='font-semibold text-coffee-navy dark:text-coffee-coral'>
+              <div className='font-regular text-coffee-navy dark:text-coffee-coral'>
                 {recipe.waterAmount}ml
               </div>
             </div>
@@ -53,7 +51,7 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
               <div className='uppercase text-xs text-gray-500 dark:text-gray-400 tracking-wider'>
                 Temp
               </div>
-              <div className='font-semibold text-coffee-navy dark:text-coffee-coral'>
+              <div className='font-regular text-coffee-navy dark:text-coffee-coral'>
                 {recipe.waterTemperature}°C
               </div>
             </div>
@@ -61,8 +59,13 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
               <div className='uppercase text-xs text-gray-500 dark:text-gray-400 tracking-wider'>
                 Ratio
               </div>
-              <div className='font-semibold text-coffee-navy dark:text-coffee-coral'>
-                {recipe.waterAmount / recipe.coffeeAmount}:1
+              <div className='font-regular text-coffee-navy dark:text-coffee-coral'>
+                {parseFloat(
+                  (
+                    (recipe?.waterAmount ?? 0) / (recipe?.coffeeAmount ?? 0)
+                  ).toFixed(1)
+                )}
+                :1
               </div>
             </div>
           </div>

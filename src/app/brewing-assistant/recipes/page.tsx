@@ -3,7 +3,6 @@
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { Plus } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 
 import { getAllRecipes } from '@/services/brewing-assistant-service';
 import { BrewingRecipe } from '@/types/brewingAssistant';
