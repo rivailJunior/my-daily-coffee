@@ -9,6 +9,8 @@ import { BrewingRecipe } from '@/types/brewingAssistant';
 import { AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
+import { getManualBrewerById } from '@/services/manual-brewing-service';
+import { getGrinderById } from '@/services/grinder-service';
 
 export default function RecipePage({ params }: { params: { id: string } }) {
   const router = useRouter();
@@ -25,7 +27,17 @@ export default function RecipePage({ params }: { params: { id: string } }) {
     enabled: !!id,
   });
 
-  console.log(recipe);
+  const { data: brewer } = useQuery({
+    queryKey: ['brewer', recipe?.brewerId],
+    queryFn: () => getManualBrewerById(recipe?.brewerId || ''),
+    enabled: !!recipe?.brewerId,
+  });
+
+  const { data: grinder } = useQuery({
+    queryKey: ['grinder', recipe?.grinderId],
+    queryFn: () => getGrinderById(recipe?.grinderId || ''),
+    enabled: !!recipe?.grinderId,
+  });
 
   if (isLoading) {
     return (
@@ -58,9 +70,9 @@ export default function RecipePage({ params }: { params: { id: string } }) {
           grindSize: recipe.grindSize,
           waterAmount: recipe.waterAmount,
           waterTemperature: recipe.waterTemperature,
-          drip: 'teste',
-          grinder: 'teste',
-          ratio: 'teste',
+          drip: brewer?.name || '',
+          grinder: grinder?.name || '',
+          ratio: `1:${recipe.coffeeAmount}`,
         }}
         onClose={() => router.back()}
         className='w-full'

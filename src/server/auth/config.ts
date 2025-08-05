@@ -41,9 +41,8 @@ export const authConfig = {
   session: {
     strategy: 'jwt',
   },
-  trustHost: true, // ✅ Add this line
-  // OR if you want to be more explicit:
-  // trustedHosts: ['mydailycoffee.rivailjunior.com'],
+  trustHost: true,
+  secret: process.env.AUTH_SECRET,
   callbacks: {
     session: ({ session, token }) => {
       return {

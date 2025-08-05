@@ -17,6 +17,7 @@ import {
   CheckCircle,
   Clock,
   Coffee,
+  Download,
   Droplet,
   FastForward,
   Pause,
@@ -260,8 +261,13 @@ export default function TimerPage({ params }: TimerPageProps) {
                         <Coffee className='text-green-500' />
                       )}
                     </div>
-                    <div className='text-sm sm:text-base font-regular flex justify-center flex-row text-green-500'>
-                      {currentStep.description}
+                    <div className='flex flex-col'>
+                      <div className='text-sm sm:text-base font-regular flex justify-center flex-row text-green-500'>
+                        {currentStep.description}
+                      </div>
+                      <div className='text-xs sm:text-sm font-regular flex justify-start flex-row text-gray-300'>
+                        Water: {currentStep.waterAmount} ml
+                      </div>
                     </div>
                   </div>
 
@@ -339,10 +345,19 @@ export default function TimerPage({ params }: TimerPageProps) {
                   <div className='flex flex-col sm:flex-row gap-3 justify-center'>
                     <Button
                       onClick={resetTimer}
-                      variant='outline'
+                      variant='default'
                       className='w-full sm:w-auto'
                     >
                       <RotateCcw className='mr-2 h-4 w-4' /> Brew Again
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        router.push(`/brewing-assistant/recipes/${recipe.id}`);
+                      }}
+                      variant='outline'
+                      className='w-full sm:w-auto'
+                    >
+                      <Download className='mr-2 h-4 w-4' /> Download Recipe
                     </Button>
                   </div>
                 </div>
