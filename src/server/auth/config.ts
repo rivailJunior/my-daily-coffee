@@ -42,7 +42,7 @@ export const authConfig = {
     strategy: 'jwt',
   },
   trustHost: true,
-  secret: '8/IxHIo2qug+W82lx2vSNuOY4X4tzjqXr451y6qJdAw=',
+  secret: process.env.AUTH_SECRET,
   callbacks: {
     session: ({ session, token }) => {
       return {
