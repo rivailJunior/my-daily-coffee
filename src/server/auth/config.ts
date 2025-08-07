@@ -2,6 +2,9 @@
 import { type DefaultSession, type NextAuthConfig } from "next-auth";
 import Google from 'next-auth/providers/google';
 
+console.log('✅ Runtime NEXTAUTH_URL:', process.env.NEXTAUTH_URL);
+console.log('✅ Runtime AUTH_SECRET:', process.env.AUTH_SECRET);
+
 // import { db } from "@/server/db";
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -39,8 +42,7 @@ export const authConfig = {
   session: {
     strategy: 'jwt',
   },
-  // trustHost: true,
-  // secret: process.env.AUTH_SECRET,
+  trustHost: true,
   callbacks: {
     session: ({ session, token }) => {
       return {
