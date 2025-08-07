@@ -1,37 +1,24 @@
-// import { PrismaAdapter } from "@auth/prisma-adapter";
-import { type DefaultSession, type NextAuthConfig } from "next-auth";
+import type { DefaultSession, NextAuthConfig } from 'next-auth';
 import Google from 'next-auth/providers/google';
 
-console.log('✅ Runtime NEXTAUTH_URL:', process.env.NEXTAUTH_URL);
-console.log('✅ Runtime AUTH_SECRET:', process.env.AUTH_SECRET);
+// For debugging - remove in production
+console.log('✅ Auth Environment:', {
+  NODE_ENV: process.env.NODE_ENV,
+  AUTH_SECRET: process.env.AUTH_SECRET ? '✅ Set' : '❌ Missing',
+  GOOGLE_CLIENT_ID: process.env.AUTH_GOOGLE_CLIENT_ID ? '✅ Set' : '❌ Missing',
+  GOOGLE_CLIENT_SECRET: process.env.AUTH_GOOGLE_CLIENT_SECRET
+    ? '✅ Set'
+    : '❌ Missing',
+});
 
-// import { db } from "@/server/db";
-/**
- * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
- * object and keep type safety.
- *
- * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
- */
 declare module 'next-auth' {
   interface Session extends DefaultSession {
     user: {
       id: string;
-      // ...other properties
-      // role: UserRole;
     } & DefaultSession['user'];
   }
-
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
 }
 
-/**
- * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.
- *
- * @see https://next-auth.js.org/configuration/options
- */
 export const authConfig = {
   providers: [
     Google({
@@ -42,16 +29,16 @@ export const authConfig = {
   session: {
     strategy: 'jwt',
   },
-  trustHost: true,
   callbacks: {
     session: ({ session, token }) => {
-      return {
-        ...session,
-        user: {
-          ...session.user,
-          id: token.sub,
-        },
-      };
+      if (token.sub && session.user) {
+        session.user.id = token.sub;
+      }
+      return session;
     },
   },
+  // Base path for auth routes
+  basePath: '/api/auth',
+  // Enable debug logs in development
+  debug: process.env.NODE_ENV === 'development',
 } satisfies NextAuthConfig;
