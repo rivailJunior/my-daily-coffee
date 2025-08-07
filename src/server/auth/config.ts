@@ -1,8 +1,6 @@
 // import { PrismaAdapter } from "@auth/prisma-adapter";
 import { type DefaultSession, type NextAuthConfig } from "next-auth";
-import Google from "next-auth/providers/google";
-import Credentials from "next-auth/providers/credentials";
-
+import Google from 'next-auth/providers/google';
 
 // import { db } from "@/server/db";
 /**
@@ -11,13 +9,13 @@ import Credentials from "next-auth/providers/credentials";
  *
  * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
  */
-declare module "next-auth" {
+declare module 'next-auth' {
   interface Session extends DefaultSession {
     user: {
       id: string;
       // ...other properties
       // role: UserRole;
-    } & DefaultSession["user"];
+    } & DefaultSession['user'];
   }
 
   // interface User {
@@ -41,8 +39,8 @@ export const authConfig = {
   session: {
     strategy: 'jwt',
   },
-  trustHost: true,
-  secret: process.env.AUTH_SECRET,
+  // trustHost: true,
+  // secret: process.env.AUTH_SECRET,
   callbacks: {
     session: ({ session, token }) => {
       return {
