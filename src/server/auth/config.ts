@@ -38,7 +38,9 @@ export const authConfig = {
     },
   },
   // Base path for auth routes
-  basePath: '/api/auth',
+  // basePath: '/api/auth',
   // Enable debug logs in development
-  debug: process.env.NODE_ENV === 'development',
+  // debug: process.env.NODE_ENV === 'development',
+  secret: process.env.AUTH_SECRET,
+  trustHost: true,
 } satisfies NextAuthConfig;
