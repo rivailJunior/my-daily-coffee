@@ -1,11 +1,9 @@
 import { LoginForm } from '@/components/auth/login-form';
 import Image from 'next/image';
-import Link from 'next/link';
 export const metadata = {
   title: 'Login - My Daily Coffee',
   description: 'Sign in to your My Daily Coffee account',
 };
-
 const coffeeImageUrl =
   'https://images.unsplash.com/photo-1521677446241-d182a96ec49f?q=80&w=3645&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
 
@@ -41,15 +39,6 @@ export default function LoginPage() {
         className='flex-1 h-full w-full md:w-1/3 lg:w-1/3 flex flex-col justify-center  bg-white dark:bg-gray-900 z-10 overflow-hidden'
         aria-label='Login panel'
       >
-        <header className='mb-6 text-center'>
-          <div className='text-3xl font-regular text-coffee-900 dark:text-white mb-2'>
-            Sign In
-          </div>
-          <div className='text-base text-gray-600 dark:text-gray-300 font-light'>
-            Please login to your account.
-          </div>
-        </header>
-
         <LoginForm />
       </section>
     </main>
