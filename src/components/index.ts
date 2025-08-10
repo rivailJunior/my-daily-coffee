@@ -4,7 +4,6 @@ export { Header } from './navigation/header';
 export { AuthStatus } from './auth/auth-status';
 export { LoginForm } from './auth/login-form';
 export { ConditionalAuthStatus } from './auth/conditional-auth-status';
-export { ProtectedNavbar } from './navigation/protected-navbar';
 export { Navbar } from './navigation/navbar';
 export { GrinderCard } from './grinders/grinder-card';
 export { GrinderForm } from './grinders/grinder-form';
