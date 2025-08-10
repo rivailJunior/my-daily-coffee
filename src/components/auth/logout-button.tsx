@@ -4,8 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button, ButtonProps } from '@/components/ui/button'
 import { LogOut } from 'lucide-react'
-import { signOut } from 'next-auth/react'
-import { useAuth } from '@/contexts/AuthContext'
+import { useAuth } from '@/providers/auth-provider';
 
 interface LogoutButtonProps extends ButtonProps {
   variant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link'
@@ -18,24 +17,23 @@ export function LogoutButton({
   children, 
   ...props 
 }: LogoutButtonProps) {
-  const [isLoading, setIsLoading] = useState(false)
-  const router = useRouter()
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
-  const { logout } = useAuth()
+  // const { logout } = useAuth()
 
   const handleLogout = async () => {
-    setIsLoading(true)
-    
+    setIsLoading(true);
+
     try {
       // Use our AuthContext's logout function
-      await logout()
-      
+      // await logout()
       // The AuthContext will handle the redirect and state clearing
     } catch (error) {
-      console.error('Logout failed:', error)
-      setIsLoading(false)
+      console.error('Logout failed:', error);
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <Button
@@ -44,8 +42,8 @@ export function LogoutButton({
       disabled={isLoading}
       {...props}
     >
-      {showIcon && <LogOut className="mr-2 h-4 w-4" />}
+      {showIcon && <LogOut className='mr-2 h-4 w-4' />}
       {children || 'Sign out'}
     </Button>
-  )
+  );
 }

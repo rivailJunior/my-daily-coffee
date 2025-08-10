@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 import { Menu, Coffee, ChevronDown } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { AuthStatus } from '@/components/auth/auth-status';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/providers/auth-provider';
 import {
   DropdownMenu,
   DropdownMenuContent,

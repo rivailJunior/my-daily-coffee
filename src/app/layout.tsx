@@ -7,6 +7,7 @@ import { AuthProvider } from '@/providers/auth-provider';
 import { ThemeSwitcher } from '@/components/theme-switcher';
 import { Header } from '@/components/navigation/header';
 import { Footer } from '@/components/navigation/footer';
+import { Toaster } from '@/components/ui/toaster';
 
 const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
@@ -53,6 +54,7 @@ export default function RootLayout({
                 <div className='fixed bottom-4 right-4 z-50'>
                   <ThemeSwitcher />
                 </div>
+                <Toaster />
               </div>
               <Footer />
             </AuthProvider>
