@@ -9,38 +9,10 @@ const coffeeImageUrl =
 
 export default function LoginPage() {
   return (
-    <main className='h-screen flex flex-col md:flex-row bg-gradient-to-br from-[#f8fafc] to-[#ece9e6] dark:from-gray-900 dark:to-gray-800 items-stretch'>
-      {/* Left: image + logo */}
-      <aside className='relative flex-1 h-full w-full md:w-2/3 lg:w-2/3 flex flex-col items-center justify-center bg-coffee-50 dark:bg-gray-800 p-8 overflow-hidden'>
-        <div className='absolute inset-0 z-0'>
-          <Image
-            src={coffeeImageUrl}
-            alt='Coffee beans and brewing equipment'
-            fill
-            className='object-cover object-center opacity-80'
-            priority
-            sizes='(min-width: 768px) 50vw, 100vw'
-          />
-          <div className='absolute inset-0 bg-black/30 dark:bg-black/50 z-10' />
-        </div>
-
-        <div className='relative z-20 flex flex-col items-center justify-center w-full h-full'>
-          <h1 className='text-4xl font-normal text-white tracking-wide text-center drop-shadow mb-2'>
-            My Daily Coffee
-          </h1>
-          <p className='text-md text-white/90 text-center mb-0 drop-shadow'>
-            Brew better, every day
-          </p>
-        </div>
-      </aside>
-
-      {/* Right: login form */}
-      <section
-        className='flex-1 h-full w-full md:w-1/3 lg:w-1/3 flex flex-col justify-center  bg-white dark:bg-gray-900 z-10 overflow-hidden'
-        aria-label='Login panel'
-      >
+    <main className='min-h-screen flex flex-col md:flex-row bg-gradient-to-br from-[#f8fafc] to-[#ece9e6] dark:from-gray-900 dark:to-gray-800'>
+      <div className='w-full max-w-md mx-auto'>
         <LoginForm />
-      </section>
+      </div>
     </main>
   );
 }

@@ -2,8 +2,13 @@
 import { Github, Instagram, Twitter } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
+import { usePathname } from 'next/navigation';
 
 export function Footer() {
+  const pathname = usePathname();
+  if (pathname.includes('/login')) {
+    return null;
+  }
   return (
     <footer className='bg-white dark:bg-coffee-navy relative'>
       <div className='mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8'>
