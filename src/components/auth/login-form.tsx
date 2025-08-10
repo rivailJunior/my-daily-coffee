@@ -1,6 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -27,7 +26,6 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 export function LoginForm() {
-  const router = useRouter();
   const { toast } = useToast();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -59,11 +57,9 @@ export function LoginForm() {
       return response.json();
     },
     onSuccess: () => {
-      router.push('/');
-      router.refresh();
+      window.location.assign('/');
     },
     onError: (error: Error) => {
-      console.log({ error });
       toast({
         title: 'Error',
         description: error.message,
