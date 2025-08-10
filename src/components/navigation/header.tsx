@@ -33,7 +33,7 @@ const navigation = [
   },
 ];
 
-export function Header() {
+export function HeaderComponent() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [expandedMenu, setExpandedMenu] = useState<string | null>(null);
@@ -243,3 +243,15 @@ export function Header() {
     </div>
   );
 }
+
+export const Header = () => {
+  const pathname = usePathname();
+  if (pathname.includes('/login')) {
+    return null;
+  }
+  return (
+    <header className='fixed top-0 right-0 p-4 z-50 flex items-center gap-4'>
+      <HeaderComponent />
+    </header>
+  );
+};
