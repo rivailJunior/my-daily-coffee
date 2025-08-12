@@ -34,10 +34,9 @@ const unsetCognitoCookie = (cookieStore: ReadonlyRequestCookies) => {
 };
 
 export async function POST(req: Request) {
-  console.log('POST /api/auth');
   const data = await req.json();
   const cookieStore = cookies();
-  
+
   if (!data.action) {
     return NextResponse.json(
       { error: 'Missing action parameter' },
@@ -47,12 +46,7 @@ export async function POST(req: Request) {
 
   try {
     if (data.action === 'login') {
-      // return await login({ username, password });
-
-      const loginData = await cognitoClient.signIn(
-        data.username,
-        data.password
-      );
+      const loginData = await cognitoClient.signIn(data.email, data.password);
 
       if (!loginData?.AuthenticationResult?.AccessToken) {
         return NextResponse.json({ message: 'Login failed' }, { status: 401 });
@@ -77,6 +71,11 @@ export async function POST(req: Request) {
         );
       }
       return NextResponse.json({ message: 'Registration successful' });
+    }
+
+    if (data.action === 'logout') {
+      unsetCognitoCookie(cookieStore);
+      return NextResponse.json({ message: 'Logout successful' });
     }
 
     return NextResponse.json({ error: 'Invalid action' }, { status: 400 });

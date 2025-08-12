@@ -42,13 +42,19 @@ async function handleConfirmSignUp(formData: FormData) {
   }
 }
 
-async function handleSignIn(formData: FormData) {
+async function handleSignIn({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) {
   try {
     const response = await api.post(
       '/auth/',
       JSON.stringify({
-        email: String(formData.get('email')),
-        password: String(formData.get('password')),
+        email,
+        password,
         action: 'login',
       })
     );

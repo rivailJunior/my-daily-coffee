@@ -92,6 +92,7 @@ class CognitoClient {
   };
 
   signIn = async (username: string, password: string) => {
+    console.log(username, password);
     const params = {
       AuthFlow: 'USER_PASSWORD_AUTH',
       ClientId: this.clientId,

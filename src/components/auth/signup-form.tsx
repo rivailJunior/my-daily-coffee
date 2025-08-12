@@ -14,7 +14,6 @@ import { handleSignUp } from '@/services/auth';
 import { signupSchema } from '@/types/authSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import Link from 'next/link';
