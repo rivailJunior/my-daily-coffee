@@ -246,7 +246,7 @@ export function HeaderComponent() {
 
 export const Header = () => {
   const pathname = usePathname();
-  if (pathname.includes('/login')) {
+  if (pathname.includes('/login') || pathname.includes('/signup')) {
     return null;
   }
   return (

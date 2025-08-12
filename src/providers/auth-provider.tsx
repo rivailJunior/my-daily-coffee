@@ -1,45 +1,14 @@
 'use client'
+import { useContext, useEffect, useState } from 'react';
+
+import Cookie from 'js-cookie';
+
 import {
-  ReactNode,
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+  AuthContext,
+  AuthProviderProps,
+  AuthState,
+} from '@/types/authProvider';
 
-type User = {
-  sub: string;
-  email?: string;
-  email_verified?: boolean;
-  name?: string;
-  given_name?: string;
-  family_name?: string;
-  picture?: string;
-  [key: string]: any; // Allow for additional Cognito user attributes
-};
-
-type AuthState = {
-  isAuthenticated: boolean;
-  user: User | null;
-  isLoading: boolean;
-  error: Error | null;
-};
-
-type AuthContextType = AuthState & {
-  refreshAuth: () => Promise<void>;
-};
-
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
-type AuthProviderProps = {
-  children: ReactNode;
-  initialAuthState?: Partial<AuthState>;
-};
-
-/**
- * Client-side authentication provider that wraps the application
- * and provides authentication state and user information to all child components.
- */
 export function AuthProvider({
   children,
   initialAuthState = {},
@@ -53,33 +22,17 @@ export function AuthProvider({
   });
 
   const refreshAuth = async () => {
-    try {
-      setAuthState((prev) => ({ ...prev, isLoading: true, error: null }));
-
-      const response = await fetch('/api/auth');
-      const data = await response.json();
-
-      if (!response.ok)
-        throw new Error(data.message || 'Failed to authenticate');
-
+    const user = Cookie.get('cognito_user');
+    if (user) {
       setAuthState({
-        isAuthenticated: !!data.user,
-        user: data.user || null,
+        isAuthenticated: !!user,
+        user: JSON.parse(user),
         isLoading: false,
         error: null,
-      });
-    } catch (error) {
-      setAuthState({
-        isAuthenticated: false,
-        user: null,
-        isLoading: false,
-        error:
-          error instanceof Error ? error : new Error('Authentication failed'),
       });
     }
   };
 
-  // Initial auth check on mount
   useEffect(() => {
     refreshAuth();
   }, []);

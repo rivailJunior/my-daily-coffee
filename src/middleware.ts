@@ -8,7 +8,8 @@ export async function middleware(req: NextRequest) {
   // Allow public access only to /login
   const isPublicPath = pathname === '/login';
 
-  const token = req.cookies.get('idToken');
+  const token = req.cookies.get('cognito_token');
+
   const user = token ? await verifyCognitoToken(token.value) : null;
 
   if (!user) {
