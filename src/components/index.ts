@@ -9,3 +9,6 @@ export { GrinderCard } from './grinders/grinder-card';
 export { GrinderForm } from './grinders/grinder-form';
 export { ManualBrewerCard } from './manual-brewing/manual-brewer-card';
 export { ManualBrewerForm } from './manual-brewing/manual-brewer-form';
+export { SignupForm } from './auth/signup-form';
+export { ErrorMessage } from './errorMessage';
+export { SubmitButton } from './submitBtn';

@@ -1,59 +1,91 @@
 import { NextResponse } from 'next/server';
-import {
-  CognitoIdentityProviderClient,
-  InitiateAuthCommand,
-} from '@aws-sdk/client-cognito-identity-provider';
-import { generateSecretHash } from '@/lib/generateSecretHash';
 import { cookies } from 'next/headers';
 import { verifyCognitoToken } from '@/lib/verifyCognitoToken';
+import { cognitoClient } from '@/lib/aws/client-cognito';
 
-const client = new CognitoIdentityProviderClient({
-  region: process.env.COGNITO_REGION,
-});
+import {
+  GetUserCommandOutput,
+  InitiateAuthCommandOutput,
+} from '@aws-sdk/client-cognito-identity-provider';
+import { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
+
+type setCookieProps = {
+  cookieStore: ReadonlyRequestCookies;
+  loginData: InitiateAuthCommandOutput;
+  user: GetUserCommandOutput;
+};
+const setCognitoCookie = ({ cookieStore, loginData, user }: setCookieProps) => {
+  cookieStore.set({
+    name: 'cognito_token',
+    value: loginData?.AuthenticationResult?.AccessToken ?? '',
+    maxAge: loginData?.AuthenticationResult?.ExpiresIn,
+  });
+  cookieStore.set({
+    name: 'cognito_user',
+    value: JSON.stringify(user.UserAttributes),
+  });
+};
+
+const unsetCognitoCookie = (cookieStore: ReadonlyRequestCookies) => {
+  cookieStore.set('cognito_token', '', {
+    path: '/',
+    maxAge: 0,
+  });
+};
 
 export async function POST(req: Request) {
-  try {
-    const { username, password } = await req.json();
+  console.log('POST /api/auth');
+  const data = await req.json();
+  const cookieStore = cookies();
+  
+  if (!data.action) {
+    return NextResponse.json(
+      { error: 'Missing action parameter' },
+      { status: 400 }
+    );
+  }
 
-    if (!username || !password) {
-      return NextResponse.json(
-        { error: 'Missing credentials' },
-        { status: 400 }
+  try {
+    if (data.action === 'login') {
+      // return await login({ username, password });
+
+      const loginData = await cognitoClient.signIn(
+        data.username,
+        data.password
       );
+
+      if (!loginData?.AuthenticationResult?.AccessToken) {
+        return NextResponse.json({ message: 'Login failed' }, { status: 401 });
+      }
+      const user = await cognitoClient.getUser(
+        loginData?.AuthenticationResult?.AccessToken
+      );
+
+      setCognitoCookie({ cookieStore, loginData, user });
+      return NextResponse.json({ message: 'Login successful' });
+    }
+    if (data.action === 'signup') {
+      const registerData = await cognitoClient.signUp(
+        data.name,
+        data.email,
+        data.password
+      );
+      if (registerData?.$metadata?.httpStatusCode !== 200) {
+        return NextResponse.json(
+          { message: 'Registration failed' },
+          { status: 401 }
+        );
+      }
+      return NextResponse.json({ message: 'Registration successful' });
     }
 
-    const command = new InitiateAuthCommand({
-      AuthFlow: 'USER_PASSWORD_AUTH',
-      ClientId: process.env.COGNITO_CLIENT_ID!, // App Client ID from User Pool
-      AuthParameters: {
-        USERNAME: username,
-        PASSWORD: password,
-        SECRET_HASH: generateSecretHash(
-          username,
-          process.env.COGNITO_CLIENT_ID!,
-          process.env.COGNITO_CLIENT_SECRET!
-        ),
-      },
-    });
-
-    const response = await client.send(command);
-
-    const cookieStore = cookies();
-    cookieStore.set('idToken', response.AuthenticationResult?.IdToken!);
-    cookieStore.set('accessToken', response.AuthenticationResult?.AccessToken!);
-    cookieStore.set(
-      'refreshToken',
-      response.AuthenticationResult?.RefreshToken!
+    return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
+  } catch (error: any) {
+    console.error('Auth error:', error);
+    return NextResponse.json(
+      { error: error.message || 'An error occurred' },
+      { status: error.statusCode || 500 }
     );
-
-    return NextResponse.json({
-      accessToken: response.AuthenticationResult?.AccessToken,
-      idToken: response.AuthenticationResult?.IdToken,
-      refreshToken: response.AuthenticationResult?.RefreshToken,
-    });
-  } catch (err: any) {
-    console.error('Login error:', err);
-    return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }
 
