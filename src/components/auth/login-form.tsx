@@ -17,6 +17,7 @@ import { Input } from '@/components/ui/input';
 import { Loader2, Eye, EyeOff } from 'lucide-react';
 import { useToast } from '@/hooks/useToast';
 import { useState } from 'react';
+import { handleSignIn } from '@/services/auth';
 
 const formSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
@@ -38,24 +39,7 @@ export function LoginForm() {
   });
 
   const loginMutation = useMutation({
-    mutationFn: async (values: FormValues) => {
-      const response = await fetch('/api/auth', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: values.email,
-          password: values.password,
-        }),
-      });
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || 'Login failed');
-      }
-
-      return response.json();
-    },
+    mutationFn: handleSignIn,
     onSuccess: () => {
       window.location.assign('/');
     },
@@ -69,7 +53,7 @@ export function LoginForm() {
   });
 
   const onSubmit = (values: FormValues) => {
-    loginMutation.mutate(values);
+    loginMutation.mutate({ email: values.email, password: values.password });
   };
 
   return (
