@@ -9,7 +9,8 @@ type SubmitButtonProps = {
 export function SubmitButton({ isLoading, text }: Readonly<SubmitButtonProps>) {
   return (
     <Button
-      className='w-full shadow-xl py-2.5 px-4 mt-4 text-sm font-semibold rounded text-white bg-blue-600 hover:bg-blue-700 focus:outline-none'
+      className='mt-5'
+      variant='default'
       aria-disabled={isLoading}
       disabled={isLoading}
     >

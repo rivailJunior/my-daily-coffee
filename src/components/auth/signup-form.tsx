@@ -76,8 +76,8 @@ export function SignupForm() {
           onSubmit={form.handleSubmit(onSubmit)}
           className='max-w-md  w-full bg-white p-8 shadow-lg dark:bg-gray-800 rounded-lg flex flex-col justify-center'
         >
-          <div className='text-white lg:text-3xl text-2xl font-bold mb-8'>
-            Cadastro
+          <div className='text-invert lg:text-3xl text-2xl font-bold mb-8 text-center'>
+            Sign up
           </div>
 
           <div className='space-y-6'>
@@ -86,11 +86,11 @@ export function SignupForm() {
               name='name'
               render={({ field }) => (
                 <FormItem className='text-invert'>
-                  <FormLabel>Nome</FormLabel>
+                  <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input placeholder='Fulano de Tal' {...field} />
+                    <Input placeholder='John Doe' {...field} />
                   </FormControl>
-                  <FormDescription>Digite seu nome</FormDescription>
+                  <FormDescription>Enter your name</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -100,11 +100,11 @@ export function SignupForm() {
               control={form.control}
               render={({ field }) => (
                 <FormItem className='text-invert'>
-                  <FormLabel>E-mail</FormLabel>
+                  <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input placeholder='fulano@detal.com' {...field} />
                   </FormControl>
-                  <FormDescription>Digite seu e-mail</FormDescription>
+                  <FormDescription>Enter your email</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -114,11 +114,11 @@ export function SignupForm() {
               control={form.control}
               render={({ field }) => (
                 <FormItem className='text-invert'>
-                  <FormLabel>Senha</FormLabel>
+                  <FormLabel>Password</FormLabel>
                   <FormControl>
                     <Input type='password' placeholder='*****' {...field} />
                   </FormControl>
-                  <FormDescription>Digite sua senha</FormDescription>
+                  <FormDescription>Enter your password</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -128,28 +128,25 @@ export function SignupForm() {
               control={form.control}
               render={({ field }) => (
                 <FormItem className='text-invert'>
-                  <FormLabel>Confirme sua senha</FormLabel>
+                  <FormLabel>Confirm Password</FormLabel>
                   <FormControl>
                     <Input type='password' placeholder='*****' {...field} />
                   </FormControl>
-                  <FormDescription>Digite novamente sua senha</FormDescription>
+                  <FormDescription>Confirm your password</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
           </div>
 
-          <SubmitButton isLoading={mutation.isPending} text='Cadastrar' />
+          <SubmitButton isLoading={mutation.isPending} text='Sign up' />
           {mutation.error && (
             <ErrorMessage error='Ops, algo deu errado. Tente novamente!' />
           )}
           <p className='text-sm mt-4 text-slate-500 block  text-center'>
-            Já possui conta?{' '}
-            <Link
-              href='/auth/login'
-              className='mt-2 cursor-pointer text-blue-500'
-            >
-              Faça Login.
+            Already have an account?{' '}
+            <Link href='/login' className='mt-2 cursor-pointer text-blue-500'>
+              Login.
             </Link>
           </p>
         </form>

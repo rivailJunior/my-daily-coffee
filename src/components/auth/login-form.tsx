@@ -18,6 +18,7 @@ import { Loader2, Eye, EyeOff } from 'lucide-react';
 import { useToast } from '@/hooks/useToast';
 import { useState } from 'react';
 import { handleSignIn } from '@/services/auth';
+import Link from 'next/link';
 
 const formSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
@@ -61,16 +62,16 @@ export function LoginForm() {
       <div className='w-full max-w-md space-y-8 rounded-lg bg-white p-8 shadow-lg dark:bg-gray-800'>
         <div className='text-center'>
           <h2 className='text-3xl font-bold tracking-tight text-gray-900 dark:text-white'>
-            Sign in to your account
+            Login
           </h2>
           <p className='mt-2 text-sm text-gray-600 dark:text-gray-400'>
-            Or{' '}
-            <a
-              href='/register'
+            {" Don't have an account? "}
+            <Link
+              href='/signup'
               className='font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300'
             >
-              create a new account
-            </a>
+              Sign up
+            </Link>
           </p>
         </div>
 
@@ -106,12 +107,12 @@ export function LoginForm() {
                   <FormItem>
                     <div className='flex items-center justify-between'>
                       <FormLabel>Password</FormLabel>
-                      <a
+                      {/* <a
                         href='/forgot-password'
                         className='text-sm font-medium text-blue-600 hover:underline dark:text-blue-400'
                       >
                         Forgot password?
-                      </a>
+                      </a> */}
                     </div>
                     <FormControl>
                       <div className='relative'>
@@ -148,6 +149,7 @@ export function LoginForm() {
 
             <Button
               type='submit'
+              variant='default'
               className='w-full'
               disabled={loginMutation.isPending}
             >
