@@ -3,7 +3,6 @@
 import { Button } from '@/components/ui/button';
 import { LogoutButton } from '@/components/auth/logout-button';
 import { LogIn, User } from 'lucide-react';
-import { signIn } from 'next-auth/react';
 import { useAuth } from '@/providers/auth-provider';
 
 export function AuthStatus() {
@@ -13,6 +12,10 @@ export function AuthStatus() {
   if (isLoading) {
     return <div className='h-9 w-24 animate-pulse rounded bg-muted'></div>;
   }
+
+  const handleSignIn = () => {
+    window.location.href = '/auth/login';
+  };
 
   // Show user info and logout button when authenticated
   if (isAuthenticated && user) {
@@ -29,7 +32,7 @@ export function AuthStatus() {
 
   // Show sign in button when not authenticated
   return (
-    <Button variant='outline' size='default' onClick={() => signIn()}>
+    <Button variant='outline' size='default' onClick={handleSignIn}>
       <LogIn className='mr-2 h-4 w-4 capitalize' />
       Sign in
     </Button>

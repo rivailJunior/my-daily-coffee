@@ -16,6 +16,7 @@ export function AuthProvider({
   const [authState, setAuthState] = useState<AuthState>({
     isAuthenticated: false,
     user: null,
+    accessToken: '',
     isLoading: true,
     error: null,
     ...initialAuthState,
@@ -23,10 +24,12 @@ export function AuthProvider({
 
   const refreshAuth = async () => {
     const user = Cookie.get('cognito_user');
+    const accessToken = Cookie.get('cognito_token');
     if (user) {
       setAuthState({
         isAuthenticated: !!user,
         user: JSON.parse(user),
+        accessToken: accessToken || '',
         isLoading: false,
         error: null,
       });

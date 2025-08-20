@@ -98,7 +98,7 @@ async function handleSignOut(accessToken: string) {
   try {
     const response = await api.post(
       '/auth/',
-      JSON.stringify({ type: 'logout', token: accessToken })
+      JSON.stringify({ action: 'logout', token: accessToken })
     );
     return response;
   } catch (error) {
