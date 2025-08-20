@@ -1,5 +1,6 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
+import { Eye, EyeOff } from 'lucide-react';
 import {
   Form,
   FormControl,
@@ -19,11 +20,15 @@ import { z } from 'zod';
 import Link from 'next/link';
 import { ErrorMessage, SubmitButton } from '@/components';
 import { useToast } from '@/hooks/useToast';
+import { useRouter } from 'next/navigation';
 
 type TSignupForm = z.infer<typeof signupSchema>;
 
 export function SignupForm() {
+  const router = useRouter();
   const { toast } = useToast();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const form = useForm<TSignupForm>({
     resolver: zodResolver(signupSchema),
   });
@@ -32,11 +37,9 @@ export function SignupForm() {
     mutationFn: handleSignUp,
     onSuccess: () => {
       form.reset();
-      // Optionally redirect to confirm signup page
-      // router.push('/auth/confirm-signup');
+      router.push('/auth/confirm-signup');
     },
     onError: (error: Error) => {
-      // Show error message to user
       toast({
         title: 'Error',
         description:
@@ -55,7 +58,6 @@ export function SignupForm() {
         name: values.name,
       });
 
-      // Show success message
       toast({
         title: 'Success',
         description:
@@ -116,7 +118,22 @@ export function SignupForm() {
                 <FormItem className='text-invert'>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input type='password' placeholder='*****' {...field} />
+                    <div className='relative'>
+                      <Input 
+                        type={showPassword ? 'text' : 'password'} 
+                        placeholder='*****' 
+                        {...field} 
+                        className='pr-10'
+                      />
+                      <button
+                        type='button'
+                        onClick={() => setShowPassword(!showPassword)}
+                        className='absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
+                        tabIndex={-1}
+                      >
+                        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                      </button>
+                    </div>
                   </FormControl>
                   <FormDescription>Enter your password</FormDescription>
                   <FormMessage />
@@ -130,7 +147,22 @@ export function SignupForm() {
                 <FormItem className='text-invert'>
                   <FormLabel>Confirm Password</FormLabel>
                   <FormControl>
-                    <Input type='password' placeholder='*****' {...field} />
+                    <div className='relative'>
+                      <Input 
+                        type={showConfirmPassword ? 'text' : 'password'} 
+                        placeholder='*****' 
+                        {...field} 
+                        className='pr-10'
+                      />
+                      <button
+                        type='button'
+                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                        className='absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
+                        tabIndex={-1}
+                      >
+                        {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                      </button>
+                    </div>
                   </FormControl>
                   <FormDescription>Confirm your password</FormDescription>
                   <FormMessage />
@@ -145,7 +177,10 @@ export function SignupForm() {
           )}
           <p className='text-sm mt-4 text-slate-500 block  text-center'>
             Already have an account?{' '}
-            <Link href='/login' className='mt-2 cursor-pointer text-blue-500'>
+            <Link
+              href='/auth/login'
+              className='mt-2 cursor-pointer text-blue-500'
+            >
               Login.
             </Link>
           </p>

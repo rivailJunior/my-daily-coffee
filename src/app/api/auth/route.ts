@@ -72,6 +72,19 @@ export async function POST(req: Request) {
       }
       return NextResponse.json({ message: 'Registration successful' });
     }
+    if (data.action === 'confirm-signup') {
+      const registerData = await cognitoClient.confirmSignUp(
+        data.email,
+        data.code
+      );
+      if (registerData?.$metadata?.httpStatusCode !== 200) {
+        return NextResponse.json(
+          { message: 'Registration failed' },
+          { status: 401 }
+        );
+      }
+      return NextResponse.json({ message: 'Registration successful' });
+    }
 
     if (data.action === 'logout') {
       unsetCognitoCookie(cookieStore);

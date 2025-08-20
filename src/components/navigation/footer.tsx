@@ -3,10 +3,11 @@ import { Github, Instagram, Twitter } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
 import { usePathname } from 'next/navigation';
+import { handleHideComponentPerPage } from '@/utils/handleHideComponentPerPage';
 
 export function Footer() {
   const pathname = usePathname();
-  if (pathname.includes('/login') || pathname.includes('/signup')) {
+  if (handleHideComponentPerPage(pathname)) {
     return null;
   }
   return (

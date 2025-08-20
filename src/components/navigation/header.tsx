@@ -13,6 +13,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { handleHideComponentPerPage } from '@/utils/handleHideComponentPerPage';
 
 const navigation = [
   { name: 'Home', href: '/' },
@@ -246,7 +247,7 @@ export function HeaderComponent() {
 
 export const Header = () => {
   const pathname = usePathname();
-  if (pathname.includes('/login') || pathname.includes('/signup')) {
+  if (handleHideComponentPerPage(pathname)) {
     return null;
   }
   return (
