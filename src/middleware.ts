@@ -6,7 +6,10 @@ export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   // Allow public access only to /login
-  const isPublicPath = pathname === '/auth/login';
+  const isPublicPath =
+    pathname === '/auth/login' ||
+    pathname === '/auth/signup' ||
+    pathname === '/auth/confirm-signup';
 
   const token = req.cookies.get('cognito_token');
 

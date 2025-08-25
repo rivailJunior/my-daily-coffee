@@ -1,191 +1,277 @@
 'use client';
-import React, { useState } from 'react';
-import { Eye, EyeOff } from 'lucide-react';
+
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useMutation } from '@tanstack/react-query';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { handleSignUp } from '@/services/auth';
-import { signupSchema } from '@/types/authSchema';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import Link from 'next/link';
-import { ErrorMessage, SubmitButton } from '@/components';
+import { Loader2, Eye, EyeOff, User, Mail, Lock } from 'lucide-react';
 import { useToast } from '@/hooks/useToast';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { handleSignUp } from '@/services/auth';
 
-type TSignupForm = z.infer<typeof signupSchema>;
+const signupSchema = z.object({
+  name: z.string().min(2, 'Name must be at least 2 characters'),
+  email: z.string().email('Please enter a valid email address'),
+  password: z.string().min(6, 'Password must be at least 6 characters'),
+  confirmPassword: z.string().min(6, 'Password must be at least 6 characters'),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords don't match",
+  path: ["confirmPassword"],
+});
+
+type FormValues = z.infer<typeof signupSchema>;
 
 export function SignupForm() {
   const router = useRouter();
   const { toast } = useToast();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const form = useForm<TSignupForm>({
+  
+  const form = useForm<FormValues>({
     resolver: zodResolver(signupSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+    },
   });
 
-  const mutation = useMutation({
+  const signupMutation = useMutation({
     mutationFn: handleSignUp,
     onSuccess: () => {
+      toast({
+        title: 'Success',
+        description: 'Account created! Please check your email to verify your account.',
+      });
       form.reset();
       router.push('/auth/confirm-signup');
     },
     onError: (error: Error) => {
       toast({
         title: 'Error',
-        description:
-          error.message || 'Erro ao realizar cadastro. Tente novamente.',
+        description: error.message || 'Failed to create account. Please try again.',
         variant: 'destructive',
       });
-      console.error('Signup error:', error);
     },
   });
 
-  async function onSubmit(values: TSignupForm) {
-    try {
-      const response = await mutation.mutateAsync({
-        email: values.email,
-        password: values.password,
-        name: values.name,
-      });
-
-      toast({
-        title: 'Success',
-        description:
-          'Cadastro realizado com sucesso! Por favor, verifique seu e-mail.',
-        variant: 'default',
-      });
-      return response;
-    } catch (error) {
-      // Error is already handled by the mutation's onError
-      return null;
-    }
-  }
+  const onSubmit = (values: FormValues) => {
+    signupMutation.mutate({
+      name: values.name,
+      email: values.email,
+      password: values.password,
+    });
+  };
 
   return (
-    <div className='flex min-h-screen w-full items-center justify-center p-4'>
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className='max-w-md  w-full bg-white p-8 shadow-lg dark:bg-gray-800 rounded-lg flex flex-col justify-center'
-        >
-          <div className='text-invert lg:text-3xl text-2xl font-bold mb-8 text-center'>
-            Sign up
-          </div>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
+        <div className='lg:hidden text-center mb-8'>
+          <h2 className='text-2xl font-bold text-gray-900 mb-2'>
+            Create an Account
+          </h2>
+          <p className='text-sm text-gray-600'>
+            Join our community of coffee enthusiasts
+          </p>
+        </div>
+        <div className='hidden lg:block text-left'>
+          <h2 className='text-2xl font-bold text-gray-900'>
+            Create an Account
+          </h2>
+          <p className='mt-2 text-sm text-gray-600'>
+            Join our community of coffee enthusiasts
+          </p>
+        </div>
+        
+        <div className='space-y-4'>
+          <FormField
+            control={form.control}
+            name='name'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className='text-sm font-medium text-gray-700'>
+                  Full Name
+                </FormLabel>
+                <div className='relative'>
+                  <div className='absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none'>
+                    <User className='h-5 w-5 text-gray-400' />
+                  </div>
+                  <FormControl>
+                    <Input
+                      placeholder='John Doe'
+                      autoComplete='name'
+                      disabled={signupMutation.isPending}
+                      className='pl-10 h-11 text-base'
+                      {...field}
+                    />
+                  </FormControl>
+                </div>
+                <FormMessage className='text-xs mt-1' />
+              </FormItem>
+            )}
+          />
 
-          <div className='space-y-6'>
-            <FormField
-              control={form.control}
-              name='name'
-              render={({ field }) => (
-                <FormItem className='text-invert'>
-                  <FormLabel>Name</FormLabel>
+          <FormField
+            control={form.control}
+            name='email'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className='text-sm font-medium text-gray-700'>
+                  Email address
+                </FormLabel>
+                <div className='relative'>
+                  <div className='absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none'>
+                    <Mail className='h-5 w-5 text-gray-400' />
+                  </div>
                   <FormControl>
-                    <Input placeholder='John Doe' {...field} />
+                    <Input
+                      placeholder='your@email.com'
+                      type='email'
+                      autoCapitalize='none'
+                      autoComplete='email'
+                      disabled={signupMutation.isPending}
+                      className='pl-10 h-11 text-base'
+                      {...field}
+                    />
                   </FormControl>
-                  <FormDescription>Enter your name</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              name='email'
-              control={form.control}
-              render={({ field }) => (
-                <FormItem className='text-invert'>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder='fulano@detal.com' {...field} />
-                  </FormControl>
-                  <FormDescription>Enter your email</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              name='password'
-              control={form.control}
-              render={({ field }) => (
-                <FormItem className='text-invert'>
-                  <FormLabel>Password</FormLabel>
+                </div>
+                <FormMessage className='text-xs mt-1' />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name='password'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className='text-sm font-medium text-gray-700'>
+                  Password
+                </FormLabel>
+                <div className='relative'>
+                  <div className='absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none'>
+                    <Lock className='h-5 w-5 text-gray-400' />
+                  </div>
                   <FormControl>
                     <div className='relative'>
-                      <Input 
-                        type={showPassword ? 'text' : 'password'} 
-                        placeholder='*****' 
-                        {...field} 
-                        className='pr-10'
+                      <Input
+                        placeholder='••••••••'
+                        type={showPassword ? 'text' : 'password'}
+                        autoComplete='new-password'
+                        disabled={signupMutation.isPending}
+                        className='pl-10 pr-10 h-11 text-base'
+                        {...field}
                       />
                       <button
                         type='button'
+                        className='absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600'
                         onClick={() => setShowPassword(!showPassword)}
-                        className='absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
-                        tabIndex={-1}
+                        disabled={signupMutation.isPending}
                       >
-                        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                        {showPassword ? (
+                          <EyeOff className='h-5 w-5' />
+                        ) : (
+                          <Eye className='h-5 w-5' />
+                        )}
+                        <span className='sr-only'>
+                          {showPassword ? 'Hide password' : 'Show password'}
+                        </span>
                       </button>
                     </div>
                   </FormControl>
-                  <FormDescription>Enter your password</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              name='confirmPassword'
-              control={form.control}
-              render={({ field }) => (
-                <FormItem className='text-invert'>
-                  <FormLabel>Confirm Password</FormLabel>
+                </div>
+                <p className='text-xs text-gray-500 mt-1'>
+                  Use at least 6 characters
+                </p>
+                <FormMessage className='text-xs mt-1' />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name='confirmPassword'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className='text-sm font-medium text-gray-700'>
+                  Confirm Password
+                </FormLabel>
+                <div className='relative'>
+                  <div className='absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none'>
+                    <Lock className='h-5 w-5 text-gray-400' />
+                  </div>
                   <FormControl>
                     <div className='relative'>
-                      <Input 
-                        type={showConfirmPassword ? 'text' : 'password'} 
-                        placeholder='*****' 
-                        {...field} 
-                        className='pr-10'
+                      <Input
+                        placeholder='••••••••'
+                        type={showConfirmPassword ? 'text' : 'password'}
+                        autoComplete='new-password'
+                        disabled={signupMutation.isPending}
+                        className='pl-10 pr-10 h-11 text-base'
+                        {...field}
                       />
                       <button
                         type='button'
+                        className='absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600'
                         onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                        className='absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
-                        tabIndex={-1}
+                        disabled={signupMutation.isPending}
                       >
-                        {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                        {showConfirmPassword ? (
+                          <EyeOff className='h-5 w-5' />
+                        ) : (
+                          <Eye className='h-5 w-5' />
+                        )}
+                        <span className='sr-only'>
+                          {showConfirmPassword ? 'Hide password' : 'Show password'}
+                        </span>
                       </button>
                     </div>
                   </FormControl>
-                  <FormDescription>Confirm your password</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
+                </div>
+                <FormMessage className='text-xs mt-1' />
+              </FormItem>
+            )}
+          />
+        </div>
 
-          <SubmitButton isLoading={mutation.isPending} text='Sign up' />
-          {mutation.error && (
-            <ErrorMessage error='Ops, algo deu errado. Tente novamente!' />
+        <Button
+          type='submit'
+          variant='default'
+          className='w-full h-11 text-base font-medium bg-blue-600 hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
+          disabled={signupMutation.isPending}
+        >
+          {signupMutation.isPending ? (
+            <>
+              <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+              Creating Account...
+            </>
+          ) : (
+            'Create Account'
           )}
-          <p className='text-sm mt-4 text-slate-500 block  text-center'>
+        </Button>
+
+        <div className='text-center text-sm text-gray-600 mt-4'>
+          <p>
             Already have an account?{' '}
-            <Link
-              href='/auth/login'
-              className='mt-2 cursor-pointer text-blue-500'
-            >
-              Login.
+            <Link href='/auth/login' className='font-medium text-blue-600 hover:text-blue-500'>
+              Sign in
             </Link>
           </p>
-        </form>
-      </Form>
-    </div>
+        </div>
+      </form>
+    </Form>
   );
 }
