@@ -31,5 +31,7 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/'], // middleware runs on all routes
+  matcher: [
+    '/((?!_next/static|_next/image|_next/data|favicon.ico|api/|sitemap|robots.txt|.*\\.(?:svg|png|jpg|jpeg|gif|webp|css|js|woff|woff2|ttf|eot|json|xml)$).*)',
+  ],
 };
