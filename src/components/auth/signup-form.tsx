@@ -95,7 +95,7 @@ export function SignupForm() {
             Join our community of coffee enthusiasts
           </p>
         </div>
-        
+
         <div className='space-y-4'>
           <FormField
             control={form.control}
@@ -226,7 +226,9 @@ export function SignupForm() {
                       <button
                         type='button'
                         className='absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600'
-                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                        onClick={() =>
+                          setShowConfirmPassword(!showConfirmPassword)
+                        }
                         disabled={signupMutation.isPending}
                       >
                         {showConfirmPassword ? (
@@ -235,7 +237,9 @@ export function SignupForm() {
                           <Eye className='h-5 w-5' />
                         )}
                         <span className='sr-only'>
-                          {showConfirmPassword ? 'Hide password' : 'Show password'}
+                          {showConfirmPassword
+                            ? 'Hide password'
+                            : 'Show password'}
                         </span>
                       </button>
                     </div>
@@ -262,15 +266,6 @@ export function SignupForm() {
             'Create Account'
           )}
         </Button>
-
-        <div className='text-center text-sm text-gray-600 mt-4'>
-          <p>
-            Already have an account?{' '}
-            <Link href='/auth/login' className='font-medium text-blue-600 hover:text-blue-500'>
-              Sign in
-            </Link>
-          </p>
-        </div>
       </form>
     </Form>
   );
