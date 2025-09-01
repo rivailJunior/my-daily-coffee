@@ -20,12 +20,17 @@ export function AuthStatus() {
   // Show user info and logout button when authenticated
   if (isAuthenticated && user) {
     return (
-      <div className='flex items-center gap-4'>
+      <div className='flex items-center gap-2'>
         <div className='hidden md:flex items-center gap-2'>
-          <User className='h-4 w-4' />
-          <span className='text-sm font-medium capitalize'>{user.email}</span>
+          <span className='text-sm font-medium uppercase'>
+            {user.email?.split('@')[0]}
+          </span>
         </div>
-        <LogoutButton variant='outline' size='default' />
+        <LogoutButton
+          variant='default'
+          size='sm'
+          className='w-full md:w-auto'
+        />
       </div>
     );
   }

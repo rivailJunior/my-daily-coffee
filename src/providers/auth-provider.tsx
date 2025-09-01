@@ -8,6 +8,7 @@ import {
   AuthProviderProps,
   AuthState,
 } from '@/types/authProvider';
+import { transformUserAttributes } from '@/utils/transformUser';
 
 export function AuthProvider({
   children,
@@ -26,9 +27,10 @@ export function AuthProvider({
     const user = Cookie.get('cognito_user');
     const accessToken = Cookie.get('cognito_token');
     if (user) {
+      const transformedUser = transformUserAttributes(JSON.parse(user));
       setAuthState({
         isAuthenticated: !!user,
-        user: JSON.parse(user),
+        user: transformedUser,
         accessToken: accessToken || '',
         isLoading: false,
         error: null,

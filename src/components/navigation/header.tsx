@@ -165,9 +165,9 @@ export function HeaderComponent() {
       {isMenuOpen && (
         <div
           ref={menuRef}
-          className='md:hidden bg-background border-t border-border pt-4'
+          className='md:hidden bg-background border-t border-border pt-2 mt-4'
         >
-          <div className='px-4 space-y-2 pb-2'>
+          <div className='px-4 space-y-2 pb-2 pt-2'>
             {isAuthenticated && (
               <>
                 {navigation.map((item) => (

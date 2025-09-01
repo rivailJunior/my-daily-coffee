@@ -24,28 +24,20 @@ export function LogoutButton({
   children,
   ...props
 }: LogoutButtonProps) {
-  const [isLoading, setIsLoading] = useState(false);
   const { accessToken } = useAuth();
 
-  const handleLogout = async () => {
-    setIsLoading(true);
+  const handleLogout = () => {
     try {
-      await handleSignOut(accessToken || '');
-      window.location.reload();
-    } catch (error) {
-      setIsLoading(false);
-    }
+      handleSignOut(accessToken || '').then(() => {
+        window.location.reload();
+      });
+    } catch (error) {}
   };
 
   return (
-    <Button
-      variant={variant}
-      onClick={handleLogout}
-      disabled={isLoading}
-      {...props}
-    >
-      {showIcon && <LogOut className='mr-2 h-4 w-4' />}
-      {children || 'Sign out'}
+    <Button variant={variant} onClick={() => handleLogout()} {...props}>
+      {showIcon && <LogOut />}
+      {/* {children || 'Sign out'} */}
     </Button>
   );
 }

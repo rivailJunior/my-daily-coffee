@@ -58,18 +58,16 @@ export default function Home() {
 
   return (
     <Container>
-      <div className='flex flex-col min-h-screen bg-transparent '>
+      <div className='flex flex-col min-h-screen '>
         {/* App Header with Welcome Message */}
-        <div className='mb-8'>
-          <div className='flex items-center justify-between mb-4'>
-            <div>
-              <h1 className='text-2xl font-bold text-coffee-navy dark:text-coffee-coral'>
-                Home
-              </h1>
-              <p className='text-coffee-navy/70 dark:text-coffee-white/70 capitalize'>
-                Good evening, {user?.email ?? 'Coffee Lover'}!
-              </p>
-            </div>
+        <div className='space-y-6 mb-8'>
+          <div className='text-left'>
+            <h1 className='text-2xl font-bold text-gray-900 dark:text-white'>
+              Welcome back, {user?.email?.split('@')[0] ?? 'Coffee Lover'}!
+            </h1>
+            <p className='mt-2 text-sm text-gray-600 dark:text-gray-400'>
+              What would you like to brew today?
+            </p>
           </div>
         </div>
 
@@ -89,12 +87,12 @@ export default function Home() {
         {/* Recent Brews */}
         <div className='mb-8'>
           <div className='flex justify-between items-center mb-4'>
-            <h2 className='text-xl font-bold text-coffee-navy dark:text-coffee-white'>
+            <h2 className='text-xl font-bold text-gray-900 dark:text-white'>
               Recent Brews
             </h2>
             <Link
               href='/brewing-assistant/recipes'
-              className='text-coffee-navy hover:text-coffee-coral dark:text-coffee-coral dark:hover:text-coffee-coral/80 text-sm font-medium'
+              className='text-sm font-medium text-blue-600 hover:text-blue-500 hover:underline dark:text-blue-400 dark:hover:text-blue-300'
             >
               View All
             </Link>
