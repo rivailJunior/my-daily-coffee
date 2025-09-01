@@ -18,7 +18,7 @@ import { Input } from '@/components/ui/input';
 import { Loader2, Eye, EyeOff, User, Mail, Lock } from 'lucide-react';
 import { useToast } from '@/hooks/useToast';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+// import Link from 'next/link';
 import { handleSignUp } from '@/services/auth';
 
 const signupSchema = z.object({
@@ -80,18 +80,18 @@ export function SignupForm() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
         <div className='lg:hidden text-center mb-8'>
-          <h2 className='text-2xl font-bold text-gray-900 mb-2'>
+          <h2 className='text-2xl font-bold text-gray-900 dark:text-white mb-2'>
             Create an Account
           </h2>
-          <p className='text-sm text-gray-600'>
+          <p className='text-sm text-gray-900 dark:text-white'>
             Join our community of coffee enthusiasts
           </p>
         </div>
         <div className='hidden lg:block text-left'>
-          <h2 className='text-2xl font-bold text-gray-900'>
+          <h2 className='text-2xl font-bold text-gray-900 dark:text-white'>
             Create an Account
           </h2>
-          <p className='mt-2 text-sm text-gray-600'>
+          <p className='mt-2 text-sm text-gray-900 dark:text-white'>
             Join our community of coffee enthusiasts
           </p>
         </div>
@@ -102,7 +102,7 @@ export function SignupForm() {
             name='name'
             render={({ field }) => (
               <FormItem>
-                <FormLabel className='text-sm font-medium text-gray-700'>
+                <FormLabel className='text-sm font-medium text-gray-900 dark:text-white'>
                   Full Name
                 </FormLabel>
                 <div className='relative'>
@@ -114,7 +114,7 @@ export function SignupForm() {
                       placeholder='John Doe'
                       autoComplete='name'
                       disabled={signupMutation.isPending}
-                      className='pl-10 h-11 text-base'
+                      className='pl-10 h-11 text-base text-gray-900 dark:text-white'
                       {...field}
                     />
                   </FormControl>
@@ -129,7 +129,7 @@ export function SignupForm() {
             name='email'
             render={({ field }) => (
               <FormItem>
-                <FormLabel className='text-sm font-medium text-gray-700'>
+                <FormLabel className='text-sm font-medium text-gray-900 dark:text-white'>
                   Email address
                 </FormLabel>
                 <div className='relative'>
@@ -143,7 +143,7 @@ export function SignupForm() {
                       autoCapitalize='none'
                       autoComplete='email'
                       disabled={signupMutation.isPending}
-                      className='pl-10 h-11 text-base'
+                      className='pl-10 h-11 text-base text-gray-900 dark:text-white'
                       {...field}
                     />
                   </FormControl>
@@ -158,7 +158,7 @@ export function SignupForm() {
             name='password'
             render={({ field }) => (
               <FormItem>
-                <FormLabel className='text-sm font-medium text-gray-700'>
+                <FormLabel className='text-sm font-medium text-gray-900 dark:text-white'>
                   Password
                 </FormLabel>
                 <div className='relative'>
@@ -172,12 +172,12 @@ export function SignupForm() {
                         type={showPassword ? 'text' : 'password'}
                         autoComplete='new-password'
                         disabled={signupMutation.isPending}
-                        className='pl-10 pr-10 h-11 text-base'
+                        className='pl-10 pr-10 h-11 text-base text-gray-900 dark:text-white'
                         {...field}
                       />
                       <button
                         type='button'
-                        className='absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600'
+                        className='absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
                         onClick={() => setShowPassword(!showPassword)}
                         disabled={signupMutation.isPending}
                       >
@@ -193,7 +193,7 @@ export function SignupForm() {
                     </div>
                   </FormControl>
                 </div>
-                <p className='text-xs text-gray-500 mt-1'>
+                <p className='text-xs text-gray-900 dark:text-white mt-1'>
                   Use at least 6 characters
                 </p>
                 <FormMessage className='text-xs mt-1' />
@@ -206,7 +206,7 @@ export function SignupForm() {
             name='confirmPassword'
             render={({ field }) => (
               <FormItem>
-                <FormLabel className='text-sm font-medium text-gray-700'>
+                <FormLabel className='text-sm font-medium text-gray-900 dark:text-white'>
                   Confirm Password
                 </FormLabel>
                 <div className='relative'>
@@ -220,12 +220,12 @@ export function SignupForm() {
                         type={showConfirmPassword ? 'text' : 'password'}
                         autoComplete='new-password'
                         disabled={signupMutation.isPending}
-                        className='pl-10 pr-10 h-11 text-base'
+                        className='pl-10 pr-10 h-11 text-base text-gray-900 dark:text-white'
                         {...field}
                       />
                       <button
                         type='button'
-                        className='absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600'
+                        className='absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
                         onClick={() =>
                           setShowConfirmPassword(!showConfirmPassword)
                         }

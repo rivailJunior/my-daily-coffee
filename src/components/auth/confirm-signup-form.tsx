@@ -68,29 +68,29 @@ export function ConfirmSignUpForm() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
         <div className='lg:hidden text-center mb-8'>
-          <h2 className='text-2xl font-bold text-gray-900 mb-2'>
+          <h2 className='text-2xl font-bold text-gray-900 dark:text-white mb-2'>
             Confirm Your Account
           </h2>
-          <p className='text-sm text-gray-600'>
+          <p className='text-sm text-gray-900 dark:text-white'>
             Enter the verification code sent to your email
           </p>
         </div>
         <div className='hidden lg:block text-left'>
-          <h2 className='text-2xl font-bold text-gray-900'>
+          <h2 className='text-2xl font-bold text-gray-900 dark:text-white'>
             Confirm Your Account
           </h2>
-          <p className='mt-2 text-sm text-gray-600'>
+          <p className='mt-2 text-sm text-gray-900 dark:text-white'>
             Enter the verification code sent to your email
           </p>
         </div>
-        
+
         <div className='space-y-4'>
           <FormField
             control={form.control}
             name='email'
             render={({ field }) => (
               <FormItem>
-                <FormLabel className='text-sm font-medium text-gray-700'>
+                <FormLabel className='text-sm font-medium text-gray-900 dark:text-white'>
                   Email address
                 </FormLabel>
                 <div className='relative'>
@@ -105,7 +105,7 @@ export function ConfirmSignUpForm() {
                       autoComplete='email'
                       autoCorrect='off'
                       disabled={confirmSignupMutation.isPending}
-                      className='pl-10 h-11 text-base'
+                      className='pl-10 h-11 text-base text-gray-900 dark:text-white'
                       {...field}
                     />
                   </FormControl>
@@ -120,7 +120,7 @@ export function ConfirmSignUpForm() {
             name='code'
             render={({ field }) => (
               <FormItem>
-                <FormLabel className='text-sm font-medium text-gray-700'>
+                <FormLabel className='text-sm font-medium text-gray-900 dark:text-white'>
                   Verification Code
                 </FormLabel>
                 <div className='relative'>
@@ -133,12 +133,12 @@ export function ConfirmSignUpForm() {
                       type='text'
                       autoComplete='one-time-code'
                       disabled={confirmSignupMutation.isPending}
-                      className='pl-10 h-11 text-base'
+                      className='pl-10 h-11 text-base text-gray-900 dark:text-white'
                       {...field}
                     />
                   </FormControl>
                 </div>
-                <p className='text-xs text-gray-500 mt-1'>
+                <p className='text-xs text-gray-900 dark:text-white mt-1'>
                   Enter the 6-digit code sent to your email
                 </p>
                 <FormMessage className='text-xs mt-1' />
@@ -163,10 +163,13 @@ export function ConfirmSignUpForm() {
           )}
         </Button>
 
-        <div className='text-center text-sm text-gray-600 mt-4'>
+        <div className='text-center text-sm text-gray-900 dark:text-white mt-4'>
           <p>
             Already have an account?{' '}
-            <Link href='/auth/login' className='font-medium text-blue-600 hover:text-blue-500'>
+            <Link
+              href='/auth/login'
+              className='font-medium text-blue-600 hover:text-blue-500'
+            >
               Sign in
             </Link>
           </p>

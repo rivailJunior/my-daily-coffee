@@ -60,18 +60,18 @@ export function LoginForm() {
     <div className='w-full'>
       <div className='space-y-6'>
         <div className='lg:hidden text-center mb-8'>
-          <h2 className='text-2xl font-bold text-gray-900 mb-2'>
+          <h2 className='text-2xl font-bold text-gray-900 dark:text-white mb-2'>
             Sign in to your account
           </h2>
-          <p className='text-sm text-gray-600'>
+          <p className='text-sm text-gray-900 dark:text-white'>
             Enter your credentials to access your account
           </p>
         </div>
         <div className='hidden lg:block text-left'>
-          <h2 className='text-2xl font-bold text-gray-900'>
+          <h2 className='text-2xl font-bold text-gray-900 dark:text-white'>
             Sign in to your account
           </h2>
-          <p className='mt-2 text-sm text-gray-600'>
+          <p className='mt-2 text-sm text-gray-900 dark:text-white'>
             Enter your credentials to access your account
           </p>
         </div>
@@ -84,7 +84,7 @@ export function LoginForm() {
                 name='email'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className='text-sm font-medium text-gray-700'>
+                    <FormLabel className='text-sm font-medium text-gray-700 dark:text-white'>
                       Email address
                     </FormLabel>
                     <div className='relative'>
@@ -99,7 +99,7 @@ export function LoginForm() {
                           autoComplete='email'
                           autoCorrect='off'
                           disabled={loginMutation.isPending}
-                          className='pl-10 h-11 text-base'
+                          className='pl-10 h-11 text-base text-gray-900 dark:text-white'
                           {...field}
                         />
                       </FormControl>
@@ -115,15 +115,15 @@ export function LoginForm() {
                 render={({ field }) => (
                   <FormItem>
                     <div className='flex items-center justify-between'>
-                      <FormLabel className='text-sm font-medium text-gray-700'>
+                      <FormLabel className='text-sm font-medium text-gray-900 dark:text-white'>
                         Password
                       </FormLabel>
-                      <a
+                      {/* <a
                         href='/forgot-password'
-                        className='text-sm font-medium text-blue-600 hover:text-blue-500 hover:underline'
+                        className='text-sm font-medium text-blue-600 hover:text-blue-500 hover:underline dark:text-blue-400 dark:hover:text-blue-300'
                       >
                         Forgot password?
-                      </a>
+                      </a> */}
                     </div>
                     <div className='relative'>
                       <div className='absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none'>
@@ -136,12 +136,12 @@ export function LoginForm() {
                             type={showPassword ? 'text' : 'password'}
                             autoComplete='current-password'
                             disabled={loginMutation.isPending}
-                            className='pl-10 pr-10 h-11 text-base'
+                            className='pl-10 pr-10 h-11 text-base text-gray-900 dark:text-white'
                             {...field}
                           />
                           <button
                             type='button'
-                            className='absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600'
+                            className='absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
                             onClick={() => setShowPassword(!showPassword)}
                             disabled={loginMutation.isPending}
                           >
@@ -181,18 +181,18 @@ export function LoginForm() {
           </form>
         </Form>
 
-        <div className='relative my-6'>
+        {/* <div className='relative my-6'>
           <div className='absolute inset-0 flex items-center'>
             <div className='w-full border-t border-gray-200' />
           </div>
           <div className='relative flex justify-center text-sm'>
-            <span className='px-3 bg-white text-gray-500 text-xs'>
+            <span className='px-3 bg-white dark:bg-coffee-navy text-gray-900 dark:text-white text-xs'>
               Or continue with
             </span>
           </div>
-        </div>
+        </div> */}
 
-        <div className='grid grid-cols-2 gap-3'>
+        {/* <div className='grid grid-cols-2 gap-3'>
           <Button
             type='button'
             variant='outline'
@@ -213,7 +213,7 @@ export function LoginForm() {
             </svg>
             <span>LinkedIn</span>
           </Button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
