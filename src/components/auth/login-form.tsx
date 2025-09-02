@@ -59,14 +59,6 @@ export function LoginForm() {
   return (
     <div className='w-full'>
       <div className='space-y-6'>
-        <div className='lg:hidden text-center mb-8'>
-          <h2 className='text-2xl font-bold text-gray-900 dark:text-white mb-2'>
-            Sign in to your account
-          </h2>
-          <p className='text-sm text-gray-900 dark:text-white'>
-            Enter your credentials to access your account
-          </p>
-        </div>
         <div className='hidden lg:block text-left'>
           <h2 className='text-2xl font-bold text-gray-900 dark:text-white'>
             Sign in to your account

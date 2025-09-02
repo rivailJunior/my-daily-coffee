@@ -67,14 +67,6 @@ export function ConfirmSignUpForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
-        <div className='lg:hidden text-center mb-8'>
-          <h2 className='text-2xl font-bold text-gray-900 dark:text-white mb-2'>
-            Confirm Your Account
-          </h2>
-          <p className='text-sm text-gray-900 dark:text-white'>
-            Enter the verification code sent to your email
-          </p>
-        </div>
         <div className='hidden lg:block text-left'>
           <h2 className='text-2xl font-bold text-gray-900 dark:text-white'>
             Confirm Your Account
@@ -83,7 +75,6 @@ export function ConfirmSignUpForm() {
             Enter the verification code sent to your email
           </p>
         </div>
-
         <div className='space-y-4'>
           <FormField
             control={form.control}

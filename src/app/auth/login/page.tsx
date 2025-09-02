@@ -9,14 +9,14 @@ export const metadata = {
 export default function Login() {
   return (
     <AuthLayout
-      title="Welcome Back!"
-      description="Track your coffee brewing, discover new recipes, and join a community of coffee enthusiasts."
-      pageTitle="Welcome Back"
-      pageDescription="Sign in to continue to My Daily Coffee"
+      title='Welcome Back'
+      description='Track your coffee brewing, discover new recipes, and join a community of coffee enthusiasts.'
+      pageTitle='Sign In'
+      pageDescription='Sign in to continue to My Daily Coffee'
       showFooterLink={true}
       footerLinkText="Don't have an account?"
-      footerLinkHref="/auth/signup"
-      footerLinkLabel="Sign up"
+      footerLinkHref='/auth/signup'
+      footerLinkLabel='Sign up'
     >
       <LoginForm />
     </AuthLayout>

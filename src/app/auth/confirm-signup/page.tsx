@@ -9,10 +9,10 @@ export const metadata = {
 export default function ConfirmSignUp() {
   return (
     <AuthLayout
-      title="Confirm Your Account"
-      description="Complete your registration and start exploring the world of coffee."
-      pageTitle="Confirm Your Account"
-      pageDescription="Enter the verification code sent to your email"
+      title='You are almost there'
+      description='Complete your registration and start exploring the world of coffee.'
+      pageTitle='Confirm your account'
+      pageDescription='Enter the verification code sent to your email'
     >
       <ConfirmSignUpForm />
     </AuthLayout>

@@ -15,6 +15,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { handleHideComponentPerPage } from '@/utils/handleHideComponentPerPage';
 
+import { motion } from 'framer-motion';
+
 const navigation = [
   { name: 'Home', href: '/' },
   {
@@ -86,7 +88,7 @@ export function HeaderComponent() {
   return (
     <div
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md transition-all duration-300 border-b',
+        'fixed top-0 left-0 right-0 z-50 bg-gray-50 dark:bg-coffee-navy-dark dark:border-coffee-navy-dark backdrop-blur-md transition-all duration-300 border-b',
         isScrolled ? 'py-2' : 'py-4',
         'border-border'
       )}
@@ -150,13 +152,18 @@ export function HeaderComponent() {
           <button
             type='button'
             aria-expanded={isMenuOpen}
-            className='md:hidden p-2 rounded-md text-foreground/80 hover:text-foreground focus:outline-none hover:bg-accent/50'
+            className='md:hidden p-2 rounded-md text-foreground/80 hover:text-foreground focus:outline-none'
             onClick={(e) => {
               e.stopPropagation();
               setIsMenuOpen(!isMenuOpen);
             }}
           >
-            <Menu className='h-6 w-6' />
+            <motion.div
+              whileTap={{ scale: 0.8 }}
+              animate={{ rotate: isMenuOpen ? 90 : 0 }}
+            >
+              <Menu className='h-6 w-6' />
+            </motion.div>
           </button>
         )}
       </div>
@@ -165,9 +172,9 @@ export function HeaderComponent() {
       {isMenuOpen && (
         <div
           ref={menuRef}
-          className='md:hidden bg-background border-t border-border pt-2 mt-4'
+          className='md:hidden bg-gray-50 dark:bg-coffee-navy-dark pt-2 mt-4'
         >
-          <div className='px-4 space-y-2 pb-2 pt-2'>
+          <div className='px-2 space-y-2 pb-2 pt-2'>
             {isAuthenticated && (
               <>
                 {navigation.map((item) => (
@@ -176,7 +183,7 @@ export function HeaderComponent() {
                       <div className='space-y-1'>
                         <button
                           type='button'
-                          className='w-full text-left px-3 py-2 rounded-md text-base font-medium flex items-center justify-between hover:bg-accent/50'
+                          className='w-full text-left px-3 py-2 rounded-md text-base font-medium flex items-center justify-between hover:bg-gray-200 hover:text-black'
                           onClick={() =>
                             setExpandedMenu(
                               expandedMenu === item.name ? null : item.name
@@ -205,8 +212,8 @@ export function HeaderComponent() {
                                 className={cn(
                                   'block px-3 py-2 rounded-md text-sm',
                                   pathname === subItem.href
-                                    ? 'bg-accent text-accent-foreground'
-                                    : 'text-foreground/80 hover:bg-accent/50 hover:text-foreground'
+                                    ? 'bg-gray-500 text-white'
+                                    : 'text-foreground/80 '
                                 )}
                                 onClick={() => {
                                   setIsMenuOpen(false);
@@ -225,8 +232,8 @@ export function HeaderComponent() {
                         className={cn(
                           'block px-3 py-2 rounded-md text-base font-medium',
                           pathname === item.href
-                            ? 'bg-accent text-accent-foreground'
-                            : 'text-foreground/80 hover:bg-accent/50 hover:text-foreground'
+                            ? 'bg-slate-500 text-white'
+                            : 'text-foreground/80 hover:bg-gray-200 hover:text-foreground'
                         )}
                         onClick={() => setIsMenuOpen(false)}
                       >

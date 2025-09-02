@@ -40,7 +40,7 @@ export function AuthLayout({
           <Link href='/' className='text-xl font-bold text-white mb-2'>
             My Daily Coffee
           </Link>
-          <h1 className='text-2xl font-bold text-white'>{title}</h1>
+          <h1 className='text-2xl font-normal text-white'>{title}</h1>
         </div>
       </div>
 
@@ -56,7 +56,7 @@ export function AuthLayout({
             priority
           />
           <div className='relative z-20 flex flex-col justify-between p-12 w-full'>
-            <Link href='/' className='text-2xl font-bold text-white'>
+            <Link href='/' className='text-2xl font-bold font-sans text-white'>
               My Daily Coffee
             </Link>
             <div className='text-white'>
@@ -67,14 +67,16 @@ export function AuthLayout({
         </div>
 
         {/* Right side with form */}
-        <div className='w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-8 dark:bg-coffee-navy'>
+        <div className='w-full h-screen lg:w-1/2 flex  md:items-center justify-center p-6 sm:p-8 dark:bg-coffee-navy'>
           <div className='w-full max-w-md'>
             {/* Mobile header */}
             <div className='lg:hidden mb-8 text-center'>
-              <h1 className='text-2xl font-bold text-white mb-2'>
+              <h1 className='text-2xl font-bold dark:text-white text-black mb-2'>
                 {pageTitle}
               </h1>
-              <p className='text-white text-sm'>{pageDescription}</p>
+              <p className='dark:text-white text-sm text-black'>
+                {pageDescription}
+              </p>
             </div>
 
             {/* Form Content */}

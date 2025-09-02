@@ -33,7 +33,7 @@ import {
 } from '@/components/ui/collapsible';
 import { Container } from '@/components/container';
 import { Countdown } from '@/components/countdown';
-import { cn } from '@/lib/utils';
+
 import { formatTime } from '@/utils/formatTime';
 
 interface TimerPageProps {
