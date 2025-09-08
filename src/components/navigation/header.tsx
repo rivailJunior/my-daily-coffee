@@ -5,7 +5,6 @@ import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Menu, Coffee, ChevronDown } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
-import { AuthStatus } from '@/components/auth/auth-status';
 import { useAuth } from '@/providers/auth-provider';
 import {
   DropdownMenu,
@@ -16,32 +15,16 @@ import {
 import { handleHideComponentPerPage } from '@/utils/handleHideComponentPerPage';
 
 import { motion } from 'framer-motion';
-
-const navigation = [
-  { name: 'Home', href: '/' },
-  {
-    name: 'Recipes',
-    items: [
-      { name: 'All', href: '/brewing-assistant/recipes' },
-      { name: 'Create IA', href: '/brewing-assistant' },
-      { name: 'Create Manual', href: '/brewing-assistant/manual-recipe' },
-    ],
-  },
-  {
-    name: 'Gear',
-    items: [
-      { name: 'Grinders', href: '/grinders' },
-      { name: 'Drippers', href: '/manual-brewing-methods' },
-    ],
-  },
-];
+import { handleSignOut } from '@/services/auth';
+import { navigation } from '@/constants/navigation';
 
 export function HeaderComponent() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [expandedMenu, setExpandedMenu] = useState<string | null>(null);
+  const [menuItems, setMenuItems] = useState(navigation);
   const pathname = usePathname();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, accessToken } = useAuth();
   const isLoginPage = pathname === '/login';
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -85,6 +68,32 @@ export function HeaderComponent() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleLogout = () => {
+    try {
+      handleSignOut(accessToken || '').then(() => {
+        window.location.reload();
+      });
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      setMenuItems((prevMenuItems) => [
+        ...prevMenuItems,
+        {
+          name: 'Account',
+          items: [
+            {
+              name: 'Logout',
+              href: '#',
+              onClick: () => handleLogout(),
+            },
+          ],
+        },
+      ]);
+    }
+  }, [isAuthenticated]);
+
   return (
     <div
       className={cn(
@@ -104,7 +113,7 @@ export function HeaderComponent() {
         <nav className='hidden md:flex items-center space-x-8'>
           {isAuthenticated && (
             <>
-              {navigation.map((item) => {
+              {menuItems.map((item) => {
                 const isActive =
                   pathname === item.href ||
                   (item.href !== '/' && pathname?.startsWith(item?.href || ''));
@@ -121,6 +130,8 @@ export function HeaderComponent() {
                           <Link
                             href={subItem.href}
                             className='w-full cursor-pointer'
+                            // @ts-ignore
+                            onClick={subItem?.onClick}
                           >
                             {subItem.name}
                           </Link>
@@ -144,7 +155,7 @@ export function HeaderComponent() {
               })}
             </>
           )}
-          {!isLoginPage && <AuthStatus />}
+          {/* {!isLoginPage && <AuthStatus />} */}
         </nav>
 
         {/* Mobile menu button */}
@@ -177,7 +188,7 @@ export function HeaderComponent() {
           <div className='px-2 space-y-2 pb-2 pt-2'>
             {isAuthenticated && (
               <>
-                {navigation.map((item) => (
+                {menuItems.map((item) => (
                   <div key={item.name}>
                     {item.items ? (
                       <div className='space-y-1'>
@@ -242,7 +253,6 @@ export function HeaderComponent() {
                     )}
                   </div>
                 ))}
-                {!isLoginPage && <AuthStatus />}
               </>
             )}
           </div>
