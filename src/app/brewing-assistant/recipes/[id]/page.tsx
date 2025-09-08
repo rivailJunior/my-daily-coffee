@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { DownloadRecipeCard } from '../../components/downloadRecipeCard';
+import { DownloadRecipeCard } from '@/components/brewing-assistant/downloadRecipeCard';
 import { Container } from '@/components/container';
 import { useQuery } from '@tanstack/react-query';
 import { getRecipeById } from '@/services/brewing-assistant-service';

@@ -107,4 +107,6 @@ export type BrewAssistantProps = {
   ) => Promise<BrewingRecipe>;
   heading: string;
   isManualRecipe?: boolean;
+  title?: string;
+  headingDescription?: string;
 };

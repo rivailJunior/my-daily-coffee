@@ -25,6 +25,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Card } from '../ui/card';
 
 interface ManualBrewerFormProps {
   brewer?: ManualBrewer;
@@ -129,18 +130,18 @@ export function ManualBrewerForm({ brewer, onSuccess }: ManualBrewerFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
           {/* Required Fields First */}
           <FormField
             control={form.control}
-            name="name"
-            rules={{ required: "Brewer name is required" }}
+            name='name'
+            rules={{ required: 'Brewer name is required' }}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="My V60 setup" {...field} />
+                  <Input placeholder='My V60 setup' {...field} />
                 </FormControl>
                 <FormDescription>
                   Give your brewing device a name to easily identify it
@@ -152,13 +153,13 @@ export function ManualBrewerForm({ brewer, onSuccess }: ManualBrewerFormProps) {
 
           <FormField
             control={form.control}
-            name="brand"
-            rules={{ required: "Brand is required" }}
+            name='brand'
+            rules={{ required: 'Brand is required' }}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Brand</FormLabel>
                 <FormControl>
-                  <Input placeholder="Hario, Chemex, etc." {...field} />
+                  <Input placeholder='Hario, Chemex, etc.' {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -167,13 +168,13 @@ export function ManualBrewerForm({ brewer, onSuccess }: ManualBrewerFormProps) {
 
           <FormField
             control={form.control}
-            name="model"
-            rules={{ required: "Model is required" }}
+            name='model'
+            rules={{ required: 'Model is required' }}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Model</FormLabel>
                 <FormControl>
-                  <Input placeholder="V60 02, Classic, etc." {...field} />
+                  <Input placeholder='V60 02, Classic, etc.' {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -182,18 +183,19 @@ export function ManualBrewerForm({ brewer, onSuccess }: ManualBrewerFormProps) {
 
           <FormField
             control={form.control}
-            name="brewMethod"
+            name='brewMethod'
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Brewing Method</FormLabel>
                 <FormControl>
                   <select
-                    className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+                    className='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm'
                     {...field}
                     onChange={(e) => {
                       field.onChange(e);
                       // Update type based on brew method
-                      const method = e.target.value as ManualBrewer['brewMethod'];
+                      const method = e.target
+                        .value as ManualBrewer['brewMethod'];
                       if (method === 'immersion') {
                         form.setValue('type', 'press');
                       } else if (method === 'percolation') {
@@ -218,13 +220,13 @@ export function ManualBrewerForm({ brewer, onSuccess }: ManualBrewerFormProps) {
 
           <FormField
             control={form.control}
-            name="type"
+            name='type'
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Type</FormLabel>
                 <FormControl>
                   <select
-                    className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+                    className='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm'
                     {...field}
                   >
                     {BREWER_TYPES.map((type) => (
@@ -241,13 +243,13 @@ export function ManualBrewerForm({ brewer, onSuccess }: ManualBrewerFormProps) {
 
           <FormField
             control={form.control}
-            name="material"
+            name='material'
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Material</FormLabel>
                 <FormControl>
                   <select
-                    className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+                    className='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm'
                     {...field}
                   >
                     {BREWER_MATERIALS.map((material) => (
@@ -264,13 +266,13 @@ export function ManualBrewerForm({ brewer, onSuccess }: ManualBrewerFormProps) {
 
           <FormField
             control={form.control}
-            name="filterType"
+            name='filterType'
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Filter Type</FormLabel>
                 <FormControl>
                   <select
-                    className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+                    className='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm'
                     {...field}
                   >
                     {FILTER_TYPES.map((filter) => (
@@ -287,17 +289,21 @@ export function ManualBrewerForm({ brewer, onSuccess }: ManualBrewerFormProps) {
 
           <FormField
             control={form.control}
-            name="capacity"
-            rules={{ required: "Capacity is required" }}
+            name='capacity'
+            rules={{ required: 'Capacity is required' }}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Capacity (ml)</FormLabel>
                 <FormControl>
                   <Input
-                    type="number"
-                    placeholder="400"
+                    type='number'
+                    placeholder='400'
                     {...field}
-                    onChange={(e) => field.onChange(e.target.value ? Number(e.target.value) : 0)}
+                    onChange={(e) =>
+                      field.onChange(
+                        e.target.value ? Number(e.target.value) : 0
+                      )
+                    }
                   />
                 </FormControl>
                 <FormDescription>
@@ -310,21 +316,26 @@ export function ManualBrewerForm({ brewer, onSuccess }: ManualBrewerFormProps) {
 
           <FormField
             control={form.control}
-            name="recommendedGrindSize"
-            rules={{ required: "Recommended grind size is required" }}
+            name='recommendedGrindSize'
+            rules={{ required: 'Recommended grind size is required' }}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Recommended Grind Size</FormLabel>
                 <FormControl>
                   <Input
-                    type="number"
-                    placeholder="7"
+                    type='number'
+                    placeholder='7'
                     {...field}
-                    onChange={(e) => field.onChange(e.target.value ? Number(e.target.value) : 0)}
+                    onChange={(e) =>
+                      field.onChange(
+                        e.target.value ? Number(e.target.value) : 0
+                      )
+                    }
                   />
                 </FormControl>
                 <FormDescription>
-                  Recommended grind size (1-13, where 1 is finest and 13 is coarsest)
+                  Recommended grind size (1-13, where 1 is finest and 13 is
+                  coarsest)
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -333,18 +344,22 @@ export function ManualBrewerForm({ brewer, onSuccess }: ManualBrewerFormProps) {
 
           <FormField
             control={form.control}
-            name="brewTime.min"
-            rules={{ required: "Minimum brew time is required" }}
+            name='brewTime.min'
+            rules={{ required: 'Minimum brew time is required' }}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Minimum Brew Time (seconds)</FormLabel>
                 <FormControl>
                   <Input
-                    type="number"
-                    placeholder="120"
+                    type='number'
+                    placeholder='120'
                     {...field}
                     value={field.value}
-                    onChange={(e) => field.onChange(e.target.value ? Number(e.target.value) : 0)}
+                    onChange={(e) =>
+                      field.onChange(
+                        e.target.value ? Number(e.target.value) : 0
+                      )
+                    }
                   />
                 </FormControl>
                 <FormDescription>
@@ -357,18 +372,22 @@ export function ManualBrewerForm({ brewer, onSuccess }: ManualBrewerFormProps) {
 
           <FormField
             control={form.control}
-            name="brewTime.max"
-            rules={{ required: "Maximum brew time is required" }}
+            name='brewTime.max'
+            rules={{ required: 'Maximum brew time is required' }}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Maximum Brew Time (seconds)</FormLabel>
                 <FormControl>
                   <Input
-                    type="number"
-                    placeholder="240"
+                    type='number'
+                    placeholder='240'
                     {...field}
                     value={field.value}
-                    onChange={(e) => field.onChange(e.target.value ? Number(e.target.value) : 0)}
+                    onChange={(e) =>
+                      field.onChange(
+                        e.target.value ? Number(e.target.value) : 0
+                      )
+                    }
                   />
                 </FormControl>
                 <FormDescription>
@@ -381,18 +400,18 @@ export function ManualBrewerForm({ brewer, onSuccess }: ManualBrewerFormProps) {
 
           <FormField
             control={form.control}
-            name="pressure"
+            name='pressure'
             render={({ field }) => (
-              <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+              <FormItem className='flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4'>
                 <FormControl>
                   <input
-                    type="checkbox"
+                    type='checkbox'
                     checked={field.value}
                     onChange={(e) => field.onChange(e.target.checked)}
-                    className="h-4 w-4 rounded border-gray-300 text-coffee-coral focus:ring-coffee-coral"
+                    className='h-4 w-4 rounded border-gray-300 text-coffee-coral focus:ring-coffee-coral'
                   />
                 </FormControl>
-                <div className="space-y-1 leading-none">
+                <div className='space-y-1 leading-none'>
                   <FormLabel>Uses Pressure</FormLabel>
                   <FormDescription>
                     Check if this brewing method uses pressure (e.g., AeroPress)
@@ -405,14 +424,14 @@ export function ManualBrewerForm({ brewer, onSuccess }: ManualBrewerFormProps) {
 
         <FormField
           control={form.control}
-          name="notes"
+          name='notes'
           render={({ field }) => (
             <FormItem>
               <FormLabel>Notes</FormLabel>
               <FormControl>
                 <textarea
-                  className="flex min-h-24 w-full rounded-md border border-input bg-transparent px-3 py-2 text-base shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
-                  placeholder="Any additional notes about this brewing device..."
+                  className='flex min-h-24 w-full rounded-md border border-input bg-transparent px-3 py-2 text-base shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm'
+                  placeholder='Any additional notes about this brewing device...'
                   {...field}
                 />
               </FormControl>
@@ -422,23 +441,23 @@ export function ManualBrewerForm({ brewer, onSuccess }: ManualBrewerFormProps) {
           )}
         />
 
-        <div className="flex justify-end gap-2">
+        <div className='flex justify-end gap-2'>
           <Button
-            type="button"
-            variant="outline"
-            onClick={() => router.push("/manual-brewing-methods")}
+            type='button'
+            variant='outline'
+            onClick={() => router.push('/manual-brewing-methods')}
           >
             Cancel
           </Button>
-          <Button 
-            type="submit" 
+          <Button
+            type='submit'
             disabled={createMutation.isPending || updateMutation.isPending}
           >
             {createMutation.isPending || updateMutation.isPending
-              ? "Saving..."
+              ? 'Saving...'
               : isEditing
-                ? "Update Brewer"
-                : "Add Brewer"}
+              ? 'Update Brewer'
+              : 'Add Brewer'}
           </Button>
         </div>
       </form>

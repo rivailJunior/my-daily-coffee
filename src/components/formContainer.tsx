@@ -12,13 +12,23 @@ import { List } from 'lucide-react';
 import React from 'react';
 import { useRouter } from 'next/navigation';
 
+interface FormContainerProps {
+  heading?: string;
+  children: React.ReactNode;
+  headingDescription?: string;
+  title?: string;
+  href?: string;
+  buttonLabel?: string;
+}
+
 export function FormContainer({
   heading,
   children,
-}: {
-  heading?: string;
-  children: React.ReactNode;
-}) {
+  headingDescription,
+  title,
+  href,
+  buttonLabel,
+}: FormContainerProps) {
   const router = useRouter();
   return (
     <Container>
@@ -28,25 +38,22 @@ export function FormContainer({
         </h1>
         <div>
           <Button
-            onClick={() => router.push('/brewing-assistant/recipes')}
+            onClick={() => router.push(href || '/brewing-assistant/recipes')}
             variant='outline'
           >
             <List />
-            Recipes
+            {buttonLabel}
           </Button>
         </div>
       </div>
 
       <Card
         data-testid='recipe-card'
-        className='w-full mx-auto bg-white dark:bg-coffee-navy border-coffee-navy/30 dark:border-coffee-navy'
+        className='w-full mx-auto bg-white dark:bg-coffee-navy-dark border border-gray-200 dark:border-coffee-navy'
       >
         <CardHeader>
-          <CardTitle>Create Your Brewing Recipe</CardTitle>
-          <CardDescription>
-            Select your brewing method, grinder, and beans to get a personalized
-            brewing recipe with timer.
-          </CardDescription>
+          <CardTitle>{title}</CardTitle>
+          <CardDescription>{headingDescription}</CardDescription>
         </CardHeader>
         <CardContent>{children}</CardContent>
       </Card>

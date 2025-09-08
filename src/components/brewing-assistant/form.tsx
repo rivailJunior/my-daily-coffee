@@ -35,12 +35,14 @@ import { BrewingFormSchema, BrewAssistantProps } from '@/types/brewForm';
 import { onlyNumber } from '@/utils/inputField';
 import { StepButton } from './stepButton';
 import { InputNumber } from './inputNumber';
-import { FormContainer } from './formContainer';
+import { FormContainer } from '@/components/formContainer';
 
 export function BrewingAssistantForm({
   handleFormSubmit,
   heading,
   isManualRecipe,
+  title,
+  headingDescription,
 }: BrewAssistantProps) {
   const router = useRouter();
   const [ratio, setRatio] = useState<number>(15); // Default coffee:water ratio
@@ -152,7 +154,12 @@ export function BrewingAssistantForm({
   const isLoading = isLoadingBrewers || isLoadingGrinders;
 
   return (
-    <FormContainer heading={heading}>
+    <FormContainer
+      heading={heading}
+      href='/brewing-assistant/recipes'
+      title={title}
+      headingDescription={headingDescription}
+    >
       {isLoading ? (
         <div className='flex justify-center items-center h-auto'>
           <p className='text-gray-500'>Loading...</p>

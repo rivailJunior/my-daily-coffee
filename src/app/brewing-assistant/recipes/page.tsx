@@ -96,7 +96,7 @@ export default function RecipesPage() {
             Create your first brewing recipe to get started
           </p>
           <Button className='mt-4' asChild>
-            <Link href='/brewing-assistant/recipes/new'>Create Recipe</Link>
+            <Link href='/brewing-assistant/'>Create Recipe</Link>
           </Button>
         </div>
       ) : (

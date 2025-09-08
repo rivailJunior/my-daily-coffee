@@ -1,5 +1,5 @@
 'use client';
-import { BrewingAssistantForm } from '../components/form';
+import { BrewingAssistantForm } from '@/components/brewing-assistant/form';
 import { createManualRecipe } from '@/services/brewing-assistant-service';
 
 const ManualRecipePage = () => {
@@ -8,6 +8,8 @@ const ManualRecipePage = () => {
       handleFormSubmit={createManualRecipe}
       heading='Manual Recipe'
       isManualRecipe
+      title='Manual Recipe'
+      headingDescription='Create your own recipe. Save. Share. '
     />
   );
 };
