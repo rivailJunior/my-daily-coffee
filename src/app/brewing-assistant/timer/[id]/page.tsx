@@ -153,7 +153,7 @@ export default function TimerPage({ params }: TimerPageProps) {
         >
           <Card className='w-full bg-white dark:bg-coffee-navy-dark'>
             <CollapsibleTrigger asChild className='mb-2'>
-              <CardHeader className='flex flex-row items-center justify-between cursor-pointer rounded-t-lg transition-colors'>
+              <CardHeader className='flex flex-row items-center justify-between cursor-pointer rounded-t-lg transition-colors dark:bg-gray-600 bg-gray-200 mb-4 shadow-md dark:shadow-md'>
                 <CardTitle className='flex items-center capitalize'>
                   {recipe.name}
                 </CardTitle>
@@ -168,7 +168,7 @@ export default function TimerPage({ params }: TimerPageProps) {
             </CollapsibleTrigger>
             <CollapsibleContent>
               <CardContent className='gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6'>
-                <div className='flex flex-col'>
+                <div className='flex flex-col '>
                   <div className='font-thin text-xs text-gray-500'>Method</div>
                   <div className='text-sm sm:text-base'>
                     {brewer?.name} {brewer?.brand}
@@ -217,8 +217,8 @@ export default function TimerPage({ params }: TimerPageProps) {
 
         {/* Timer Display */}
 
-        <Card className='w-full bg-white dark:bg-coffee-navy-dark'>
-          <CardHeader>
+        <Card className='w-full bg-white dark:bg-coffee-navy-dark overflow-hidden'>
+          <CardHeader className='dark:bg-gray-600 bg-gray-200 mb-4 shadow-md dark:shadow-md'>
             <div className='flex flex-row gap-2'>
               <div className='flex flex-row gap-2 items-center'>
                 <Clock className='h-4 w-4' />
@@ -235,13 +235,6 @@ export default function TimerPage({ params }: TimerPageProps) {
             </div>
           </CardHeader>
           <CardContent className='space-y-2'>
-            {/* Progress information */}
-            <div className='flex justify-between text-xs sm:text-sm '>
-              <span className='text-white'>
-                Step {currentStepIndex + 1} of {recipe.steps.length}
-              </span>
-            </div>
-
             {/* Current Step */}
             {currentStep &&
               !(
@@ -262,10 +255,14 @@ export default function TimerPage({ params }: TimerPageProps) {
                       )}
                     </div>
                     <div className='flex flex-col'>
-                      <div className='text-sm sm:text-base font-regular flex justify-center flex-row text-green-500'>
+                      {/* Progress information */}
+                      <div className='text-sm md:text-md font-regular flex justify-start flex-row text-gray-300 mb-2'>
+                        Step {currentStepIndex + 1} of {recipe.steps.length}
+                      </div>
+                      <div className='text-md md:text-lg font-semibold flex justify-center flex-row'>
                         {currentStep.description}
                       </div>
-                      <div className='text-xs sm:text-sm font-regular flex justify-start flex-row text-gray-300'>
+                      <div className='text-sm md:text-md font-regular flex justify-start flex-row text-gray-300'>
                         Water: {currentStep.waterAmount} ml
                       </div>
                     </div>
@@ -321,7 +318,7 @@ export default function TimerPage({ params }: TimerPageProps) {
 
             {/* Next Step Preview */}
             {recipe.steps[currentStepIndex + 1] && (
-              <div className='flex flex-row items-center gap-2 text-xs sm:text-sm pt-4'>
+              <div className='flex flex-row items-center gap-2 text-sm md:text-md pt-6 justify-center'>
                 <div>
                   <FastForward className='text-yellow-500' />
                 </div>
