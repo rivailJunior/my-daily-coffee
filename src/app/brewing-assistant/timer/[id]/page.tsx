@@ -10,7 +10,13 @@ import { BrewingRecipe } from '@/types/brewingAssistant';
 import { useCountdown } from '@/hooks/useCountdown';
 
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 
 import {
   AlertCircle,
@@ -168,13 +174,13 @@ export default function TimerPage({ params }: TimerPageProps) {
             </CollapsibleTrigger>
             <CollapsibleContent>
               <CardContent className='gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6'>
-                <div className='flex flex-col '>
+                {/* <div className='flex flex-col '>
                   <div className='font-thin text-xs text-gray-500'>Method</div>
                   <div className='text-sm sm:text-base'>
                     {brewer?.name} {brewer?.brand}
                   </div>
-                </div>
-                <div className='flex flex-col'>
+                </div> */}
+                <div className='flex flex-col '>
                   <div className='font-thin text-xs text-gray-500'>Grinder</div>
                   <div className='text-sm sm:text-base'>{grinder?.name}</div>
                 </div>
@@ -188,7 +194,9 @@ export default function TimerPage({ params }: TimerPageProps) {
                 </div>
                 <div className='flex flex-col'>
                   <div className='font-thin text-xs text-gray-500'>Beans</div>
-                  <div className='text-sm sm:text-base'>{recipe.beanName}</div>
+                  <div className='text-sm sm:text-base capitalize'>
+                    {recipe.beanName}
+                  </div>
                 </div>
                 <div className='flex flex-col'>
                   <div className='font-thin text-xs text-gray-500'>Coffee</div>
@@ -216,151 +224,189 @@ export default function TimerPage({ params }: TimerPageProps) {
         </Collapsible>
 
         {/* Timer Display */}
-
-        <Card className='w-full bg-white dark:bg-coffee-navy-dark overflow-hidden'>
-          <CardHeader className='dark:bg-gray-600 bg-gray-200 mb-4 shadow-md dark:shadow-md'>
-            <div className='flex flex-row gap-2'>
-              <div className='flex flex-row gap-2 items-center'>
+        {/* Stats Cards */}
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mb-6'>
+          {/* Total Time Card */}
+          <Card className='dark:bg-coffee-navy-dark'>
+            <CardHeader className='pb-2'>
+              <div className='flex items-center gap-2 text-sm font-medium text-gray-500'>
                 <Clock className='h-4 w-4' />
-                Total Time: {formatTime(recipe.totalTime)}
+                Total Time
               </div>
-              <div className='flex flex-row gap-2 items-center'>
+            </CardHeader>
+            <CardContent>
+              <div className='text-2xl font-bold'>
+                {formatTime(recipe.totalTime)}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Elapsed Time Card */}
+          <Card className='dark:bg-coffee-navy-dark'>
+            <CardHeader className='pb-2'>
+              <div className='flex items-center gap-2 text-sm font-medium text-gray-500'>
                 <Timer className='h-4 w-4' />
-                Elapsed Time: {formatTime(totalTimeElapsed)}
+                Elapsed Time
               </div>
-              <div className='flex flex-row gap-2 items-center'>
+            </CardHeader>
+            <CardContent>
+              <div className='text-2xl font-bold'>
+                {formatTime(totalTimeElapsed)}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Progress Card */}
+          <Card className='dark:bg-coffee-navy-dark'>
+            <CardHeader className='pb-2'>
+              <div className='flex items-center gap-2 text-sm font-medium text-gray-500'>
                 <Percent className='h-4 w-4' />
-                Total Progress: {Math.round(calculateTotalProgress())}
+                Total Progress
               </div>
-            </div>
-          </CardHeader>
-          <CardContent className='space-y-2'>
-            {/* Current Step */}
-            {currentStep &&
-              !(
-                currentStepIndex === recipe.steps.length - 1 &&
-                timeRemaining === 0
-              ) && (
-                <div>
-                  <div className='flex flex-row items-start gap-5'>
-                    <div className='flex items-center justify-center'>
-                      {currentStep.isPouring ? (
-                        <Droplet className='text-green-500' />
-                      ) : currentStep.isStirring ? (
-                        <RotateCcw className='text-green-500' />
-                      ) : currentStep.isWaiting ? (
-                        <Timer className='text-green-500' />
-                      ) : (
-                        <Coffee className='text-green-500' />
-                      )}
-                    </div>
-                    <div className='flex flex-col'>
-                      {/* Progress information */}
-                      <div className='text-sm md:text-md font-regular flex justify-start flex-row text-gray-300 mb-2'>
-                        Step {currentStepIndex + 1} of {recipe.steps.length}
+            </CardHeader>
+            <CardContent>
+              <div className='text-2xl font-bold'>
+                {Math.round(calculateTotalProgress())}%
+              </div>
+              <div className='w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700 mt-2'>
+                <div
+                  className='bg-coffee-coral h-2.5 rounded-full'
+                  style={{ width: `${calculateTotalProgress()}%` }}
+                ></div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6'>
+          {/* Current Step Card */}
+          {currentStep &&
+            !(
+              currentStepIndex === recipe.steps.length - 1 &&
+              timeRemaining === 0
+            ) && (
+              <Card className='mb-6 dark:bg-coffee-navy-dark'>
+                <CardHeader className=''>
+                  <div className='flex items-center gap-2'>
+                    {currentStep.isPouring ? (
+                      <Droplet className='h-5 w-5' />
+                    ) : currentStep.isStirring ? (
+                      <RotateCcw className='h-5 w-5' />
+                    ) : currentStep.isWaiting ? (
+                      <Timer className='h-5 w-5 ' />
+                    ) : (
+                      <Coffee className='h-5 w-5 ' />
+                    )}
+                    <CardTitle>
+                      Step{' '}
+                      <span className='font-thin'>
+                        {currentStepIndex + 1}/{recipe.steps.length}
+                      </span>
+                    </CardTitle>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className='text-gray-500 dark:text-gray-400'>
+                    Add {currentStep.waterAmount} ml of water
+                  </div>
+                  <div className='text-xl font-semibold mb-2'>
+                    {currentStep.description}
+                  </div>
+                  {/* <div className='flex gap-2 flex-col'>
+                      <div className='flex items-center gap-2 text-md'>
+                        <FastForward className='h-5 w-5' />
+                        Next Step
                       </div>
-                      <div className='text-md md:text-lg font-semibold flex justify-center flex-row'>
-                        {currentStep.description}
+                      <div className='text-md'>
+                        {recipe.steps[currentStepIndex + 1].description}
                       </div>
-                      <div className='text-sm md:text-md font-regular flex justify-start flex-row text-gray-300'>
-                        Water: {currentStep.waterAmount} ml
+                    </div> */}
+                </CardContent>
+              </Card>
+            )}
+
+          {/* Timer Card */}
+          {currentStep &&
+            !(
+              currentStepIndex === recipe.steps.length - 1 &&
+              timeRemaining === 0
+            ) && (
+              <Card className='mb-6 dark:bg-coffee-navy-dark'>
+                <CardHeader>
+                  <CardTitle>Timer</CardTitle>
+                </CardHeader>
+                <CardContent className='flex flex-col items-center'>
+                  <div className='relative w-48 h-48 mb-4'>
+                    <div className='absolute inset-0 flex items-center justify-center'>
+                      <div className='text-4xl md:text-5xl font-bold font-mono'>
+                        <Countdown
+                          seconds={timeRemaining}
+                          formattedTime={formatTime(timeRemaining)}
+                        />
                       </div>
                     </div>
                   </div>
-
-                  {/* Circular Timer Display */}
-                  <div className='flex flex-col items-center justify-center mb-6 mt-6'>
-                    <div className='relative w-36 h-36 sm:w-48 sm:h-48 mb-2'>
-                      {/* Time display in center */}
-                      <div className='absolute inset-0 flex items-center justify-center'>
-                        <div className='text-2xl sm:text-3xl md:text-5xl font-bold font-mono'>
-                          <Countdown
-                            seconds={timeRemaining}
-                            formattedTime={formatTime(timeRemaining)}
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className='text-xs sm:text-sm text-gray-500'>
-                      {Math.round(calculateProgress())}% complete
-                    </div>
+                  <div className='text-gray-500 mb-4'>
+                    {Math.round(calculateProgress())}% complete
                   </div>
-
-                  <div className='flex flex-wrap justify-center gap-4'>
+                  <div className='flex gap-4'>
                     <Button
                       variant={isTimerRunning ? 'outline' : 'default'}
                       size='lg'
                       onClick={toggleTimer}
                     >
                       {isTimerRunning ? (
-                        <>
-                          <Pause className='mr-2 h-5 w-5' /> Pause
-                        </>
+                        <Pause className='mr-2 h-5 w-5' />
                       ) : (
-                        <>
-                          <Play className='mr-2 h-5 w-5' />{' '}
-                          {totalTimeElapsed > 0 ? 'Resume' : 'Start'}
-                        </>
+                        <Play className='mr-2 h-5 w-5' />
                       )}
+                      {isTimerRunning
+                        ? 'Pause'
+                        : totalTimeElapsed > 0
+                        ? 'Resume'
+                        : 'Start'}
                     </Button>
-
-                    <Button
-                      variant='destructive'
-                      size='lg'
-                      onClick={resetTimer}
-                    >
-                      <RotateCcw className='mr-2 h-5 w-5' /> Reset
+                    <Button variant='outline' size='lg' onClick={resetTimer}>
+                      <RotateCcw className='mr-2 h-5 w-5' />
+                      Reset
                     </Button>
                   </div>
-                </div>
-              )}
-
-            {/* Next Step Preview */}
-            {recipe.steps[currentStepIndex + 1] && (
-              <div className='flex flex-row items-center gap-2 text-sm md:text-md pt-6 justify-center'>
-                <div>
-                  <FastForward className='text-yellow-500' />
-                </div>
-                <div className='font-regular text-yellow-500'>
-                  Next Step: {recipe.steps[currentStepIndex + 1].description}
-                </div>
-              </div>
+                </CardContent>
+              </Card>
             )}
+        </div>
 
-            {/* Brewing Complete */}
-            {currentStepIndex === recipe.steps.length - 1 &&
-              timeRemaining === 0 && (
-                <div className='bg-green-50 dark:bg-gray-900/20 p-6 rounded-lg text-center'>
-                  <CheckCircle className='h-12 w-12 mx-auto mb-2 text-green-500' />
-                  <h3 className='text-lg sm:text-xl font-bold mb-2'>
-                    Brewing Complete!
-                  </h3>
-                  <p className='text-sm sm:text-base mb-4'>
-                    Your coffee is ready to enjoy.
-                  </p>
-                  <div className='flex flex-col sm:flex-row gap-3 justify-center'>
-                    <Button
-                      onClick={resetTimer}
-                      variant='default'
-                      className='w-full sm:w-auto'
-                    >
-                      <RotateCcw className='mr-2 h-4 w-4' /> Brew Again
-                    </Button>
-                    <Button
-                      onClick={() => {
-                        router.push(`/brewing-assistant/recipes/${recipe.id}`);
-                      }}
-                      variant='outline'
-                      className='w-full sm:w-auto'
-                    >
-                      <Download className='mr-2 h-4 w-4' /> Download Recipe
-                    </Button>
-                  </div>
-                </div>
-              )}
-          </CardContent>
-        </Card>
+        {/* Brewing Complete Card */}
+        {currentStepIndex === recipe.steps.length - 1 &&
+          timeRemaining === 0 && (
+            <Card className='border-green-500/30'>
+              <CardHeader className='text-center'>
+                <CheckCircle className='h-12 w-12 mx-auto mb-4 text-green-500' />
+                <CardTitle className='text-2xl'>Brewing Complete!</CardTitle>
+                <CardDescription>
+                  Your coffee is ready to enjoy.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className='flex flex-col sm:flex-row gap-3 justify-center'>
+                <Button
+                  onClick={resetTimer}
+                  variant='default'
+                  className='w-full sm:w-auto'
+                >
+                  <RotateCcw className='mr-2 h-4 w-4' /> Brew Again
+                </Button>
+                <Button
+                  onClick={() =>
+                    router.push(`/brewing-assistant/recipes/${recipe.id}`)
+                  }
+                  variant='outline'
+                  className='w-full sm:w-auto'
+                >
+                  <Download className='mr-2 h-4 w-4' /> Download Recipe
+                </Button>
+              </CardContent>
+            </Card>
+          )}
       </div>
     </Container>
   );
