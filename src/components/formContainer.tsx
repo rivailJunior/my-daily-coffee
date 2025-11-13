@@ -28,7 +28,7 @@ export function FormContainer({
   title,
   href,
   buttonLabel,
-}: FormContainerProps) {
+}: Readonly<FormContainerProps>) {
   const router = useRouter();
   return (
     <Container>
@@ -49,9 +49,9 @@ export function FormContainer({
 
       <Card
         data-testid='recipe-card'
-        className='w-full mx-auto bg-white dark:bg-coffee-navy-dark border border-gray-200 dark:border-coffee-navy'
+        className='w-full mx-auto bg-white dark:bg-coffee-navy-dark border border-gray-200 dark:border-coffee-navy overflow-hidden'
       >
-        <CardHeader>
+        <CardHeader className='dark:bg-gray-600 bg-gray-200 mb-4 shadow-md dark:shadow-md'>
           <CardTitle>{title}</CardTitle>
           <CardDescription>{headingDescription}</CardDescription>
         </CardHeader>

@@ -34,14 +34,14 @@ export function ComboBoxResponsive({
   setSelectedItem,
   selectedItem,
   label = 'Select...',
-}: {
+}: Readonly<{
   // selectedBrewerId?: string | null;
   // setSelectedBrewerId?: (id: string) => void;
   items: Item[];
   setSelectedItem: (item: Item | null) => void;
   selectedItem: Item | null;
   label: string;
-}) {
+}>) {
   const [open, setOpen] = React.useState(false);
   const isDesktop = useMediaQuery('(min-width: 768px)');
 
@@ -56,7 +56,7 @@ export function ComboBoxResponsive({
       >
         <FormControl>
           <SelectTrigger className='bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-coffee-coral/50 dark:focus:ring-coffee-coral/70'>
-            <SelectValue placeholder='Select brewing method' />
+            <SelectValue placeholder={label} />
           </SelectTrigger>
         </FormControl>
         <SelectContent className='bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600'>

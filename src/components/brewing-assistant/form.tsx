@@ -17,7 +17,6 @@ import {
 } from '@/types/brewingAssistant';
 import { ManualBrewer } from '@/types/manualBrewing';
 import { Grinder } from '@/types/grinder';
-import { Button } from '@/components/ui/button';
 
 import {
   Form,
@@ -29,13 +28,15 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { ComboBoxResponsive } from '@/components/combobox';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
 import { CircleMinus, CirclePlus, Loader2 } from 'lucide-react';
 import { BrewingFormSchema, BrewAssistantProps } from '@/types/brewForm';
 import { onlyNumber } from '@/utils/inputField';
 import { StepButton } from './stepButton';
 import { InputNumber } from './inputNumber';
 import { FormContainer } from '@/components/formContainer';
+import { ComboBoxResponsive } from '../combobox';
 
 export function BrewingAssistantForm({
   handleFormSubmit,
@@ -43,7 +44,7 @@ export function BrewingAssistantForm({
   isManualRecipe,
   title,
   headingDescription,
-}: BrewAssistantProps) {
+}: Readonly<BrewAssistantProps>) {
   const router = useRouter();
   const [ratio, setRatio] = useState<number>(15); // Default coffee:water ratio
   const isUpdatingRef = useRef<boolean>(false);
@@ -174,9 +175,9 @@ export function BrewingAssistantForm({
                 name='brewerId'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Brewing Method</FormLabel>
+                    <FormLabel>Method</FormLabel>
                     <ComboBoxResponsive
-                      label='Select brewing method'
+                      label='Select method'
                       items={brewers.map((brewer: ManualBrewer) => ({
                         value: brewer.id,
                         label:
@@ -256,54 +257,7 @@ export function BrewingAssistantForm({
                 )}
               />
             </div>
-            {/* Bean Information */}
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-              <FormField
-                control={form.control}
-                name='beanName'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Bean Name</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder='e.g., Ethiopia Yirgacheffe'
-                        className='bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-coffee-coral/50 dark:focus:ring-coffee-coral/70 transition-colors'
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormDescription>
-                      Enter the name of your coffee beans
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
 
-              <FormField
-                control={form.control}
-                name='roastProfile'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Roast Profile</FormLabel>
-                    <ComboBoxResponsive
-                      items={ROAST_PROFILES}
-                      selectedItem={
-                        ROAST_PROFILES.find((p) => p.value === field.value) ||
-                        null
-                      }
-                      setSelectedItem={(item) =>
-                        item && field.onChange(item.value)
-                      }
-                      label='Select roast profile'
-                    />
-                    <FormDescription>
-                      Choose the roast level of your beans
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
             {/* Combined Ratio and Coffee/Water Amounts */}
             <div className='grid grid-cols-1 md:grid-cols-4 gap-4'>
               {/* Ratio Section */}
@@ -337,6 +291,27 @@ export function BrewingAssistantForm({
                           )}
                         />
                       </div>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              {/* Bean Information */}
+              <div className='md:col-span-1'>
+                <FormField
+                  control={form.control}
+                  name='beanName'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Bean Name</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder='Bourbon Amarelo'
+                          className='bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-coffee-coral/50 dark:focus:ring-coffee-coral/70 transition-colors'
+                          {...field}
+                        />
+                      </FormControl>
 
                       <FormMessage />
                     </FormItem>
@@ -511,6 +486,51 @@ export function BrewingAssistantForm({
                 )}
               </div>
             ) : null}
+            <div className='grid grid-cols-1 col-span-1'>
+              <FormField
+                control={form.control}
+                name='roastProfile'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Roast Profile</FormLabel>
+                    <div className='grid grid-cols-1 gap-3 mt-2 md:grid-cols-4'>
+                      {ROAST_PROFILES.map((profile) => (
+                        <Button
+                          key={profile.value}
+                          type='button'
+                          variant={
+                            field.value === profile.value
+                              ? 'default'
+                              : 'outline'
+                          }
+                          className={`justify-start h-auto p-4 rounded-lg ${
+                            field.value === profile.value
+                              ? 'bg-coffee-coral text-white border-coffee-coral hover:bg-coffee-coral/90'
+                              : 'border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800'
+                          }`}
+                          onClick={() => field.onChange(profile.value)}
+                        >
+                          <div className='flex items-center w-full'>
+                            <div className='flex items-center justify-center w-5 h-5 mr-3 border rounded-full border-gray-300 dark:border-gray-600'>
+                              {field.value === profile.value && (
+                                <div className='w-3 h-3 rounded-full bg-white dark:bg-gray-900' />
+                              )}
+                            </div>
+                            <span className='text-sm font-medium leading-none'>
+                              {profile.label}
+                            </span>
+                          </div>
+                        </Button>
+                      ))}
+                    </div>
+                    <FormDescription className='mt-2'>
+                      Choose the roast level of your beans
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
             <Button
               type='submit'
               className='w-full text-white'
