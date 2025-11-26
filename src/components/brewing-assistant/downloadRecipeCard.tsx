@@ -25,7 +25,7 @@ export function DownloadRecipeCard({
   recipe,
   onClose,
   className = '',
-}: RecipeCardProps) {
+}: Readonly<RecipeCardProps>) {
   const [aspectRatio, setAspectRatio] = useState<AspectRatio>('9:16');
   const cardRef = useRef<HTMLDivElement>(null);
 
@@ -37,7 +37,7 @@ export function DownloadRecipeCard({
 
       const link = document.createElement('a');
       link.download = `${recipe.name
-        .replace(/\s+/g, '-')
+        .replaceAll(/\s+/g, '-')
         .toLowerCase()}-recipe.png`;
       link.href = canvas.toDataURL('image/png');
       link.click();
@@ -58,28 +58,35 @@ export function DownloadRecipeCard({
 
   return (
     <div className={`flex flex-col items-center gap-4 ${className}`}>
-      <div className='flex items-center gap-2 mb-4 '>
-        <div className='flex items-center gap-2 '>
-          <Instagram className='w-8 h-8 text-coffee-coral' />
-          <Select
-            value={aspectRatio}
-            onValueChange={(value: AspectRatio) => setAspectRatio(value)}
-          >
-            <SelectTrigger className='w-full'>
-              <SelectValue placeholder='Select ratio' />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value='4:5'>4:5 (Portrait)</SelectItem>
-              <SelectItem value='9:16'>9:16 (Story)</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+      <div className='flex items-center gap-2 mb-4 w-full md:w-[300px]'>
+        <Select
+          value={aspectRatio}
+          onValueChange={(value: AspectRatio) => setAspectRatio(value)}
+        >
+          <SelectTrigger className='w-full bg-white text-coffee-navy'>
+            <SelectValue placeholder='Select ratio' />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value='4:5'>
+              <div className='flex items-center gap-2 flex-row'>
+                <Instagram className='w-4 h-4 text-coffee-coral' />
+                Portrait
+              </div>
+            </SelectItem>
+            <SelectItem value='9:16'>
+              <div className='flex items-center gap-2 flex-row'>
+                <Instagram className='w-4 h-4 text-coffee-coral' />
+                Story
+              </div>
+            </SelectItem>
+          </SelectContent>
+        </Select>
       </div>
 
       <div
         ref={cardRef}
         data-testid='recipe-card'
-        className={`${getAspectRatioClass()} relative bg-white  overflow-hidden shadow-xl flex flex-col`}
+        className={`${getAspectRatioClass()} relative bg-white  overflow-hidden shadow-xl flex flex-col rounded-sm`}
       >
         {/* Content */}
         <RecipeCard recipe={recipe} />
@@ -95,11 +102,7 @@ export function DownloadRecipeCard({
           Download
         </Button>
         {onClose && (
-          <Button
-            variant='outline'
-            onClick={onClose}
-            className='border-coffee-navy text-white'
-          >
+          <Button variant='outline' onClick={onClose}>
             <X className='w-4 h-4 mr-2' />
             Close
           </Button>
