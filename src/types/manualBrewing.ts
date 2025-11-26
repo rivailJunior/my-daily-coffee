@@ -65,11 +65,12 @@ export const FILTER_TYPES = [
 export const PERCOLATION_METHODS: BrewingMethod[] = [
   {
     name: 'Hario V60',
-    description: 'Conical dripper with spiral ridges and large opening for faster flow',
+    description:
+      'Conical dripper with spiral ridges and large opening for faster flow',
     brewMethod: 'percolation',
     type: 'conical',
     recommendedRatio: '1:16',
-    technique: 'Bloom 30s, then pour in spirals from center outward'
+    technique: 'Bloom 30s, then pour in spirals from center outward',
   },
   {
     name: 'Chemex',
@@ -77,15 +78,17 @@ export const PERCOLATION_METHODS: BrewingMethod[] = [
     brewMethod: 'percolation',
     type: 'conical',
     recommendedRatio: '1:17',
-    technique: 'Bloom 45s, then pour in 2-3 stages with pauses between'
+    technique: 'Bloom 45s, then pour in 2-3 stages with pauses between',
   },
   {
     name: 'Kalita Wave',
-    description: 'Flat-bottomed dripper with three small holes for even extraction',
+    description:
+      'Flat-bottomed dripper with three small holes for even extraction',
     brewMethod: 'percolation',
     type: 'wave',
     recommendedRatio: '1:16',
-    technique: 'Bloom 30s, then pour in concentric circles maintaining water level'
+    technique:
+      'Bloom 30s, then pour in concentric circles maintaining water level',
   },
   {
     name: 'Origami Dripper',
@@ -93,7 +96,7 @@ export const PERCOLATION_METHODS: BrewingMethod[] = [
     brewMethod: 'percolation',
     type: 'conical',
     recommendedRatio: '1:15',
-    technique: 'Bloom 30s, then pour in stages maintaining even saturation'
+    technique: 'Bloom 30s, then pour in stages maintaining even saturation',
   },
   {
     name: 'Melitta',
@@ -101,72 +104,75 @@ export const PERCOLATION_METHODS: BrewingMethod[] = [
     brewMethod: 'percolation',
     type: 'flat',
     recommendedRatio: '1:16',
-    technique: 'Bloom 30s, then pour slowly in center'
+    technique: 'Bloom 30s, then pour slowly in center',
   },
-  {
-    name: 'Bee House',
-    description: 'Wedge-shaped ceramic dripper with two holes for controlled flow',
-    brewMethod: 'percolation',
-    type: 'flat',
-    recommendedRatio: '1:15',
-    technique: 'Bloom 30s, then pour in small, steady streams'
-  },
-  {
-    name: 'Kono',
-    description: 'Conical glass dripper with narrow angle for slower extraction',
-    brewMethod: 'percolation',
-    type: 'conical',
-    recommendedRatio: '1:15',
-    technique: 'Bloom 30s, then pour slowly in the center'
-  },
-  {
-    name: 'December Dripper',
-    description: 'Adjustable-flow flat-bottomed dripper with variable aperture',
-    brewMethod: 'percolation',
-    type: 'flat',
-    recommendedRatio: '1:16',
-    technique: 'Bloom 30s, adjust flow rate based on coffee amount'
-  },
-  {
-    name: 'Torch Mountain',
-    description: 'Flat-bottomed dripper with mountain-shaped ridges for even extraction',
-    brewMethod: 'percolation',
-    type: 'flat',
-    recommendedRatio: '1:16',
-    technique: 'Bloom 30s, then pour in concentric circles'
-  },
-  {
-    name: 'Blue Bottle Dripper',
-    description: 'Porcelain dripper with single hole and steep walls',
-    brewMethod: 'percolation',
-    type: 'conical',
-    recommendedRatio: '1:14',
-    technique: 'Bloom 45s, then pour in 4-5 pulses with 30-45s intervals'
-  },
+  // {
+  //   name: 'Bee House',
+  //   description:
+  //     'Wedge-shaped ceramic dripper with two holes for controlled flow',
+  //   brewMethod: 'percolation',
+  //   type: 'flat',
+  //   recommendedRatio: '1:15',
+  //   technique: 'Bloom 30s, then pour in small, steady streams',
+  // },
+  // {
+  //   name: 'Kono',
+  //   description:
+  //     'Conical glass dripper with narrow angle for slower extraction',
+  //   brewMethod: 'percolation',
+  //   type: 'conical',
+  //   recommendedRatio: '1:15',
+  //   technique: 'Bloom 30s, then pour slowly in the center',
+  // },
+  // {
+  //   name: 'December Dripper',
+  //   description: 'Adjustable-flow flat-bottomed dripper with variable aperture',
+  //   brewMethod: 'percolation',
+  //   type: 'flat',
+  //   recommendedRatio: '1:16',
+  //   technique: 'Bloom 30s, adjust flow rate based on coffee amount'
+  // },
+  // {
+  //   name: 'Torch Mountain',
+  //   description: 'Flat-bottomed dripper with mountain-shaped ridges for even extraction',
+  //   brewMethod: 'percolation',
+  //   type: 'flat',
+  //   recommendedRatio: '1:16',
+  //   technique: 'Bloom 30s, then pour in concentric circles'
+  // },
+  // {
+  //   name: 'Blue Bottle Dripper',
+  //   description: 'Porcelain dripper with single hole and steep walls',
+  //   brewMethod: 'percolation',
+  //   type: 'conical',
+  //   recommendedRatio: '1:14',
+  //   technique: 'Bloom 45s, then pour in 4-5 pulses with 30-45s intervals',
+  // },
   {
     name: 'Orea V3',
-    description: 'Flat-bottomed brewer with multiple drainage channels for even flow',
+    description:
+      'Flat-bottomed brewer with multiple drainage channels for even flow',
     brewMethod: 'percolation',
     type: 'flat',
     recommendedRatio: '1:16',
-    technique: 'Bloom 30s, then pour in slow, continuous stream'
+    technique: 'Bloom 30s, then pour in slow, continuous stream',
   },
-  {
-    name: 'Fellow Stagg [X]',
-    description: 'Flat-bottomed dripper with vacuum-insulated double walls',
-    brewMethod: 'percolation',
-    type: 'flat',
-    recommendedRatio: '1:17',
-    technique: 'Bloom 45s, then pour in 2-3 stages maintaining water level'
-  },
+  // {
+  //   name: 'Fellow Stagg [X]',
+  //   description: 'Flat-bottomed dripper with vacuum-insulated double walls',
+  //   brewMethod: 'percolation',
+  //   type: 'flat',
+  //   recommendedRatio: '1:17',
+  //   technique: 'Bloom 45s, then pour in 2-3 stages maintaining water level',
+  // },
   {
     name: 'April Brewer',
     description: 'Flat-bottomed brewer with optimized drainage system',
     brewMethod: 'percolation',
     type: 'flat',
     recommendedRatio: '1:16',
-    technique: 'Bloom 30s, then pour in 2-3 stages with 30s intervals'
-  }
+    technique: 'Bloom 30s, then pour in 2-3 stages with 30s intervals',
+  },
 ];
 
 // Immersion methods
@@ -177,7 +183,7 @@ export const IMMERSION_METHODS: BrewingMethod[] = [
     brewMethod: 'immersion',
     type: 'press',
     recommendedRatio: '1:15',
-    technique: 'Stir after adding water, steep for 4 minutes, press slowly'
+    technique: 'Stir after adding water, steep for 4 minutes, press slowly',
   },
   {
     name: 'Clever Dripper',
@@ -185,48 +191,49 @@ export const IMMERSION_METHODS: BrewingMethod[] = [
     brewMethod: 'immersion',
     type: 'flat',
     recommendedRatio: '1:16',
-    technique: 'Add coffee and water, steep for 2-3 minutes, then release'
+    technique: 'Add coffee and water, steep for 2-3 minutes, then release',
   },
-  {
-    name: 'Siphon',
-    description: 'Vacuum brewer using vapor pressure and cloth filter',
-    brewMethod: 'immersion',
-    type: 'siphon',
-    recommendedRatio: '1:17',
-    technique: 'Heat lower chamber, stir gently when water rises, remove from heat'
-  },
-  {
-    name: 'Bodum Chambord',
-    description: 'Classic French press with glass beaker and metal frame',
-    brewMethod: 'immersion',
-    type: 'press',
-    recommendedRatio: '1:15',
-    technique: 'Stir after adding water, steep for 4 minutes, press slowly'
-  },
-  {
-    name: 'Espro Press',
-    description: 'Double micro-filtered French press for cleaner cup',
-    brewMethod: 'immersion',
-    type: 'press',
-    recommendedRatio: '1:15',
-    technique: 'Stir after adding water, steep for 4 minutes, press slowly'
-  },
-  {
-    name: 'Walkure',
-    description: 'All-porcelain brewing system with built-in filter mechanism',
-    brewMethod: 'immersion',
-    type: 'other',
-    recommendedRatio: '1:15',
-    technique: 'No paper filter needed, pour slowly in center'
-  },
-  {
-    name: 'Cold Brew Toddy',
-    description: 'Immersion cold brew system with felt filter',
-    brewMethod: 'immersion',
-    type: 'other',
-    recommendedRatio: '1:7',
-    technique: 'Steep for 12-24 hours at room temperature or refrigerated'
-  }
+  // {
+  //   name: 'Siphon',
+  //   description: 'Vacuum brewer using vapor pressure and cloth filter',
+  //   brewMethod: 'immersion',
+  //   type: 'siphon',
+  //   recommendedRatio: '1:17',
+  //   technique:
+  //     'Heat lower chamber, stir gently when water rises, remove from heat',
+  // },
+  // {
+  //   name: 'Bodum Chambord',
+  //   description: 'Classic French press with glass beaker and metal frame',
+  //   brewMethod: 'immersion',
+  //   type: 'press',
+  //   recommendedRatio: '1:15',
+  //   technique: 'Stir after adding water, steep for 4 minutes, press slowly',
+  // },
+  // {
+  //   name: 'Espro Press',
+  //   description: 'Double micro-filtered French press for cleaner cup',
+  //   brewMethod: 'immersion',
+  //   type: 'press',
+  //   recommendedRatio: '1:15',
+  //   technique: 'Stir after adding water, steep for 4 minutes, press slowly',
+  // },
+  // {
+  //   name: 'Walkure',
+  //   description: 'All-porcelain brewing system with built-in filter mechanism',
+  //   brewMethod: 'immersion',
+  //   type: 'other',
+  //   recommendedRatio: '1:15',
+  //   technique: 'No paper filter needed, pour slowly in center',
+  // },
+  // {
+  //   name: 'Cold Brew Toddy',
+  //   description: 'Immersion cold brew system with felt filter',
+  //   brewMethod: 'immersion',
+  //   type: 'other',
+  //   recommendedRatio: '1:7',
+  //   technique: 'Steep for 12-24 hours at room temperature or refrigerated'
+  // }
 ];
 
 // Hybrid methods

@@ -308,7 +308,7 @@ export function BrewingAssistantForm({
                       <FormControl>
                         <Input
                           placeholder='Bourbon Amarelo'
-                          className='bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-coffee-coral/50 dark:focus:ring-coffee-coral/70 transition-colors'
+                          className='bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-coffee-coral/50 dark:focus:ring-coffee-coral/70 transition-colors capitalize'
                           {...field}
                         />
                       </FormControl>
@@ -493,7 +493,7 @@ export function BrewingAssistantForm({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Roast Profile</FormLabel>
-                    <div className='grid grid-cols-1 gap-3 mt-2 md:grid-cols-4'>
+                    <div className='grid grid-cols-1 gap-3 mt-2 md:grid-cols-3'>
                       {ROAST_PROFILES.map((profile) => (
                         <Button
                           key={profile.value}

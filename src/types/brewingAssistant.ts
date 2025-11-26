@@ -36,7 +36,7 @@ export type RoastProfile = 'light' | 'medium' | 'medium-dark' | 'dark';
 export const ROAST_PROFILES = [
   { value: 'light', label: 'Light' },
   { value: 'medium', label: 'Medium' },
-  { value: 'medium-dark', label: 'Medium-Dark' },
+  // { value: 'medium-dark', label: 'Medium-Dark' },
   { value: 'dark', label: 'Dark' },
 ];
 

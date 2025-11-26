@@ -13,14 +13,9 @@ export function Footer() {
   return (
     <footer className='bg-gray-50 dark:bg-coffee-navy-dark relative'>
       <div className='mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8'>
-        <div className='md:flex md:justify-between'>
+        {/* <div className='md:flex md:justify-between'>
           <div className='mb-6 md:mb-0'>
             <Link href='https://flowbite.com/' className='flex items-center'>
-              {/* <img
-                src='https://flowbite.com/docs/images/logo.svg'
-                className='h-8 me-3'
-                alt='FlowBite Logo'
-              /> */}
               <span className='self-center text-2xl font-semibold whitespace-nowrap dark:text-white'>
                 My Daily Coffee
               </span>
@@ -101,7 +96,7 @@ export function Footer() {
               </ul>
             </div>
           </div>
-        </div>
+        </div> */}
         <hr className='my-6 border-gray-200 sm:mx-auto dark:border-gray-800 lg:my-8' />
         <div className='sm:flex sm:items-center sm:justify-between'>
           <span className='text-sm text-gray-500 sm:text-center dark:text-gray-400'>
