@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { getRecipeById } from '@/services/brewing-assistant-service';
@@ -17,6 +17,12 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 
 import {
   AlertCircle,
@@ -52,6 +58,7 @@ export default function TimerPage({ params }: TimerPageProps) {
   const router = useRouter();
   const { id } = params;
   const [isRecipeDetailsOpen, setIsRecipeDetailsOpen] = useState(true);
+  const [isTimerModalOpen, setIsTimerModalOpen] = useState(false);
 
   // Load recipe data
   const {
@@ -108,8 +115,9 @@ export default function TimerPage({ params }: TimerPageProps) {
       } else {
         startTimer();
       }
-      // Close recipe details when timer starts
+      // Close recipe details and open timer modal when timer starts
       setIsRecipeDetailsOpen(false);
+      setIsTimerModalOpen(true);
     }
   }, [isTimerRunning, startTimer, pauseTimer, resume, totalTimeElapsed]);
 
@@ -325,13 +333,13 @@ export default function TimerPage({ params }: TimerPageProps) {
               </Card>
             )}
 
-          {/* Timer Card */}
+          {/* Timer Card - Always visible in the layout */}
           {currentStep &&
             !(
               currentStepIndex === recipe.steps.length - 1 &&
               timeRemaining === 0
             ) && (
-              <Card className='mb-6 dark:bg-coffee-navy-dark'>
+              <Card className='mb-6 dark:bg-coffee-navy-dark hidden lg:block'>
                 <CardHeader>
                   <CardTitle>Timer</CardTitle>
                 </CardHeader>
@@ -408,6 +416,93 @@ export default function TimerPage({ params }: TimerPageProps) {
             </Card>
           )}
       </div>
+
+      {/* Fixed Start Button - Mobile Only */}
+
+      <div className='fixed bottom-0 left-0 right-0 bg-gradient-to-t from-background to-transparent p-4 z-40 lg:hidden'>
+        <Button
+          size='lg'
+          className='w-full py-6 text-lg font-semibold shadow-lg'
+          onClick={toggleTimer}
+        >
+          <Play className='mr-2 h-5 w-5' />
+          {isTimerRunning ? 'Pause' : 'Start'}
+        </Button>
+      </div>
+
+      {/* Timer Modal - Shows on mobile or when toggled */}
+      <Dialog open={isTimerModalOpen} onOpenChange={setIsTimerModalOpen}>
+        <DialogContent className='sm:max-w-[425px]'>
+          <DialogHeader>
+            <DialogTitle>Brewing Timer</DialogTitle>
+          </DialogHeader>
+          <div className='flex flex-col items-center py-6'>
+            <div className='relative w-48 h-48 mb-6'>
+              <div className='absolute inset-0 flex items-center justify-center'>
+                <div className='text-5xl font-bold font-mono'>
+                  <Countdown
+                    seconds={timeRemaining}
+                    formattedTime={formatTime(timeRemaining)}
+                  />
+                </div>
+              </div>
+            </div>
+            {currentStep && (
+              <div className='text-center mb-6'>
+                <p className='text-lg font-medium'>{currentStep.description}</p>
+                <p className='text-sm text-gray-500 mt-1'>
+                  Step {currentStepIndex + 1} of {recipe.steps.length}
+                </p>
+              </div>
+            )}
+            <div className='text-gray-500 mb-6'>
+              {Math.round(calculateProgress())}% complete
+            </div>
+            <div className='flex gap-4 w-full justify-center'>
+              <Button
+                variant={isTimerRunning ? 'outline' : 'default'}
+                size='lg'
+                onClick={toggleTimer}
+                className='flex-1 max-w-[150px]'
+              >
+                {isTimerRunning ? (
+                  <Pause className='mr-2 h-5 w-5' />
+                ) : (
+                  <Play className='mr-2 h-5 w-5' />
+                )}
+                {isTimerRunning
+                  ? 'Pause'
+                  : totalTimeElapsed > 0
+                  ? 'Resume'
+                  : 'Start'}
+              </Button>
+              <Button
+                variant='outline'
+                size='lg'
+                onClick={resetTimer}
+                className='flex-1 max-w-[150px]'
+              >
+                <RotateCcw className='mr-2 h-5 w-5' />
+                Reset
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Floating Timer Button - Shows when timer is running and modal is closed */}
+      {isTimerRunning && !isTimerModalOpen && (
+        <div className='fixed bottom-12 right-6 z-50 md:hidden'>
+          <Button
+            variant='default'
+            size='lg'
+            className='rounded-full w-20 h-20 p-0 text-xl shadow-lg'
+            onClick={() => setIsTimerModalOpen(true)}
+          >
+            {formatTime(timeRemaining).split(':')[1]}
+          </Button>
+        </div>
+      )}
     </Container>
   );
 }
