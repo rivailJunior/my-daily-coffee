@@ -3,6 +3,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import { useToast } from '@/hooks/useToast';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -46,6 +47,7 @@ export function BrewingAssistantForm({
   headingDescription,
 }: Readonly<BrewAssistantProps>) {
   const router = useRouter();
+  const { toast } = useToast();
   const [ratio, setRatio] = useState<number>(15); // Default coffee:water ratio
   const isUpdatingRef = useRef<boolean>(false);
 
@@ -131,7 +133,13 @@ export function BrewingAssistantForm({
       router.push(`/brewing-assistant/timer/${recipe.id}`);
     },
     onError: (error) => {
-      console.error('Error generating recipe:', error);
+      console.error('Error generating recipe: ====>', error);
+      toast({
+        title: 'Error',
+        description:
+          error.message || 'Failed to generate recipe. Please try again.',
+        variant: 'destructive',
+      });
     },
   });
 

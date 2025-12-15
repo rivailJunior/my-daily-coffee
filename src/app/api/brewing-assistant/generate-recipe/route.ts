@@ -23,7 +23,7 @@ export async function POST(request: Request) {
     }
 
     const response = await ai.models.generateContent({
-      model: 'gemini-2.0-flash',
+      model: 'gemini-2.5-flash-lite',
       contents: `
       You are a coffee brewing expert. Generate a coffee brewing recipe for:
             - Brewing method: ${formData.brewer.name} (${formData.brewer.brewMethod})
